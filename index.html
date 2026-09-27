@@ -4,6 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Atiśaya</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#4f46e5">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -47,6 +54,9 @@ textarea{width:100%;min-height:220px;font-family:ui-monospace,monospace;font-siz
 #otp{max-width:340px;margin:16vh auto;padding:0 20px;text-align:center}#otp form{flex-direction:column;align-items:stretch;gap:10px}
 .wide{grid-column:1/-1}#heat{display:grid;grid-auto-flow:column;grid-template-columns:repeat(20,1fr);grid-template-rows:repeat(7,auto);gap:4px}#heat i{aspect-ratio:1;border-radius:4px}
 #otp .code{font-size:28px;letter-spacing:.4em;text-align:center;font-weight:800}
+#pin{max-width:320px;margin:18vh auto;padding:0 20px;text-align:center}#pin form{flex-direction:column;align-items:stretch;gap:10px}
+#pinset{max-width:340px;margin:16vh auto;padding:0 20px;text-align:center}#pinset form{flex-direction:column;align-items:stretch;gap:10px}
+.pincode{font-size:34px;letter-spacing:.6em;text-align:center;font-weight:800;padding:12px 0 12px .6em}
 .hide{display:none!important}
 #landing{min-height:100vh;display:flex;flex-direction:column;position:relative;overflow:hidden;
   background:radial-gradient(circle at 12% 18%,color-mix(in srgb,var(--pri) 20%,transparent),transparent 42%),radial-gradient(circle at 88% 82%,color-mix(in srgb,var(--pri2) 20%,transparent),transparent 42%),var(--bg)}
@@ -134,6 +144,29 @@ const SUPABASE_URL="https://mefpkvaauqoqmquoajlf.supabase.co", SUPABASE_KEY="eyJ
   </form>
 </div>
 
+<div id="pinset" class="hide">
+  <h1>Create a PIN</h1>
+  <div class="mut">Choose a 4-digit PIN. Next time you open the app on this device, this is all you'll need &mdash; no email code.</div><br>
+  <form onsubmit="return savePin(event)">
+    <input id="pnew" class="pincode" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="••••" required>
+    <input id="pnew2" class="pincode" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="Confirm ••••" required>
+    <button class="btn">Save PIN and continue</button>
+    <button type="button" class="btn ghost" onclick="skipPin()">Skip for now</button>
+    <div id="psmsg" class="r"></div>
+  </form>
+</div>
+
+<div id="pin" class="hide">
+  <h1><center>Atiśaya</center></h1>
+  <div class="mut">Enter your 4-digit PIN.</div><br>
+  <form onsubmit="return checkPin(event)">
+    <input id="pcode" class="pincode" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="••••" autofocus required>
+    <button class="btn">Unlock</button>
+    <button type="button" class="btn ghost" onclick="forgotPin()">Forgot PIN? Use email instead</button>
+    <div id="pmsg" class="r"></div>
+  </form>
+</div>
+
 <div id="app" class="hide">
   <header>
     <h1>Atiśaya</h1>
@@ -213,11 +246,27 @@ async function loadState(){
 async function signIn(e){e.preventDefault();const f=new FormData($('af'));
   const {error}=await sb.auth.signInWithPassword({email:f.get('email'),password:f.get('pw')});
   if(error)$('amsg').textContent=error.message;else{afterAuth.sent=0;afterAuth()}return false}
-async function logout(){if(user)sessionStorage.removeItem('wt_otp_'+user.id);await sb.auth.signOut();localStorage.removeItem(ck());user=null;location.reload()}
+async function logout(){if(user){sessionStorage.removeItem('wt_otp_'+user.id);localStorage.removeItem(pinKey(user.id))}await sb.auth.signOut();localStorage.removeItem(ck());user=null;location.reload()}
+function pinHash(pin,uid){let h=5381;const s2=pin+':'+uid;for(let i=0;i<s2.length;i++)h=((h*33)^s2.charCodeAt(i))>>>0;return h.toString(36)}
+function pinKey(uid){return 'wt_pin_'+uid}
 async function enter(){$('landing').classList.add('hide');
   const {data:{session}}=await sb.auth.getSession();
   if(!session){$('auth').classList.remove('hide');return}
+  user=session.user;
+  if(localStorage.getItem(pinKey(user.id))){
+    $('pin').classList.remove('hide');$('pmsg').textContent='';const c=$('pcode');c.value='';setTimeout(()=>c.focus(),50);return}
   afterAuth.sent=0;await afterAuth()}
+function checkPin(e){e.preventDefault();const v=$('pcode').value.trim();
+  if(pinHash(v,user.id)===localStorage.getItem(pinKey(user.id))){$('pin').classList.add('hide');enterApp()}
+  else{$('pmsg').textContent='Incorrect PIN. Try again.';$('pcode').value='';$('pcode').focus()}
+  return false}
+async function forgotPin(){$('pin').classList.add('hide');localStorage.removeItem(pinKey(user.id));
+  sessionStorage.removeItem('wt_otp_'+user.id);afterAuth.sent=0;await afterAuth()}
+function savePin(e){e.preventDefault();const a=$('pnew').value.trim(),b=$('pnew2').value.trim();
+  if(!/^\d{4}$/.test(a)){$('psmsg').textContent='PIN must be exactly 4 digits.';return false}
+  if(a!==b){$('psmsg').textContent='PINs do not match.';$('pnew2').value='';$('pnew2').focus();return false}
+  localStorage.setItem(pinKey(user.id),pinHash(a,user.id));$('pinset').classList.add('hide');enterApp();return false}
+function skipPin(){$('pinset').classList.add('hide');enterApp()}
 const LCYC=['in real time','automatically','beautifully','without spreadsheets'];
 function cycleLanding(){let i=0;const el=$('lcyc');if(!el)return;setInterval(()=>{i=(i+1)%LCYC.length;el.style.opacity=0;setTimeout(()=>{el.textContent=LCYC[i];el.style.opacity=1},280)},2600);el.style.transition='opacity .28s'}
 const DEFAULT_TICKER=['Salary','Rent','SIP','Groceries','EMI','Mutual funds','Electricity bill','Freelance income','Credit card','Gold','Fuel','Insurance'];
@@ -240,13 +289,18 @@ async function verifyOtp(e){e.preventDefault();
   afterAuth();return false}
 async function afterAuth(){
   const {data:{session}}=await sb.auth.getSession();
-  if(!session){$('landing').classList.remove('hide');$('auth').classList.add('hide');$('app').classList.add('hide');$('otp').classList.add('hide');return}
+  if(!session){$('landing').classList.remove('hide');$('auth').classList.add('hide');$('app').classList.add('hide');$('otp').classList.add('hide');$('pinset').classList.add('hide');$('pin').classList.add('hide');return}
   $('landing').classList.add('hide');
   const {data:{user:u}}=await sb.auth.getUser();user=u||session.user;$('auth').classList.add('hide');
   if(sessionStorage.getItem('wt_otp_'+user.id)!=='1'){ // OTP required on every login
     $('app').classList.add('hide');$('otp').classList.remove('hide');$('oem').textContent=user.email;
     if(!afterAuth.sent){afterAuth.sent=1;sendOtp()}return}
-  $('otp').classList.add('hide');$('app').classList.remove('hide');
+  $('otp').classList.add('hide');
+  if(!localStorage.getItem(pinKey(user.id))){$('pinset').classList.remove('hide');$('pnew').value='';$('pnew2').value='';$('psmsg').textContent='';return}
+  await enterApp();
+}
+async function enterApp(){
+  $('otp').classList.add('hide');$('pinset').classList.add('hide');$('pin').classList.add('hide');$('app').classList.remove('hide');
   try{const c=JSON.parse(localStorage.getItem(ck()));if(valid(c)){S=c;go(tab)}}catch(e){}
   await loadState();if(S)go(tab);
 }
@@ -535,5 +589,6 @@ if(!configured){
   document.body.innerHTML='<main style="max-width:480px"><div class="card"><h3>Connect your Supabase project</h3><form onsubmit="return saveCfg(this)" style="flex-direction:column;align-items:stretch"><label>Project URL<input name="url" placeholder="https://abcdxyz.supabase.co" required></label><label>Anon or publishable key<input name="key" placeholder="eyJ... or sb_publishable_..." required></label><button class="btn">Save and continue</button><div id="cmsg" class="r"></div></form><p class="mut">Both values are in Supabase under Project Settings, then API. They are stored only in this browser. Remember to run the SQL from the comment at the top of this file once.</p></div></main>';
 }
 </script>
+<script>if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
 </body>
 </html>
