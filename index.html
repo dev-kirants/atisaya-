@@ -225,7 +225,7 @@ function demo(){
     txs:[]};
 }
 
-/* ---------- persistence (Supabase + local cache) ---------- */
+/* ---------- persistence (Supabase + local cache) ------------ */
 function save(){
   if(user)localStorage.setItem(ck(),JSON.stringify(S));
   if(!sb||!user)return;
