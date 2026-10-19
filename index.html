@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Atiśaya</title>
+<title>Atisaya · finrec</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#4f46e5">
 <link rel="icon" href="icon-192.png">
@@ -17,9 +17,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f6f4ef;--card:#fff;--ink:#1a1d29;--mut:#6b7080;--line:#e6e3da;--g:#16a34a;--r:#dc2626;--b:#2563eb;--a:#f59e0b;--pri:#4f46e5;--pri2:#7c3aed;--sh:0 1px 2px rgba(20,20,40,.06),0 8px 24px rgba(20,20,40,.06)}
-[data-theme=dark]{--bg:#0c0e16;--card:#151827;--ink:#eceefb;--mut:#8b90a8;--line:#242840;--g:#4ade80;--r:#f87171;--b:#60a5fa;--a:#fbbf24;--sh:0 8px 24px rgba(0,0,0,.4)}
-[data-accent=emerald]{--pri:#059669;--pri2:#0d9488}[data-accent=sunset]{--pri:#ea580c;--pri2:#db2777}[data-accent=ocean]{--pri:#0284c7;--pri2:#2563eb}
 *{box-sizing:border-box}
 html{overscroll-behavior-y:contain}
 body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Manrope,system-ui,-apple-system,Segoe UI,sans-serif;font-variant-numeric:tabular-nums;overscroll-behavior-y:contain}
@@ -36,9 +33,9 @@ main{max-width:1100px;flex:1;min-width:0;margin:0;padding:12px 20px 110px}
 .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(270px,1fr))}
 .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;overflow-x:auto;box-shadow:var(--sh)}
 .card h3{margin:0 0 10px;font-size:15px;font-weight:800}
-.hero{background:linear-gradient(135deg,var(--pri),var(--pri2));color:#fff;border:0}.hero .mut{color:rgba(255,255,255,.78)}
 .big{font-size:38px;font-weight:800;letter-spacing:-.03em}.kpi{font-size:22px;font-weight:800}.mut{color:var(--mut);font-size:13px}
-table{width:100%;border-collapse:collapse}td,th{padding:9px 6px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+table{width:100%;border-collapse:collapse}table.tacc th:nth-child(2),table.tacc td:nth-child(2){border-right:2px solid var(--ink);padding-right:12px}table.tacc th:nth-child(3),table.tacc td:nth-child(3){padding-left:12px}
+td,th{padding:9px 6px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
 th{color:var(--mut);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em}.num{text-align:right}
 tr.tot td{font-weight:800;border-bottom:0;border-top:2px solid var(--line)}
 .badge{padding:2px 9px;border-radius:99px;font-size:12px;color:#fff;font-weight:600}
@@ -89,8 +86,68 @@ canvas{max-height:260px}
 .chips2{display:flex;flex-wrap:wrap;gap:6px}.chips2 button{border:1px solid var(--line);background:var(--bg);border-radius:99px;padding:7px 14px;cursor:pointer;font-weight:600}
 .chips2 button.on{background:var(--pri);color:#fff;border-color:var(--pri)}
 .row{display:flex;gap:8px;flex-wrap:wrap}.row>*{flex:1;min-width:110px}
+.fs{display:contents}
+.sres{display:flex;flex-direction:column;gap:4px;width:100%;max-height:230px;overflow:auto}.sres:empty{display:none}
+.sres button{text-align:left;border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:8px 12px;cursor:pointer}.sres button:hover{border-color:var(--pri)}
+.pick{width:100%;padding:10px 12px;border:1px dashed var(--pri);border-radius:10px;background:color-mix(in srgb,var(--pri) 8%,transparent);display:flex;justify-content:space-between;gap:10px;align-items:center}
+.live{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--g);margin-right:5px;animation:pulse 1.6s infinite}
+@keyframes flup{0%{background:rgba(22,163,74,.45)}100%{background:transparent}}@keyframes fldn{0%{background:rgba(220,38,38,.4)}100%{background:transparent}}
+.fl-up{animation:flup 1.4s ease-out;border-radius:6px;padding:0 4px}.fl-dn{animation:fldn 1.4s ease-out;border-radius:6px;padding:0 4px}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+.fbar{display:flex;flex-wrap:wrap;gap:8px;align-items:end;margin-bottom:12px}.fbar label{min-width:130px}
+.note2{margin:10px 2px 0}
 #toast{position:fixed;left:50%;bottom:100px;transform:translate(-50%,20px);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:99px;opacity:0;transition:.25s;z-index:30;pointer-events:none;font-weight:600}
 #toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* ===== ERP theme ===== */
+:root{--bg:#e9edf2;--card:#fff;--ink:#1c2733;--mut:#5f6b7a;--line:#d0d8e2;--pri:#1d4f8c;--pri2:#2b6cb0;--g:#15803d;--r:#b91c1c;--b:#1d4ed8;--a:#b45309;--sh:0 1px 2px rgba(15,30,50,.08);--nav:#14263b;--navh:#1d3752;--th:#e4eaf2;--zebra:#f6f8fb}
+[data-theme=dark]{--bg:#0e1620;--card:#16212d;--ink:#e6edf5;--mut:#93a1b3;--line:#2a3a4c;--pri:#4a90d9;--pri2:#3b7dc4;--g:#4ade80;--r:#f87171;--b:#60a5fa;--a:#fbbf24;--sh:none;--nav:#0a1119;--navh:#142130;--th:#1d2b3a;--zebra:#19252f}
+[data-accent=emerald]{--pri:#047857;--pri2:#0d9488}[data-accent=sunset]{--pri:#c2410c;--pri2:#be185d}[data-accent=ocean]{--pri:#0369a1;--pri2:#1d4ed8}
+body{font:13.5px/1.45 "Segoe UI",Inter,system-ui,-apple-system,Manrope,sans-serif}
+header{background:var(--nav);color:#fff;border-bottom:3px solid var(--pri2);padding:8px 16px;backdrop-filter:none;gap:8px}
+header h1{color:#fff;font-size:16px;letter-spacing:.03em}header .mut{color:#9fb3c8}
+header .btn.ghost{color:#fff;border-color:rgba(255,255,255,.3);background:transparent;padding:5px 11px}
+.dot{width:14px;height:14px;border-radius:2px;border:1px solid rgba(255,255,255,.5);box-shadow:none}
+.shell{max-width:none;margin:0}
+nav{background:var(--nav);width:212px;flex:0 0 212px;padding:8px 0 20px;gap:0;top:48px;min-height:calc(100vh - 48px);max-height:calc(100vh - 48px)}
+nav button{color:#c3d0de;border-radius:0;padding:8px 16px 8px 20px;font-weight:500;font-size:13.5px;border-left:3px solid transparent;background:transparent}
+nav button:hover{background:var(--navh);color:#fff}
+nav button.on{background:var(--navh);color:#fff;border-left-color:#5aa9f0;font-weight:700}
+.ngrp{color:#7390ad;font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:14px 18px 4px}
+main{max-width:none;padding:12px 22px 100px}
+.ptitle{font-size:12px;color:var(--mut);margin:0 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line)}.ptitle b{color:var(--ink);font-size:18px;display:block;margin-top:2px;font-weight:700}
+.card{border-radius:3px;padding:12px 14px 14px;box-shadow:var(--sh)}
+.card>h3{margin:-12px -14px 12px;padding:8px 14px;background:var(--th);border-bottom:1px solid var(--line);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.sec{margin:0 0 20px}.sec h4{margin:0 0 10px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--pri);border-bottom:2px solid var(--pri);padding-bottom:4px}
+.big{font-size:30px}.kpi{font-size:19px}
+table{font-size:13px}
+th{background:var(--th);color:var(--ink);font-size:11px;padding:7px 8px;border-top:1px solid var(--line)}
+td{padding:6px 8px}
+tr:nth-child(even) td{background:var(--zebra)}
+tr:hover td{background:color-mix(in srgb,var(--pri) 9%,var(--card))}
+tr.tot td{background:var(--th);border-top:2px solid var(--ink)}
+tr.vh td{background:var(--th);font-weight:800;color:var(--pri);border-top:1px solid var(--line)}
+tr.vsh td{font-weight:700;color:var(--mut);background:transparent}
+tr.vs td{font-weight:800;border-top:1px solid var(--ink);background:transparent}
+tr.vi td:first-child{padding-left:30px}
+.badge{border-radius:2px;padding:1px 7px;font-size:11px;text-transform:uppercase;letter-spacing:.03em}
+.prin{background:var(--g)}
+input,select,textarea{border-radius:3px;padding:6px 8px;background:var(--card);border:1px solid #b4c0cf}
+[data-theme=dark] input,[data-theme=dark] select,[data-theme=dark] textarea{border-color:#3a4d63}
+label{font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+.btn{background:var(--pri);border-radius:3px;padding:7px 14px;font-weight:600}
+.btn.ghost{background:var(--card);color:var(--ink);border:1px solid #b4c0cf}
+.seg,.seg button{border-radius:3px}.chips2 button,.chip{border-radius:3px}
+.pbar,.pbar i{border-radius:2px}
+.fab{border-radius:4px;width:50px;height:50px;font-size:28px;background:var(--pri);box-shadow:0 4px 12px rgba(0,0,0,.3)}
+.sheet{border-radius:4px}
+@media(max-width:760px){nav{flex-direction:row;width:100%;flex:none;min-height:0;max-height:none;top:46px;padding:0;overflow-x:auto}.ngrp{display:none}nav button{border-left:0;border-bottom:3px solid transparent;white-space:nowrap;width:auto;padding:10px 14px}nav button.on{border-bottom-color:#5aa9f0}main{padding:10px 12px 100px}}
+
+.badge.invest{background:#7c3aed}.seg button.on.invest{background:#7c3aed}
+#qinv{display:flex;flex-direction:column;gap:8px}#qinv.hide{display:none}
+#qinv .row{align-items:flex-end}#qinv .pick{align-items:flex-start}
+.hbox{padding:8px 12px;border-radius:10px;background:var(--bg);font-size:13px}
+.smx{display:flex;flex-direction:column;gap:10px}
 </style>
 </head>
 <body>
@@ -100,9 +157,9 @@ const SUPABASE_URL="https://mefpkvaauqoqmquoajlf.supabase.co", SUPABASE_KEY="eyJ
 
 <div id="landing">
   <div class="lorb o1"></div><div class="lorb o2"></div>
-  <div class="lnav"><span class="lbrand">Atiśaya - finrec</span><button class="btn ghost" onclick="enter()">Login</button></div>
+  <div class="lnav"><span class="lbrand">Atisaya <span class="mut">· finrec</span></span><button class="btn ghost" onclick="enter()">Login</button></div>
   <div class="lhero">
-    <h1>Namaste !<br>
+    <div class="lsub">Namaste!</div>
     <h1 class="ltitle">Every rupee, tracked<br><span class="lcycle" id="lcyc">in real time</span></h1>
     <p class="lsub">I'm Kiran! As a fintech student, I built this live dashboard to track income, expenses, investments, and debts with auto-updating budgets and instant, emailable financial reports.</p>
     <button class="btn lcta" onclick="enter()">Get started →</button>
@@ -120,12 +177,15 @@ const SUPABASE_URL="https://mefpkvaauqoqmquoajlf.supabase.co", SUPABASE_KEY="eyJ
 </div></div>
 
 <div id="auth" class="hide">
-  <h1><center>Atiśaya</center></h1>
+  <h1><center>Atisaya</center></h1><div class="mut"><center>finrec</center></div>
   <div class="card">
+    <div class="seg" style="margin-bottom:12px"><button type="button" id="am-in" class="on transfer" onclick="authMode('in')">Sign in</button><button type="button" id="am-up" onclick="authMode('up')">Create account</button></div>
     <form id="af" onsubmit="return signIn(event)">
       <label>Email<input name="email" type="email" required autocomplete="email"></label>
       <label>Password<input name="pw" type="password" minlength="6" required autocomplete="current-password"></label>
-      <button class="btn">Sign in</button>
+      <label id="apw2l" class="hide">Confirm password<input name="pw2" type="password" minlength="6" autocomplete="new-password"></label>
+      <button class="btn" id="abtn">Sign in</button>
+      <button type="button" class="btn ghost" id="aotp" onclick="otpLogin()">Sign in with email code instead</button>
       <div id="amsg" class="r"></div><div class="mut"><center>Jñānaṁ vittasya rakṣakam.</center></div>
     </form>
     <button type="button" class="btn ghost" onclick="$('auth').classList.add('hide');$('landing').classList.remove('hide')" style="width:100%">← Back</button>
@@ -150,6 +210,7 @@ const SUPABASE_URL="https://mefpkvaauqoqmquoajlf.supabase.co", SUPABASE_KEY="eyJ
   <form onsubmit="return savePin(event)">
     <input id="pnew" class="pincode" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="••••" required>
     <input id="pnew2" class="pincode" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="Confirm ••••" required>
+    <label id="bioopt" class="hide" style="display:flex;gap:10px;align-items:center;flex-direction:row"><input type="checkbox" id="biochk" checked style="width:auto"> Also unlock with fingerprint / face</label>
     <button class="btn">Save PIN and continue</button>
     <button type="button" class="btn ghost" onclick="skipPin()">Skip for now</button>
     <div id="psmsg" class="r"></div>
@@ -157,11 +218,12 @@ const SUPABASE_URL="https://mefpkvaauqoqmquoajlf.supabase.co", SUPABASE_KEY="eyJ
 </div>
 
 <div id="pin" class="hide">
-  <h1><center>Atiśaya</center></h1>
+  <h1><center>Atisaya</center></h1><div class="mut"><center>finrec</center></div>
   <div class="mut">Enter your 4-digit PIN.</div><br>
   <form onsubmit="return checkPin(event)">
     <input id="pcode" class="pincode" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="••••" autofocus required>
     <button class="btn">Unlock</button>
+    <button type="button" id="biobtn" class="btn ghost hide" onclick="unlockBio()">👆 Use fingerprint / face</button>
     <button type="button" class="btn ghost" onclick="forgotPin()">Forgot PIN? Use email instead</button>
     <div id="pmsg" class="r"></div>
   </form>
@@ -169,7 +231,7 @@ const SUPABASE_URL="https://mefpkvaauqoqmquoajlf.supabase.co", SUPABASE_KEY="eyJ
 
 <div id="app" class="hide">
   <header>
-    <h1>Atiśaya</h1>
+    <h1>Atisaya <span class="mut">· finrec</span></h1>
     <span id="sync" class="mut">Saved</span>
     <span class="dots"><button class="dot" style="background:#4f46e5" onclick="accent('indigo')" aria-label="Indigo"></button><button class="dot" style="background:#059669" onclick="accent('emerald')" aria-label="Emerald"></button><button class="dot" style="background:#ea580c" onclick="accent('sunset')" aria-label="Sunset"></button><button class="dot" style="background:#0284c7" onclick="accent('ocean')" aria-label="Ocean"></button></span>
     <button class="btn ghost" onclick="toggleTheme()">Light/Dark</button>
@@ -181,22 +243,26 @@ const SUPABASE_URL="https://mefpkvaauqoqmquoajlf.supabase.co", SUPABASE_KEY="eyJ
   </div>
   <button class="fab" onclick="qe()" aria-label="Quick add entry" title="Quick add (press N)">+</button>
   <div id="qm" class="modal hide" onclick="if(event.target===this)qc()"><div class="sheet">
+    <h3 id="qtitle" style="margin:0">New entry</h3>
     <div class="seg" id="qseg"></div>
-    <input id="qamt" class="amt" inputmode="decimal" type="number" step="any" placeholder="0" onkeydown="if(event.key==='Enter')qsave(true)">
+    <input id="qamt" class="amt" inputmode="decimal" type="number" step="any" placeholder="0" oninput="if(q.type==='invest')qInvCalc()" onkeydown="if(event.key==='Enter')qsave(true)">
     <div id="qchips" class="chips2"></div>
-    <div class="row"><label>Account<select id="qacct"></select></label><label id="qtol" class="hide">To account<select id="qto"></select></label><label>Date<input id="qdate" type="date"></label></div>
+    <div id="qinv" class="hide"></div>
+    <div class="row"><label>Account<select id="qacct"></select></label><label id="qtol" class="hide">To account<select id="qto"></select></label><label>Date<input id="qdate" type="date" onchange="if(q.type==='invest')qInvPrice()"></label></div>
     <input id="qnote" placeholder="Note (optional)" onkeydown="if(event.key==='Enter')qsave(true)">
-    <div class="row"><button class="btn" onclick="qsave(false)">Save</button><button class="btn ghost" onclick="qsave(true)">Save + add another</button></div>
-    <div class="mut" style="text-align:center">Enter = save and add another · Esc = close · N = open</div>
+    <div class="row"><button class="btn" id="qb1" onclick="qsave(false)">Save</button><button class="btn ghost" id="qb2" onclick="qsave(true)">Save + add another</button></div>
+    <div class="mut" id="qhint" style="text-align:center">Enter = save and add another · Esc = close · N = open</div>
   </div></div>
   <div id="toast"></div>
+  <div id="sm" class="modal hide" onclick="if(event.target===this)smc()"><div class="sheet" id="sbody"></div></div>
 </div>
 
 <script>
 const $=id=>document.getElementById(id);
 function ymd(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const TABS=[['dash','Dashboard'],['cash','Bank & Cash'],['assets','Assets'],['debts','Liabilities'],['tx','Transactions'],['targets','Budget & Goals'],['totals','Totals'],['reports','Reports'],['admin','Admin']];
+const TABS=[['dash','Dashboard'],['cash','Bank & Cash'],['tx','Transactions'],['ledger','General Ledger'],['debts','Liabilities'],['assets','Investments & Assets'],['targets','Budget & Goals'],['totals','Totals'],['reports','Financial Statements'],['admin','Admin']],
+  NAVG={dash:'Overview',cash:'Accounting',assets:'Investments',targets:'Planning',reports:'Reports',admin:'Setup'};
 let cfg=null;try{cfg=JSON.parse(localStorage.getItem('wt_cfg'))}catch(e){}
 const cfgUrl=((cfg&&cfg.url)||SUPABASE_URL).trim().replace(/\/$/,''),cfgKey=((cfg&&cfg.key)||SUPABASE_KEY).trim();
 const urlOk=u=>/^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(u)&&!/your-project/i.test(u);
@@ -210,19 +276,10 @@ const ck=()=>'wt_cache_'+user.id;
 let S,user,tab=localStorage.getItem('wt_tab')||'dash',charts=[],timer,txMo='all',per='month';
 
 /* ---------- default data ---------- */
-function demo(){
-  // Fresh start: no sample accounts, transactions, assets, debts or targets.
-  // The category lists below are just starting options for the dropdowns, not financial data.
-  return{cur:'₹',next:1,
-    heads:['Food','Rent','Transport','Bills','Shopping','Health','Fun'],
-    sources:['Salary','Business','Interest','Gift'],
-    classes:['Mutual Funds','Stocks','Bonds','P2P Lending','Real Estate','Gold'],
-    accounts:[],
-    assets:[],
-    debts:[],
-    ibudget:{},budget:{},
-    targets:[],
-    txs:[]};
+const CATS=['Salary','Business','Freelance','Interest','Dividends','Rent','Food & Dining','Groceries','Transport','Bills & Utilities','Shopping','Health','Education','Entertainment','Travel','Insurance','Loan Interest & Charges','Gifts','Taxes','Refunds','Other'];
+function demo(){ // fresh start: only starting categories, no sample money data
+  return{cur:'₹',next:1,cats:CATS.slice(),classes:['Mutual Funds','Stocks','Bonds','P2P Lending','Real Estate','Gold'],
+    accounts:[],assets:[],debts:[],ibudget:{},budget:{},targets:[],txs:[]};
 }
 
 /* ---------- persistence (Supabase + local cache) ------------ */
@@ -243,10 +300,26 @@ async function loadState(){
 }
 
 /* ---------- auth ---------- */
-async function signIn(e){e.preventDefault();const f=new FormData($('af'));
-  const {error}=await sb.auth.signInWithPassword({email:f.get('email'),password:f.get('pw')});
-  if(error)$('amsg').textContent=error.message;else{afterAuth.sent=0;afterAuth()}return false}
-async function logout(){if(user){sessionStorage.removeItem('wt_otp_'+user.id);localStorage.removeItem(pinKey(user.id))}await sb.auth.signOut();localStorage.removeItem(ck());user=null;location.reload()}
+let amode='in',pend='';
+function authMode(m){amode=m;const up=m==='up';
+  $('am-in').className=up?'':'on transfer';$('am-up').className=up?'on transfer':'';
+  $('apw2l').classList.toggle('hide',!up);$('af').pw2.required=up;$('abtn').textContent=up?'Create account':'Sign in';
+  $('aotp').classList.toggle('hide',up);$('af').pw.autocomplete=up?'new-password':'current-password';$('amsg').textContent=''}
+async function signIn(e){e.preventDefault();const f=new FormData($('af')),email=String(f.get('email')).trim(),pw=f.get('pw'),m=$('amsg');m.textContent='';
+  if(amode==='up'){
+    if(pw!==f.get('pw2')){m.textContent='Passwords do not match.';return false}
+    const {data,error}=await sb.auth.signUp({email,password:pw});
+    if(error){m.textContent=error.message;return false}
+    if(data.user&&data.user.identities&&!data.user.identities.length){m.textContent='This email is already registered. Use Sign in.';return false}
+    if(data.session){afterAuth.sent=0;afterAuth()}
+    else{authMode('in');m.className='g';m.textContent='Account created. Confirm the link we emailed you, then sign in.'}
+    return false}
+  const {error}=await sb.auth.signInWithPassword({email,password:pw});
+  if(error)m.textContent=error.message;else{afterAuth.sent=0;afterAuth()}return false}
+async function otpLogin(){const em=String($('af').email.value).trim();
+  if(!/^\S+@\S+\.\S+$/.test(em)){$('amsg').textContent='Enter your email first.';return}
+  pend=em;$('auth').classList.add('hide');$('otp').classList.remove('hide');$('oem').textContent=em;$('ocode').value='';sendOtp()}
+async function logout(){if(user){sessionStorage.removeItem('wt_otp_'+user.id);localStorage.removeItem(pinKey(user.id));localStorage.removeItem(bioKey(user.id))}await sb.auth.signOut();localStorage.removeItem(ck());user=null;location.reload()}
 function pinHash(pin,uid){let h=5381;const s2=pin+':'+uid;for(let i=0;i<s2.length;i++)h=((h*33)^s2.charCodeAt(i))>>>0;return h.toString(36)}
 function pinKey(uid){return 'wt_pin_'+uid}
 async function enter(){$('landing').classList.add('hide');
@@ -254,18 +327,45 @@ async function enter(){$('landing').classList.add('hide');
   if(!session){$('auth').classList.remove('hide');return}
   user=session.user;
   if(localStorage.getItem(pinKey(user.id))){
-    $('pin').classList.remove('hide');$('pmsg').textContent='';const c=$('pcode');c.value='';setTimeout(()=>c.focus(),50);return}
+    $('pin').classList.remove('hide');$('pmsg').textContent='';const c=$('pcode');c.value='';setTimeout(()=>c.focus(),50);
+    const hb=!!localStorage.getItem(bioKey(user.id));$('biobtn').classList.toggle('hide',!hb);if(hb)setTimeout(unlockBio,350);return}
   afterAuth.sent=0;await afterAuth()}
 function checkPin(e){e.preventDefault();const v=$('pcode').value.trim();
   if(pinHash(v,user.id)===localStorage.getItem(pinKey(user.id))){$('pin').classList.add('hide');enterApp()}
   else{$('pmsg').textContent='Incorrect PIN. Try again.';$('pcode').value='';$('pcode').focus()}
   return false}
-async function forgotPin(){$('pin').classList.add('hide');localStorage.removeItem(pinKey(user.id));
+async function forgotPin(){$('pin').classList.add('hide');localStorage.removeItem(pinKey(user.id));localStorage.removeItem(bioKey(user.id));
   sessionStorage.removeItem('wt_otp_'+user.id);afterAuth.sent=0;await afterAuth()}
-function savePin(e){e.preventDefault();const a=$('pnew').value.trim(),b=$('pnew2').value.trim();
+/* ---------- fingerprint / face unlock (WebAuthn, this device only) ---------- */
+const bioKey=uid=>'wt_bio_'+uid;
+const bioOK=()=>!!(window.PublicKeyCredential&&navigator.credentials&&window.isSecureContext&&location.hostname);
+const b64=b=>btoa(String.fromCharCode(...new Uint8Array(b)));
+const unb64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+async function enrollBio(){
+  if(!bioOK())return 'Fingerprint unlock needs this page opened over https on a device with a fingerprint / face sensor.';
+  try{const c=await navigator.credentials.create({publicKey:{challenge:crypto.getRandomValues(new Uint8Array(32)),
+      rp:{name:'Atisaya finrec',id:location.hostname},user:{id:new TextEncoder().encode(user.id),name:user.email,displayName:user.email},
+      pubKeyCredParams:[{type:'public-key',alg:-7},{type:'public-key',alg:-257}],
+      authenticatorSelection:{authenticatorAttachment:'platform',userVerification:'required',residentKey:'discouraged'},timeout:60000}});
+    localStorage.setItem(bioKey(user.id),b64(c.rawId));return ''}
+  catch(e){return 'Fingerprint was not enabled ('+(e.name||'cancelled')+'). Your PIN still works.'}}
+async function unlockBio(){const id=localStorage.getItem(bioKey(user.id));if(!id)return;
+  try{await navigator.credentials.get({publicKey:{challenge:crypto.getRandomValues(new Uint8Array(32)),rpId:location.hostname,
+      allowCredentials:[{type:'public-key',id:unb64(id),transports:['internal']}],userVerification:'required',timeout:60000}});
+    $('pin').classList.add('hide');enterApp()}
+  catch(e){$('pmsg').textContent='Fingerprint did not match. Enter your PIN.'}}
+function showPinSet(){$('app').classList.add('hide');$('pinset').classList.remove('hide');$('pnew').value='';$('pnew2').value='';$('psmsg').textContent='';
+  $('bioopt').classList.toggle('hide',!bioOK())}
+async function bioToggle(){if(localStorage.getItem(bioKey(user.id))){localStorage.removeItem(bioKey(user.id))}
+  else{if(!localStorage.getItem(pinKey(user.id))){alert('Create a PIN first (Change PIN), then enable fingerprint.');return}
+    const er=await enrollBio();if(er)alert(er)}
+  go('admin')}
+async function savePin(e){e.preventDefault();const a=$('pnew').value.trim(),b=$('pnew2').value.trim();
   if(!/^\d{4}$/.test(a)){$('psmsg').textContent='PIN must be exactly 4 digits.';return false}
   if(a!==b){$('psmsg').textContent='PINs do not match.';$('pnew2').value='';$('pnew2').focus();return false}
-  localStorage.setItem(pinKey(user.id),pinHash(a,user.id));$('pinset').classList.add('hide');enterApp();return false}
+  localStorage.setItem(pinKey(user.id),pinHash(a,user.id));
+  if($('biochk').checked&&bioOK()&&!localStorage.getItem(bioKey(user.id))){const er=await enrollBio();if(er)alert(er)}
+  $('pinset').classList.add('hide');enterApp();return false}
 function skipPin(){$('pinset').classList.add('hide');enterApp()}
 const LCYC=['in real time','automatically','beautifully','without spreadsheets'];
 function cycleLanding(){let i=0;const el=$('lcyc');if(!el)return;setInterval(()=>{i=(i+1)%LCYC.length;el.style.opacity=0;setTimeout(()=>{el.textContent=LCYC[i];el.style.opacity=1},280)},2600);el.style.transition='opacity .28s'}
@@ -278,15 +378,16 @@ function closeTickerEdit(){$('tm').classList.add('hide')}
 function saveTickerEdit(){const items=$('ttxt').value.split('\n').map(x=>x.trim()).filter(Boolean);
   localStorage.setItem('wt_ticker',JSON.stringify(items.length?items:DEFAULT_TICKER));tickLanding();closeTickerEdit()}
 let cool=0;
-async function sendOtp(){if(cool>0)return;$('omsg').textContent='Sending code…';
-  const {error}=await sb.auth.signInWithOtp({email:user.email,options:{shouldCreateUser:false}});
-  $('omsg').textContent=error?error.message:'Code sent to '+user.email+'. Check inbox and spam.';
+async function sendOtp(){if(cool>0)return;$('omsg').textContent='Sending code…';const em=(user&&user.email)||pend;
+  const {error}=await sb.auth.signInWithOtp({email:em,options:{shouldCreateUser:false}});
+  $('omsg').textContent=error?error.message:'Code sent to '+em+'. Check inbox and spam.';
   cool=error?10:60;const b=$('ores'),iv=setInterval(()=>{cool--;b.disabled=cool>0;b.textContent=cool>0?'Resend in '+cool+'s':'Resend code';if(cool<=0)clearInterval(iv)},1000)}
 async function verifyOtp(e){e.preventDefault();
-  const {error}=await sb.auth.verifyOtp({email:user.email,token:$('ocode').value.trim(),type:'email'});
+  const em=(user&&user.email)||pend;
+  const {data,error}=await sb.auth.verifyOtp({email:em,token:$('ocode').value.trim(),type:'email'});
   if(error){$('omsg').textContent=error.message;return false}
-  sessionStorage.setItem('wt_otp_'+user.id,'1');
-  afterAuth();return false}
+  const uid=(data&&data.user&&data.user.id)||(user&&user.id);if(uid)sessionStorage.setItem('wt_otp_'+uid,'1');
+  pend='';afterAuth();return false}
 async function afterAuth(){
   const {data:{session}}=await sb.auth.getSession();
   if(!session){$('landing').classList.remove('hide');$('auth').classList.add('hide');$('app').classList.add('hide');$('otp').classList.add('hide');$('pinset').classList.add('hide');$('pin').classList.add('hide');return}
@@ -296,136 +397,585 @@ async function afterAuth(){
     $('app').classList.add('hide');$('otp').classList.remove('hide');$('oem').textContent=user.email;
     if(!afterAuth.sent){afterAuth.sent=1;sendOtp()}return}
   $('otp').classList.add('hide');
-  if(!localStorage.getItem(pinKey(user.id))){$('pinset').classList.remove('hide');$('pnew').value='';$('pnew2').value='';$('psmsg').textContent='';return}
+  if(!localStorage.getItem(pinKey(user.id))){showPinSet();return}
   await enterApp();
 }
 async function enterApp(){
   $('otp').classList.add('hide');$('pinset').classList.add('hide');$('pin').classList.add('hide');$('app').classList.remove('hide');
   try{const c=JSON.parse(localStorage.getItem(ck()));if(valid(c)){S=c;go(tab)}}catch(e){}
   await loadState();if(S)go(tab);
+  if(S)startPriceSync();
 }
 function toggleTheme(){const t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;localStorage.setItem('wt_theme',t);if(S)go(tab)}
 
 function valid(o){if(!o||typeof o!=='object'||typeof o.cur!=='string')return false;
-  if(!['accounts','assets','debts','txs','heads','sources','classes'].every(k=>Array.isArray(o[k])))return false;
+  if(!o.cats&&Array.isArray(o.heads)&&Array.isArray(o.sources)){o.cats=[...new Set([...CATS,...o.heads,...o.sources])];delete o.heads;delete o.sources}
+  if(!['accounts','assets','debts','txs','cats','classes'].every(k=>Array.isArray(o[k])))return false;
   o.budget=o.budget||{};o.ibudget=o.ibudget||{};o.targets=o.targets||[];
   if(!o.next)o.next=Math.max(0,...[...o.accounts,...o.assets,...o.debts,...o.txs].map(x=>+x.id||0))+1;return true}
 /* ---------- helpers ---------- */
-const fmt=n=>(n<0?'-':'')+S.cur+Math.abs(Number(n)).toLocaleString(undefined,{maximumFractionDigits:2});
+const fmt=n=>{n=r2(+n||0);return(n<0?'-':'')+S.cur+Math.abs(n).toLocaleString(undefined,{maximumFractionDigits:2})};
 const acct=id=>S.accounts.find(a=>a.id==id);
 const sum=(a,k)=>a.reduce((s,x)=>s+Number(x[k]||0),0);
 const opts=a=>a.map(x=>`<option>${esc(x)}</option>`).join('');
-const acctOpts=()=>S.accounts.map(a=>`<option value="${a.id}">${esc(a.name)} (${a.type})</option>`).join('');
+const akind=a=>a.kind||(a.type==='cash'?'Cash':'Bank');
+const acctOpts=()=>S.accounts.map(a=>`<option value="${a.id}">${esc(a.name)} (${esc(akind(a))} · ${fmt(a.bal)})</option>`).join('');
+const r2=n=>Math.round(n*100)/100;
+const bsum=b=>S.cats.reduce((a,c)=>a+(+b[c]||0),0);
+const catList=()=>[...new Set([...S.cats,...S.txs.filter(t=>t.type==='income'||t.type==='expense').map(t=>t.cat).filter(Boolean)])];
+/* Funds guard: returns an error message if the change would overdraw a bank/cash account, else ''.
+   add = transaction being created, rem = transaction being removed/replaced (edit or delete). */
+function chk(add,rem){
+  if(add){
+    if(!S.accounts.length)return 'Add a bank or cash account first (Bank & Cash tab).';
+    if(!acct(add.acct))return 'Pick an account.';
+    if(add.type==='transfer'&&!acct(add.to))return 'Pick the account to transfer to.';
+  }
+  const bal={},was={};S.accounts.forEach(a=>bal[a.id]=was[a.id]=Number(a.bal)||0);
+  const out=t=>!!t&&['expense','repay','invest','transfer'].includes(t.type);
+  const sim=(t,sg)=>{if(!t)return;const m=Number(t.amount)*sg;
+    if((t.type==='income'||t.type==='prin')&&t.acct in bal)bal[t.acct]+=m;
+    else if((t.type==='expense'||t.type==='repay'||t.type==='invest')&&t.acct in bal)bal[t.acct]-=m;
+    else if(t.type==='transfer'){if(t.acct in bal)bal[t.acct]-=m;if(t.to in bal)bal[t.to]+=m}};
+  sim(rem,-1);sim(add,1);
+  for(const a of S.accounts){const now=r2(bal[a.id]);
+    if(now<0&&now<r2(was[a.id]))
+      return out(add)&&add.acct==a.id
+        ?'Not enough money in "'+a.name+'" (available '+fmt(was[a.id]+(out(rem)&&rem.acct==a.id?Number(rem.amount):0))+'). Transaction not created.'
+        :'This would make "'+a.name+'" negative ('+fmt(now)+'). Not allowed.'}
+  return ''}
 const netWorth=()=>sum(S.accounts,'bal')+sum(S.assets,'val')-sum(S.debts,'out');
-function apply(t,s=1){const a=acct(t.acct),b=acct(t.to),m=Number(t.amount)*s;
-  if(t.type==='income'&&a)a.bal+=m;
-  else if((t.type==='expense'||t.type==='repay')&&a)a.bal-=m;
-  else if(t.type==='transfer'){if(a)a.bal-=m;if(b)b.bal+=m}
-  if(t.type==='repay'){const d=S.debts.find(x=>x.id==t.debt);if(d)d.out=Math.max(0,d.out-m)}}
+function apply(t,s=1){const a=acct(t.acct),b=acct(t.to),m=Number(t.amount)*s,add=(x,v)=>{if(x)x.bal=r2(x.bal+v)};
+  if(t.type==='income'||t.type==='prin')add(a,m);
+  else if(t.type==='expense'||t.type==='repay'||t.type==='invest')add(a,-m);
+  else if(t.type==='transfer'){add(a,-m);add(b,m)}
+  if(t.type==='repay'){const d=S.debts.find(x=>x.id==t.debt);if(d)d.out=Math.max(0,r2(d.out-m))}}
 function fd(f){const o={};new FormData(f).forEach((v,k)=>o[k]=v);return o}
 function nid(){return S.next++}
 
 /* ---------- actions ---------- */
-function addAcct(f){const o=fd(f);S.accounts.push({id:nid(),name:o.name,type:o.type,bal:+o.bal||0});save();go('cash');return false}
-function addAsset(f){const o=fd(f);S.assets.push({id:nid(),name:o.name,cls:o.cls,inv:+o.inv,val:+o.val});save();go('assets');return false}
-function addDebt(f){const o=fd(f);S.debts.push({id:nid(),name:o.name,type:o.type,out:+o.out});save();go('debts');return false}
-function repay(f){const o=fd(f),t={id:nid(),date:o.date,type:'repay',amount:+o.amount,acct:+o.acct,debt:+o.debt,cat:'Repayment',note:''};
+const KINDS={'Savings':'bank','Current':'bank','Other bank':'bank','Cash in hand':'cash','Wallet / UPI':'cash'};
+function addAcct(f){const o=fd(f),name=(o.name||'').trim();
+  if(!name){alert('Enter an account name.');return false}
+  if(S.accounts.some(a=>a.name.trim().toLowerCase()===name.toLowerCase())){alert('You already have an account with this name.');return false}
+  const bal=+o.bal||0;if(bal<0){alert('Opening balance cannot be negative.');return false}
+  S.accounts.push({id:nid(),name,kind:o.kind,type:KINDS[o.kind]||'bank',bal});save();go('cash');return false}
+/* ---------- live prices: stocks (Yahoo Finance) + mutual funds (mfapi.in, AMFI NAV) ---------- */
+const kindOf=c=>/stock|equit|share/i.test(c||'')?'stock':/mutual|fund|\bmf\b/i.test(c||'')?'mf':/p2p|lend/i.test(c||'')?'p2p':'manual';
+const pxf=(n,d=2)=>S.cur+Number(n).toLocaleString(undefined,{maximumFractionDigits:d});
+const PROXY=[u=>u,u=>'https://api.allorigins.win/raw?url='+encodeURIComponent(u),u=>'https://api.codetabs.com/v1/proxy?quest='+encodeURIComponent(u),u=>'https://corsproxy.io/?url='+encodeURIComponent(u)];
+// all routes are tried at once, the first good answer wins
+const getJSON=url=>Promise.any(PROXY.map(async px=>{const ac=new AbortController(),tm=setTimeout(()=>ac.abort(),8000);
+  try{const r=await fetch(px(url),{signal:ac.signal});if(!r.ok)throw 0;return await r.json()}finally{clearTimeout(tm)}})).catch(()=>null);
+const dmy=d=>String(d).split('-').reverse().join('-');
+async function yq(sym,qs){for(const h of ['query1','query2']){const j=await getJSON('https://'+h+'.finance.yahoo.com/v8/finance/chart/'+encodeURIComponent(sym)+'?'+qs),r=j&&j.chart&&j.chart.result&&j.chart.result[0];if(r&&r.meta)return r}return null}
+async function stockQuote(sym){
+  const r=await yq(sym,'interval=1d&range=5d'),m=r&&r.meta;if(!m||!(m.regularMarketPrice>0))return null;
+  const off=m.gmtoffset||0,dk=t=>new Date((t+off)*1000).toISOString().slice(0,10),mk=dk(m.regularMarketTime||Date.now()/1000),
+  ts=r.timestamp||[],cl=(r.indicators&&r.indicators.quote&&r.indicators.quote[0]&&r.indicators.quote[0].close)||[];let prev=0;
+  for(let i=ts.length-1;i>=0;i--){if(cl[i]>0&&dk(ts[i])<mk){prev=cl[i];break}}
+  if(!prev)prev=m.previousClose||0;
+  return{px:m.regularMarketPrice,prev,date:m.regularMarketTime?ymd(new Date(m.regularMarketTime*1000)):'',at:(m.regularMarketTime||0)*1000}}
+async function mfNav(code){
+  const from=ymd(new Date(Date.now()-12*864e5));
+  let j=await getJSON('https://api.mfapi.in/mf/'+code+'?startDate='+from+'&endDate='+today());
+  if(!j||!j.data||!j.data.length)j=await getJSON('https://api.mfapi.in/mf/'+code+'/latest');
+  const d=j&&j.data;if(!d||!d.length||!(+d[0].nav>0))return null;
+  return{px:+d[0].nav,prev:d[1]?+d[1].nav:0,date:dmy(d[0].date)}}
+// popular NSE stocks are built in, so names always appear even when the live service is blocked
+const NSE=`RELIANCE|Reliance Industries,TCS|Tata Consultancy Services,HDFCBANK|HDFC Bank,ICICIBANK|ICICI Bank,INFY|Infosys,HINDUNILVR|Hindustan Unilever,ITC|ITC,SBIN|State Bank of India,BHARTIARTL|Bharti Airtel,KOTAKBANK|Kotak Mahindra Bank,LT|Larsen & Toubro,AXISBANK|Axis Bank,BAJFINANCE|Bajaj Finance,ASIANPAINT|Asian Paints,MARUTI|Maruti Suzuki India,HCLTECH|HCL Technologies,SUNPHARMA|Sun Pharmaceutical Industries,TITAN|Titan Company,ULTRACEMCO|UltraTech Cement,NTPC|NTPC,ONGC|Oil & Natural Gas Corporation,POWERGRID|Power Grid Corporation of India,WIPRO|Wipro,M&M|Mahindra & Mahindra,TATASTEEL|Tata Steel,ADANIENT|Adani Enterprises,ADANIPORTS|Adani Ports & SEZ,COALINDIA|Coal India,JSWSTEEL|JSW Steel,NESTLEIND|Nestle India,TECHM|Tech Mahindra,BAJAJFINSV|Bajaj Finserv,GRASIM|Grasim Industries,HINDALCO|Hindalco Industries,CIPLA|Cipla,DRREDDY|Dr. Reddy's Laboratories,EICHERMOT|Eicher Motors,BRITANNIA|Britannia Industries,APOLLOHOSP|Apollo Hospitals,DIVISLAB|Divi's Laboratories,HEROMOTOCO|Hero MotoCorp,BPCL|Bharat Petroleum,INDUSINDBK|IndusInd Bank,SBILIFE|SBI Life Insurance,HDFCLIFE|HDFC Life Insurance,BAJAJ-AUTO|Bajaj Auto,TATACONSUM|Tata Consumer Products,SHRIRAMFIN|Shriram Finance,JIOFIN|Jio Financial Services,TRENT|Trent,BEL|Bharat Electronics,HAL|Hindustan Aeronautics,IRCTC|Indian Railway Catering & Tourism,IRFC|Indian Railway Finance Corporation,VEDL|Vedanta,PNB|Punjab National Bank,BANKBARODA|Bank of Baroda,CANBK|Canara Bank,IDFCFIRSTB|IDFC First Bank,YESBANK|Yes Bank,TATAPOWER|Tata Power,DLF|DLF,GAIL|GAIL India,IOC|Indian Oil Corporation,SAIL|Steel Authority of India,NHPC|NHPC,DMART|Avenue Supermarts,PIDILITIND|Pidilite Industries,SIEMENS|Siemens,HAVELLS|Havells India,ADANIPOWER|Adani Power,ADANIGREEN|Adani Green Energy,SUZLON|Suzlon Energy,LICI|Life Insurance Corporation of India,POLYCAB|Polycab India,PAYTM|One 97 Communications,NYKAA|FSN E-Commerce Ventures,LTIM|LTIMindtree`.split(',').map(x=>{const[a,b]=x.split('|');return{sym:a+'.NS',name:b,ex:'NSE'}});
+const localStocks=q=>{const k=q.toLowerCase();return NSE.filter(x=>x.name.toLowerCase().includes(k)||x.sym.toLowerCase().startsWith(k)).slice(0,8)};
+async function searchStocks(q){
+  const j=await getJSON('https://query2.finance.yahoo.com/v1/finance/search?quotesCount=10&newsCount=0&q='+encodeURIComponent(q));
+  if(!j||!Array.isArray(j.quotes))return null;
+  const ind=x=>/^(NSI|BSE|NSE)$/.test(x.exchange)?1:0;
+  return j.quotes.filter(x=>x.quoteType==='EQUITY'&&x.symbol).sort((a,b)=>ind(b)-ind(a)).map(x=>({sym:x.symbol,name:x.longname||x.shortname||x.symbol,ex:x.exchDisp||x.exchange||''}))}
+async function searchFunds(q){
+  const j=await getJSON('https://api.mfapi.in/mf/search?q='+encodeURIComponent(q));
+  return Array.isArray(j)?j.slice(0,25).map(x=>({code:x.schemeCode,name:x.schemeName})):null}
+async function stockOn(sym,d){   // closing price on (or just before) a date
+  const t=Date.parse(d+'T00:00:00Z')/1000,r=await yq(sym,'interval=1d&period1='+(t-9*86400)+'&period2='+(t+2*86400));if(!r||!r.timestamp)return null;
+  const off=(r.meta&&r.meta.gmtoffset)||0,cl=r.indicators.quote[0].close;let best=null;
+  r.timestamp.forEach((ts,i)=>{if(new Date((ts+off)*1000).toISOString().slice(0,10)<=d&&cl[i]>0)best=cl[i]});return best}
+async function mfOn(code,d){
+  const s0=new Date(Date.parse(d+'T00:00:00Z')-10*864e5).toISOString().slice(0,10),
+  j=await getJSON('https://api.mfapi.in/mf/'+code+'?startDate='+s0+'&endDate='+d),r=j&&j.data&&j.data[0];return r?+r.nav:null}
+
+let psBusy=0,psMsg='',psTimer,FLASH={};
+function setPs(m){psMsg=m;const e=$('pst');if(e)e.textContent=m}
+async function syncPrices(force){
+  if(psBusy||!S)return;const L=S.assets.filter(a=>a.kind==='stock'||a.kind==='mf');if(!L.length)return;
+  const day=today(),now=Date.now(),need=L.filter(a=>force||(a.kind==='stock'?now-(a.pxAt||0)>25000:a.pxDay!==day));
+  if(!need.length)return;psBusy=1;setPs('Syncing prices…');
+  const id=a=>a.kind==='stock'?a.sym:a.code,keys=[...new Set(need.map(a=>a.kind+'|'+id(a)))],res={};
+  await Promise.all(keys.map(async k=>{const[kd,i]=k.split('|');res[k]=kd==='stock'?await stockQuote(i):await mfNav(i)}));
+  let ch=0,fail=0,dirty=0;
+  need.forEach(a=>{const r=res[a.kind+'|'+id(a)];if(!r){fail++;return}
+    if(a.px!==r.px||a.pxDay!==day)dirty=1;if(a.px&&r.px!==a.px)FLASH[a.id]=r.px>a.px?'up':'dn';a.px=r.px;a.prev=r.prev||0;a.pxAt=now;a.pxTime=r.at||0;a.pxDay=day;a.pxDate=r.date||'';
+    const v=+(a.qty*r.px).toFixed(2);if(v!==a.val){a.val=v;ch=1}});
+  psBusy=0;if(dirty||ch)save();
+  const t=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+  setPs(fail===need.length?'Could not reach price services · showing last known prices':'Synced '+t+(fail?' · '+fail+' could not be updated':''));
+  if(tab==='assets'&&$('ahold'))$('ahold').innerHTML=assetTable();else if(ch&&(tab==='dash'||tab==='totals'))go(tab);setTimeout(()=>{FLASH={}},1500)}
+function startPriceSync(){sipProcess().then(()=>syncPrices(0));clearInterval(psTimer);psTimer=setInterval(()=>{if(!document.hidden&&user&&S){sipProcess();syncPrices(0)}},30000)}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&user&&S)syncPrices(0)});
+
+let pick={},SR=[],stm;
+function assetKind(f,keep){if(!f||!f.cls)return;const k=kindOf(f.cls.value),mo=f.mode?f.mode.value:'hold',sip=k==='mf'&&mo==='sip',hold=k==='mf'&&mo==='hold';
+  f.querySelectorAll('.fs').forEach(e=>{const w=e.dataset.k,on=w==='manual'?k==='manual':w==='linked'?(k==='stock'||k==='mf'):w==='p2p'?k==='p2p':w==='stock'?k==='stock':w==='mfmode'?k==='mf':w==='mf'?k==='mf'&&mo==='one':w==='sip'?sip:w==='hold'?hold:false;e.classList.toggle('hide',!on)});
+  const l=$('sqlab');if(l)l.textContent=k==='stock'?'Stock name or symbol':'Mutual fund';
+  const bl=$('bdlab');if(bl)bl.textContent=sip?'SIP start date':hold?'Holding as on':'Purchase date';if(f.bdate)f.bdate.max=sip?'':today();
+  if(f.sq)f.sq.placeholder=k==='stock'?'Type e.g. Reliance, TCS, Infosys':'Type e.g. Parag Parikh Flexi Cap';
+  const h=$('khint');if(h)h.textContent=k==='stock'?'Live market price and the daily change are fetched automatically and refreshed every 30 seconds while the app is open.':sip?'Each month on the SIP date the amount is debited from the account you choose and units are added at that day\'s NAV (instalments before today are only back-filled from AMFI history). NAV is refreshed daily.':hold?'Enter what you have invested so far and what it is worth today. Units are worked out from the latest NAV. You can start a SIP on it afterwards, or later add to it with + then Invest.':k==='mf'?'NAV is fetched from AMFI and refreshed every day.':k==='p2p'?'Instalments are scheduled automatically. Press Receive when money arrives: the interest part is booked as income (P2P Interest) and the principal part reduces the amount you have lent.':'';
+  if(!keep)unpick()}
+function unpick(){pick={};const b=$('picked'),r=$('sres'),f=$('af2');if(b){b.classList.add('hide');b.innerHTML=''}if(r)r.innerHTML='';if(f&&f.sq){f.sq.value='';f.sq.parentElement.classList.remove('hide')}}
+/* shared by the Investments form and the + sheet: built-in matches show at once, live matches are added when they arrive */
+async function findAssets(kind,q,box,fn,store,still){
+  const list=r=>r.map((x,i)=>`<button type="button" onclick="${fn}(${i})"><b>${esc(x.name)}</b><div class="mut">${kind==='stock'?esc(x.sym)+' · '+esc(x.ex):'Code '+x.code}</div></button>`).join('');
+  let r=kind==='stock'?localStocks(q):[];store(r);box.innerHTML=r.length?list(r)+'<div class="mut">Searching more…</div>':'<div class="mut">Searching…</div>';
+  const n=await(kind==='stock'?searchStocks(q):searchFunds(q));if(!still())return;
+  if(n)r=[...r,...n.filter(x=>!r.some(y=>y.sym&&y.sym===x.sym))];
+  if(!r.length&&kind==='stock'&&/^[\w&-]{2,15}$/.test(q))r=[{sym:q.toUpperCase()+'.NS',name:q.toUpperCase(),ex:'NSE · use as symbol'}];
+  store(r);box.innerHTML=r.length?list(r):n===null?'<div class="r">Could not reach the price service. Check your connection and try again.</div>':'<div class="mut">No matches</div>'}
+function srch(el){const v=el.value.trim(),box=$('sres');clearTimeout(stm);if(v.length<2){box.innerHTML='';return}
+  stm=setTimeout(()=>findAssets(kindOf(el.form.cls.value),v,box,'pickAsset',r=>SR=r,()=>el.value.trim()===v),350)}
+async function pickAsset(i){const x=SR[i],f=$('af2'),k=kindOf(f.cls.value);if(!x)return;
+  pick={kind:k,name:x.name,sym:x.sym||'',code:x.code||''};$('sres').innerHTML='';f.sq.parentElement.classList.add('hide');
+  const b=$('picked');b.classList.remove('hide');
+  b.innerHTML=`<div><b>${esc(x.name)}</b><div class="mut">${esc(k==='stock'?x.sym+' · '+x.ex:'Code '+x.code)} <span id="plive"></span></div></div><button type="button" class="x" style="color:var(--mut)" onclick="unpick()" aria-label="Change">Change</button>`;
+  autoPrice(f);const r=k==='stock'?await stockQuote(x.sym):await mfNav(x.code);
+  if(r){pick.px=r.px;if(f.holdunits)holdCalc(f)}const e=$('plive');if(e)e.textContent=r?'· '+(k==='stock'?'Live ':'Latest NAV ')+pxf(r.px,k==='mf'?4:2):'· live price unavailable, enter the price yourself'}
+async function autoPrice(f,manual){
+  if(!pick.name){if(manual)toast('Pick a '+(kindOf(f.cls.value)==='stock'?'stock':'fund')+' first');return}
+  const d=f.bdate.value;if(!d)return;const fld=pick.kind==='stock'?f.bpx:f.bnav;
+  if(!manual&&fld.value&&fld.dataset.auto!=='1')return;
+  const v=pick.kind==='stock'?await stockOn(pick.sym,d):await mfOn(pick.code,d);
+  if(v>0){fld.value=+v.toFixed(pick.kind==='mf'?4:2);fld.dataset.auto='1';mfUnits(f)}else if(manual)toast('No price found for that date. Enter it manually.')}
+function holdCalc(f){const v=+f.holdval.value;if(f.holdunits.dataset.man!=='1'&&v>0&&pick.px>0)f.holdunits.value=(v/pick.px).toFixed(4)}
+function mfUnits(f){if(!f.units)return;const a=+f.amt.value,n=+f.bnav.value;f.units.value=a>0&&n>0?(a/n).toFixed(4):''}
+/* ---------- SIP engine: adds one lot per monthly instalment at that day's NAV ---------- */
+function sipDates(sp,upto){const o=[];let[y,m]=sp.start.split('-').map(Number);
+  for(let i=0;i<720;i++){const ds=y+'-'+String(m).padStart(2,'0')+'-'+String(sp.day).padStart(2,'0');
+    if(ds>upto||(sp.end&&ds>sp.end))break;if(ds>=sp.start)o.push(ds);m++;if(m>12){m=1;y++}}return o}
+const sipNext=sp=>{if(sp.stopped)return '';const t=today();return sipDates({...sp,end:''},ymd(new Date(Date.now()+400*864e5))).find(d=>d>t)||''};
+const ord=n=>n+(n%10===1&&n!==11?'st':n%10===2&&n!==12?'nd':n%10===3&&n!==13?'rd':'th');
+async function mfRange(code,from,to){const j=await getJSON('https://api.mfapi.in/mf/'+code+'?startDate='+from+'&endDate='+to);
+  return j&&Array.isArray(j.data)?j.data.map(x=>({d:dmy(x.date),nav:+x.nav})).filter(x=>x.nav>0):null}
+let sipBusy=0;
+async function sipProcess(){
+  if(sipBusy||!S)return;const A=S.assets.filter(a=>a.sip&&a.kind==='mf');if(!A.length)return;sipBusy=1;let ch=0,nd=0;
+  try{for(const a of A){const sp=a.sip,pw=sp.wait||0,have=new Set((a.lots||[]).filter(l=>l.sip).map(l=>l.date)),skip=new Set(sp.skip||[]),
+      due=sipDates(sp,today()).filter(d=>!have.has(d)&&!skip.has(d));
+    if(!due.length){if(pw){sp.wait=0;ch=1}continue}
+    const from=new Date(Date.parse(due[0]+'T00:00:00Z')-10*864e5).toISOString().slice(0,10),h=await mfRange(a.code,from,today());if(!h||!h.length)continue;
+    ensureLots(a);sp.wait=0;
+    for(const d of due){const n=h.find(x=>x.d<=d);if(!n||Date.parse(d)-Date.parse(n.d)>10*864e5)continue;
+      const l={date:d,amt:sp.amt,nav:n.nav,units:sp.amt/n.nav,sip:1};
+      if(sp.acct&&acct(sp.acct)&&d>=(sp.dfrom||sp.start)){
+        const t={id:nid(),date:d,type:'invest',amount:sp.amt,acct:sp.acct,cat:'SIP',note:a.name+' · SIP',asset:a.id,qty:l.units,px:n.nav};
+        if(chk(t)){sp.wait=d;break}
+        apply(t);S.txs.push(t);l.tx=t.id;nd++}
+      a.lots.push(l);ch=1}
+    if((sp.wait||0)!==pw)ch=1;
+    a.lots.sort((x,y)=>x.date.localeCompare(y.date));
+    if(!a.px&&h[0]){a.px=h[0].nav;a.prev=h[1]?h[1].nav:0;a.pxDay=today();a.pxDate=h[0].d}
+    relot(a)}}finally{sipBusy=0}
+  if(ch){save();if(nd)toast('SIP: '+nd+' instalment'+(nd===1?'':'s')+' debited from your account');
+    if(tab==='assets'&&$('ahold'))$('ahold').innerHTML=assetTable();else if(['dash','totals','tx','cash'].includes(tab))go(tab)}}
+function stopSip(id){const a=S.assets.find(x=>x.id==id);if(!a||!a.sip)return;
+  if(!confirm('Stop this SIP? Units you already hold stay in your holdings.'))return;a.sip.end=today();a.sip.stopped=1;save();go('assets')}
+function addAsset(f){const o=fd(f),k=kindOf(o.cls);
+  if(k==='p2p'){const P=+o.pprin,rt=+o.prate,n=Math.round(+o.pn);
+    if(!o.pname||!(P>0)||!(n>=1)||!(rt>=0)||o.prate===''||!o.pstart){toast('Fill borrower, amount lent, rate, months and date');return false}
+    const id=nid(),from=+o.plend||0,a={id,name:o.pname,cls:o.cls,kind:'p2p',buyDate:o.pstart,inv:P,val:P,p2p:{P,rate:rt,n,start:o.pstart,mode:o.pmode,acct:+o.pacct||(S.accounts[0]?S.accounts[0].id:0),rec:[]}};
+    if(from){const t={id:nid(),date:o.pstart,type:'invest',amount:P,acct:from,cat:'P2P Lent',note:'Lent to '+o.pname,asset:id};
+      const er=chk(t);if(er){toast(er);return false}apply(t);S.txs.push(t);a.p2p.lendTx=t.id}
+    S.assets.push(a);save();go('assets');return false}
+  if(k==='manual'){if(!o.name||o.inv===''||o.val===''){toast('Fill name, invested and current value');return false}
+    S.assets.push({id:nid(),name:o.name,cls:o.cls,kind:'manual',inv:+o.inv,val:+o.val})}
+  else{
+    if(!pick.name||pick.kind!==k){toast('Search and pick a '+(k==='stock'?'stock':'mutual fund')+' first');return false}
+    if(!o.bdate){toast('Choose the '+(k==='mf'&&o.mode==='sip'?'SIP start':k==='mf'&&o.mode==='hold'?'holding':'purchase')+' date');return false}
+    const hd=holdingFor(pick),h=hd||newHolding(pick,o.cls);
+    if(k==='mf'&&o.mode==='sip'){const amt=+o.sipamt;if(!(amt>0)){toast('Enter the monthly SIP amount');return false}
+      if(o.sipend&&o.sipend<o.bdate){toast('End date is before the start date');return false}
+      ensureLots(h);h.sip={amt,day:+o.sipday,start:o.bdate,end:o.sipend||'',acct:+o.sipacct||0,dfrom:sipDfrom(o.bdate),skip:[],wait:0};
+      if(!hd)S.assets.push(h);
+      pick={};save();go('assets');sipProcess().then(()=>syncPrices(0));return false}
+    if(k==='mf'&&o.mode==='hold'){const inv=+o.holdinv,val=+o.holdval;let units=+o.holdunits;
+      if(o.holdinv===''||!(inv>=0)){toast('Enter how much you have invested so far');return false}
+      if(!(units>0)&&val>0&&pick.px>0)units=val/pick.px;
+      if(!(units>0)){toast('Enter the current value (or the units you hold)');return false}
+      const amt=inv>0?inv:val;addLot(h,{date:o.bdate,amt,units,nav:amt/units,opening:1});if(!hd)S.assets.push(h);
+      pick={};save();go('assets');syncPrices(0);return false}
+    let qty,bp,inv;
+    if(k==='stock'){qty=+o.qty;bp=+o.bpx;if(!(qty>0&&bp>0)){toast('Enter quantity and price at purchase');return false}inv=+(qty*bp).toFixed(2)}
+    else{inv=+o.amt;bp=+o.bnav;if(!(inv>0&&bp>0)){toast('Enter amount invested and NAV at purchase');return false}qty=inv/bp}
+    addLot(h,{date:o.bdate,amt:inv,units:qty,nav:bp});if(!hd)S.assets.push(h);pick={}}
+  save();go('assets');syncPrices(0);return false}
+function addDebt(f){const o=fd(f),out=+o.out;if(!(out>0)){alert('Enter the outstanding amount.');return false}S.debts.push({id:nid(),name:o.name.trim(),type:o.type,out});save();go('debts');return false}
+function repay(f){const o=fd(f),t={id:nid(),date:o.date||today(),type:'repay',amount:+o.amount,acct:+o.acct,debt:+o.debt,cat:'Repayment',note:''},d=S.debts.find(x=>x.id==t.debt);
+  if(!d){alert('Add a liability first.');return false}
+  if(t.date>today()){alert('Future dates are not allowed.');return false}
+  if(t.amount>r2(d.out)){alert('Repayment is more than the outstanding '+fmt(d.out)+'.');return false}
+  const er=chk(t);if(er){alert(er);return false}
   apply(t);S.txs.push(t);save();go('debts');return false}
-function addTx(f){const o=fd(f);
-  if(o.type==='transfer'&&o.acct===o.to){alert('Pick two different accounts.');return false}
-  const t={id:nid(),date:o.date,type:o.type,amount:+o.amount,acct:+o.acct,to:o.type==='transfer'?+o.to:null,cat:o.type==='transfer'?'':(o.cat||''),note:o.note};
-  apply(t);S.txs.push(t);save();go('tx');return false}
 function del(kind,id){
   if(kind==='accounts'&&S.txs.some(t=>t.acct==id||t.to==id)){alert('This account has transactions. Delete them first.');return}
-  if(!confirm('Delete this item?'))return;
-  if(kind==='txs'){const t=S.txs.find(x=>x.id==id);apply(t,-1)}
+  const nl=kind==='assets'?S.txs.filter(t=>t.asset==id||t.p2p==id).length:0;
+  if(!confirm(nl?'Delete this holding and reverse its '+nl+' linked bank entr'+(nl===1?'y':'ies')+'?':'Delete this item?'))return;
+  if(kind==='assets'&&!delAssetLinks(id))return;
+  if(kind==='txs'){const t=S.txs.find(x=>x.id==id);
+    if(t&&t.type==='invest'){delInvest(t);return}
+    if(t&&t.p2p){const g=S.txs.filter(x=>x.p2p===t.p2p&&x.k===t.k),er=chk(null,{type:'income',amount:sum(g,'amount'),acct:t.acct});if(er){alert('Cannot delete: '+er);return}
+      g.forEach(x=>apply(x,-1));S.txs=S.txs.filter(x=>!g.includes(x));const a=S.assets.find(x=>x.id===t.p2p);
+      if(a){a.p2p.rec=a.p2p.rec.filter(r=>r.k!==t.k);a.inv=a.val=+(a.p2p.P-sum(a.p2p.rec,'prin')).toFixed(2)}save();go(tab);return}
+    const er=chk(null,t);if(er){alert('Cannot delete: '+er);return}apply(t,-1)}
   S[kind]=S[kind].filter(x=>x.id!=id);save();go(tab)}
-function txCatSwap(sel){const f=sel.form,tr=sel.value==='transfer';
-  f.to.parentElement.classList.toggle('hide',!tr);f.cat.parentElement.classList.toggle('hide',tr);
-  f.cat.innerHTML=opts(sel.value==='income'?S.sources:S.heads)}
-function cat(kind,mode,v){const arr=S[kind];
-  if(mode==='add'){const n=prompt('New name');if(n&&!arr.includes(n))arr.push(n)}
+function cat(kind,mode,v){const arr=S[kind],dupe=(n,i)=>arr.some((x,j)=>j!==i&&x.toLowerCase()===n.toLowerCase());
+  if(mode==='add'){const n=(prompt('New name')||'').trim();if(!n)return;if(dupe(n,-1))return toast('Already exists');arr.push(n)}
   if(mode==='del'&&confirm('Remove "'+arr[v]+'"? Existing records keep their label.'))arr.splice(v,1);
-  if(mode==='ren'){const n=prompt('Rename',arr[v]);if(n){const old=arr[v];arr[v]=n;[S.budget,S.ibudget].forEach(b=>{if(old in b){b[n]=b[old];delete b[old]}});
-    S.txs.forEach(t=>{if(t.cat===old)t.cat=n});S.assets.forEach(a=>{if(a.cls===old)a.cls=n})}}
+  if(mode==='ren'){const old=arr[v],n=(prompt('Rename',old)||'').trim();if(!n||n===old)return;if(dupe(n,v))return toast('Already exists');arr[v]=n;
+    if(kind==='cats'){[S.budget,S.ibudget].forEach(b=>{if(old in b){b[n]=b[old];delete b[old]}});S.txs.forEach(t=>{if(t.cat===old)t.cat=n})}
+    else{S.assets.forEach(a=>{if(a.cls===old)a.cls=n});S.targets.forEach(g=>{if(g.cls===old)g.cls=n})}}
   save();go('admin')}
 function setCur(v){S.cur=v;save();go('admin')}
 
 /* ---------- quick entry ---------- */
-let q={type:'expense',cat:''};
-function qe(p){p=p||{};const L=JSON.parse(localStorage.getItem('wt_q')||'{}');
-  q.type=p.type||L.type||'expense';q.cat=p.cat||'';
+let q={type:'expense',cat:'',edit:0};
+function qe(p){p=p||{};if(!S.accounts.length){toast('Add a bank or cash account first');go('cash');return}const L=JSON.parse(localStorage.getItem('wt_q')||'{}');
+  if(p.edit){const t=S.txs.find(x=>x.id==p.edit);if(!t)return;if(t.p2p){toast('P2P receipts are managed in Investments');return}if(t.type==='invest'){toast('Investment entries are managed in Investments. Delete it and add it again to change it.');return}
+    q={type:t.type,cat:t.cat||'',edit:t.id};$('qacct').innerHTML=acctOpts();$('qto').innerHTML=acctOpts();
+    if(acct(t.acct))$('qacct').value=t.acct;if(t.to&&acct(t.to))$('qto').value=t.to;
+    $('qdate').value=t.date;$('qnote').value=t.note||'';$('qamt').value=t.amount;
+    qrender();$('qm').classList.remove('hide');setTimeout(()=>$('qamt').focus(),40);return}
+  q.edit=0;q.type=p.asset?'invest':(p.type||L.type||'expense');q.cat=p.cat||'';q.inv={kind:'mf',aid:+p.asset||0,pick:null,px:0,qty:0,SR:[]};
   $('qacct').innerHTML=acctOpts();$('qto').innerHTML=acctOpts();const a=p.acct||L.acct;if(a&&acct(a))$('qacct').value=a;
   $('qdate').value=p.date||today();$('qnote').value=p.note||'';$('qamt').value=p.amount||'';
-  qrender();$('qm').classList.remove('hide');setTimeout(()=>$('qamt').focus(),40)}
-function qc(){$('qm').classList.add('hide')}
-function qtype(t){q.type=t;q.cat='';qrender()}
-function qrender(){const tr=q.type==='transfer',list=q.type==='income'?S.sources:S.heads;
-  $('qseg').innerHTML=['expense','income','transfer'].map(t=>`<button class="${q.type===t?'on '+t:''}" onclick="qtype('${t}')">${t[0].toUpperCase()+t.slice(1)}</button>`).join('');
-  $('qtol').classList.toggle('hide',!tr);$('qchips').classList.toggle('hide',tr);
-  if(!tr&&!list.includes(q.cat))q.cat=list[0]||'';
+  qrender();if(q.type==='invest')qInvPrice();$('qm').classList.remove('hide');setTimeout(()=>$('qamt').focus(),40)}
+function qc(){$('qm').classList.add('hide');q.edit=0}
+function qtype(t){q.type=t;q.cat='';qrender();if(t==='invest')qInvPrice()}
+function qrender(){const tr=q.type==='transfer',rp=q.type==='repay',list=q.edit&&q.cat&&!S.cats.includes(q.cat)?[...S.cats,q.cat]:S.cats;
+  $('qtitle').textContent=q.edit?'Edit entry':'New entry';$('qb1').textContent=q.edit?'Save changes':'Save';
+  $('qb2').classList.toggle('hide',!!q.edit);$('qhint').classList.toggle('hide',!!q.edit);
+  $('qseg').innerHTML=rp?'<button class="on expense">Repayment</button>':['expense','income','transfer','invest'].map(t=>`<button class="${q.type===t?'on '+t:''}" onclick="qtype('${t}')">${t[0].toUpperCase()+t.slice(1)}</button>`).join('');
+  $('qtol').classList.toggle('hide',!tr);$('qchips').classList.toggle('hide',tr||rp||q.type==='invest');
+  $('qdate').max=today();if(q.type==='invest')qInvRender();else{$('qinv').classList.add('hide');$('qamt').readOnly=false}
+  if(!tr&&!rp&&!list.includes(q.cat))q.cat=list[0]||'';
   $('qchips').innerHTML=list.map(c=>`<button class="${c===q.cat?'on':''}" data-c="${esc(c)}" onclick="q.cat=this.dataset.c;qrender()">${esc(c)}</button>`).join('')}
-function qsave(keep){const amt=+$('qamt').value;if(!(amt>0)){$('qamt').focus();return}
+function qsave(keep){if(q.type==='invest')return qInvSave(keep);const amt=+$('qamt').value;if(!(amt>0)){$('qamt').focus();return}const dt=$('qdate').value||today();if(dt>today()){toast('Future dates are not allowed');return}
   const tr=q.type==='transfer',a=+$('qacct').value,b=+$('qto').value;
   if(tr&&a===b){toast('Pick two different accounts');return}
-  const t={id:nid(),date:$('qdate').value||today(),type:q.type,amount:amt,acct:a,to:tr?b:null,cat:tr?'':q.cat,note:$('qnote').value};
+  if(q.edit){const i=S.txs.findIndex(x=>x.id==q.edit);if(i<0){qc();return}const old=S.txs[i],rp=q.type==='repay',
+    t={id:old.id,date:dt,type:q.type,amount:amt,acct:a,to:tr?b:null,cat:rp?'Repayment':tr?'':q.cat,note:$('qnote').value};
+    if(rp){t.debt=old.debt;const d=S.debts.find(x=>x.id==old.debt);if(d&&amt>r2(d.out+old.amount)){toast('More than the outstanding '+fmt(d.out+old.amount));return}}const er=chk(t,old);if(er){toast(er);return}apply(old,-1);S.txs[i]=t;apply(t);save();q.edit=0;qc();toast('Entry updated');go(tab);return}
+  const t={id:nid(),date:dt,type:q.type,amount:amt,acct:a,to:tr?b:null,cat:tr?'':q.cat,note:$('qnote').value};
+  const er=chk(t);if(er){toast(er);return}
   apply(t);S.txs.push(t);save();localStorage.setItem('wt_q',JSON.stringify({type:q.type,acct:a}));
   toast('Saved '+fmt(amt)+(t.cat?' · '+t.cat:''));
   if(keep){$('qamt').value='';$('qnote').value='';$('qamt').focus()}else qc();go(tab)}
 function dup(id){const t=S.txs.find(x=>x.id==id);qe({type:t.type==='repay'?'expense':t.type,cat:t.cat,acct:t.acct,amount:t.amount,note:t.note})}
 function toast(m){const t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2200)}
-addEventListener('keydown',e=>{if(!user)return;if(e.key==='Escape')qc();
+addEventListener('keydown',e=>{if(!user)return;if(e.key==='Escape'){qc();smc()}
   if(e.key==='n'&&!/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName)&&$('qm').classList.contains('hide')){e.preventDefault();qe()}});
-function setIBudget(i,v){S.ibudget[S.sources[i]]=+v||0;save();go('targets')}
-function setBudget(i,v){S.budget[S.heads[i]]=+v||0;save();go('targets')}
+function setB(k,i,v){S[k][S.cats[i]]=+v||0;save();go('targets')}
 function addTarget(f){const o=fd(f);S.targets.push({id:nid(),name:o.name,amount:+o.amount,cls:o.cls,by:o.by});save();go('targets');return false}
-function bump(id){const n=+prompt('Amount to ADD to this liability (new borrowing or card spend)');if(n>0){S.debts.find(d=>d.id==id).out+=n;save();go('debts')}}
+function bump(id){const n=+prompt('Amount to ADD to this liability');const d=S.debts.find(x=>x.id==id);if(d&&n>0){d.out=r2(d.out+n);save();go('debts')}}
 function accent(a){document.documentElement.dataset.accent=a;localStorage.setItem('wt_accent',a);if(S)go(tab)}
 /* ---------- views ---------- */
 function go(t){
   tab=t;localStorage.setItem('wt_tab',t);
-  $('nav').innerHTML=TABS.map(([k,l])=>`<button class="${k===t?'on':''}" onclick="go('${k}')">${l}</button>`).join('');
+  $('nav').innerHTML=TABS.map(([k,l])=>(NAVG[k]?`<div class="ngrp">${NAVG[k]}</div>`:'')+`<button class="${k===t?'on':''}" onclick="go('${k}')">${l}</button>`).join('');
+  let gp='';for(const[k]of TABS){if(NAVG[k])gp=NAVG[k];if(k===t)break}const tl=(TABS.find(x=>x[0]===t)||[])[1]||'';
   charts.forEach(c=>c.destroy());charts=[];
-  $('view').innerHTML=V[t]();
+  $('view').innerHTML=`<div class="ptitle">${gp} / <b>${tl}</b></div>`+V[t]();
   if(t==='dash')drawCharts();
+  if(t==='assets')assetKind($('af2'));
 }
 const today=()=>ymd(new Date());
 const delBtn=(k,id)=>`<button class="x" onclick="del('${k}',${id})" aria-label="Delete">✕</button>`;
 const monthCard=()=>{const m=today().slice(0,7),f=t=>t.date.startsWith(m),
   inc=sum(S.txs.filter(t=>t.type==='income'&&f(t)),'amount'),ex=sum(S.txs.filter(t=>t.type==='expense'&&f(t)),'amount'),
-  bud=S.heads.reduce((a,h)=>a+(+S.budget[h]||0),0),p=bud?ex/bud*100:0,ib=S.sources.reduce((a,h)=>a+(+S.ibudget[h]||0),0),ip=ib?inc/ib*100:0;
+  bud=bsum(S.budget),p=bud?ex/bud*100:0,ib=bsum(S.ibudget),ip=ib?inc/ib*100:0;
   return`<div class="card"><h3>This month</h3><div class="row"><div><div class="mut">Income</div><div class="kpi g">${fmt(inc)}</div></div>
   <div><div class="mut">Expenses</div><div class="kpi r">${fmt(ex)}</div></div><div><div class="mut">Saved</div><div class="kpi">${fmt(inc-ex)}</div></div></div><br>
   <div class="mut">Income ${fmt(inc)} of ${fmt(ib)} planned (${ip.toFixed(0)}%)</div>${pbar(ip,1)}<br><div class="mut">Expenses ${fmt(ex)} of ${fmt(bud)} budget (${p.toFixed(0)}%)</div>${pbar(p)}</div>`};
 const pbar=(p,inv)=>`<div class="pbar"><i style="width:${Math.min(100,p)}%;background:${inv?'var(--pri)':p>100?'var(--r)':p>80?'var(--a)':'var(--g)'}"></i></div>`;
 const inP=d=>{const n=new Date(),m=ymd(n).slice(0,7);if(per==='all')return true;if(per==='month')return d.startsWith(m);
   if(per==='year')return d.startsWith(m.slice(0,4));return d.startsWith(ymd(new Date(n.getFullYear(),n.getMonth()-1,1)).slice(0,7))};
-const grp=(type,keys)=>{const o={};keys.forEach(k=>o[k]=0);S.txs.filter(t=>t.type===type&&inP(t.date)).forEach(t=>o[t.cat]=(o[t.cat]||0)+t.amount);return o};
+const grp=type=>{const o={};S.txs.filter(t=>t.type===type&&inP(t.date)).forEach(t=>{const c=t.cat||'Other';o[c]=(o[c]||0)+t.amount});return o};
 const tbl=(title,o)=>{const tot=Object.values(o).reduce((a,b)=>a+b,0);
-  return`<div class="card"><h3>${title}</h3><table>${Object.entries(o).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<tr><td>${esc(k)}</td><td class="num">${fmt(v)}</td><td class="num mut">${tot?(v/tot*100).toFixed(0):0}%</td></tr>`).join('')}<tr class="tot"><td>Total</td><td class="num">${fmt(tot)}</td><td></td></tr></table></div>`};
+  return`<div class="card"><h3>${title}</h3><table>${Object.entries(o).filter(x=>x[1]).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<tr><td>${esc(k)}</td><td class="num">${fmt(v)}</td><td class="num mut">${tot?(v/tot*100).toFixed(0):0}%</td></tr>`).join('')}<tr class="tot"><td>Total</td><td class="num">${fmt(tot)}</td><td></td></tr></table></div>`};
+let tf={from:'',to:'',type:'all',acct:'all',q:'',all:0},lf={grp:'all',item:'',from:'',to:'',all:0};
+const tfOn=()=>!!(tf.from||tf.to||tf.type!=='all'||tf.acct!=='all'||tf.q);
+function txRows(){let r=[...S.txs].sort((a,b)=>b.date.localeCompare(a.date)||b.id-a.id);
+  if(tf.from)r=r.filter(t=>t.date>=tf.from);if(tf.to)r=r.filter(t=>t.date<=tf.to);
+  if(tf.type!=='all')r=r.filter(t=>t.type===tf.type);
+  if(tf.acct!=='all')r=r.filter(t=>t.acct==tf.acct||t.to==tf.acct);
+  if(tf.q){const k=tf.q.toLowerCase();r=r.filter(t=>((t.cat||'')+' '+(t.note||'')+' '+(acct(t.acct)?.name||'')+' '+(acct(t.to)?.name||'')).toLowerCase().includes(k))}
+  return r}
+function txList(){const all=txRows(),fo=tfOn(),lim=!fo&&!tf.all,rows=lim?all.slice(0,6):all,
+  inc=sum(rows.filter(t=>t.type==='income'),'amount'),ex=sum(rows.filter(t=>t.type==='expense'),'amount'),
+  hint=fo?`${all.length} matching entr${all.length===1?'y':'ies'}`:lim?`Showing the last ${rows.length} of ${all.length} entries`:`Showing all ${all.length} entries`;
+  return`<div class="mut" style="margin-bottom:8px">${hint}${!fo&&all.length>6?` · <a href="#" onclick="tf.all=${tf.all?0:1};txUpdate();return false" style="color:var(--pri);font-weight:700">${tf.all?'Show last 6':'Show all'}</a>`:''} · Income <b class="g">${fmt(inc)}</b> · Expenses <b class="r">${fmt(ex)}</b></div>
+  ${rows.length?`<table><tr><th>Date</th><th>Type</th><th>Detail</th><th class="num">Amount</th><th></th></tr>
+  ${rows.map(t=>`<tr><td>${t.date}</td><td><span class="badge ${t.type}">${t.type}</span></td>
+  <td>${t.type==='transfer'?esc(acct(t.acct)?.name||'?')+' → '+esc(acct(t.to)?.name||'?'):esc(t.cat)+' · '+esc(acct(t.acct)?.name||'?')} <span class="mut">${esc(t.note||'')}</span></td>
+  <td class="num ${t.type==='income'||t.type==='prin'?'g':t.type==='transfer'?'':'r'}">${t.type==='income'||t.type==='prin'?'+':t.type==='transfer'?'':'-'}${fmt(t.amount)}</td>
+  <td>${t.p2p||t.type==='invest'?'':`<button class="x" style="color:var(--pri)" onclick="qe({edit:${t.id}})" title="Edit this entry" aria-label="Edit">✎</button><button class="x" style="color:var(--pri)" onclick="dup(${t.id})" title="Repeat this entry">⧉</button>`}${delBtn('txs',t.id)}</td></tr>`).join('')}</table>`:'<div class="mut">No entries match.</div>'}`}
+function lgGrp(k){lf.grp=k;lf.item='';lf.all=0;go('ledger')}
+function txUpdate(){const e=$('txlist');if(e)e.innerHTML=txList()}
+function tfClear(){tf={from:'',to:'',type:'all',acct:'all',q:'',all:0};go('tx')}
+const LG={all:{n:'Everything',h:['Payments (out)','Receipts (in)','Net (in − out)'],dc:'r',cc:'g'},acct:{n:'Bank & Cash',h:['Debit (in)','Credit (out)','Balance'],dc:'g',cc:'r'},
+  cat:{n:'Categories',h:['Expense (Dr)','Income (Cr)','Net (Cr − Dr)'],dc:'r',cc:'g'},
+  asset:{n:'Assets',h:['Debit (invested / gain)','Credit (loss)','Value'],dc:'g',cc:'r'},
+  liab:{n:'Liabilities',h:['Debit (repaid)','Credit (borrowed)','Outstanding'],dc:'g',cc:'r'}};
+function lgItems(g){
+  if(g==='all')return[['all','Everything: income, expenses, investments, liabilities'],['income','Income only'],['expense','Expenses only'],['invest','Investments only (incl. P2P)'],['liab','Liability repayments only']];
+  if(g==='acct')return S.accounts.map(a=>[a.id,a.name+' ('+a.type+')']);
+  if(g==='cat')return[['all','All categories'],...catList().map(c=>[c,c])];
+  if(g==='asset')return[['all','All assets'],...S.assets.map(a=>[a.id,a.name+' · '+a.cls])];
+  return[['all','All liabilities'],...S.debts.map(d=>[d.id,d.name+' · '+d.type])]}
+function ledgerData(g,item){
+  const T=S.txs.slice().sort((a,b)=>a.date.localeCompare(b.date)||a.id-b.id),all=item==='all',R=[];let open=0;
+  const mk=(t,dr,cr,delta,p)=>R.push({date:t.date,id:t.id,note:t.note||'',dr,cr,delta,p}),an=id=>acct(id)?.name||'?';
+  if(g==='all'){const HL={income:'Income',expense:'Expense',invest:'Investment',liab:'Liability'},
+    ad=(date,id,h,pp,o,i,note)=>{if(item!=='all'&&item!==h)return;R.push({date,id,note:note||'',dr:o,cr:i,delta:i-o,p:HL[h]+' · '+pp})};
+    T.forEach(t=>{const m=+t.amount,e=t.p2p?0:t.id;
+      if(t.type==='income')ad(t.date,e,'income',(t.cat||'—')+' · into '+an(t.acct),0,m,t.note);
+      else if(t.type==='expense')ad(t.date,e,'expense',(t.cat||'—')+' · '+an(t.acct),m,0,t.note);
+      else if(t.type==='repay')ad(t.date,e,'liab','Repayment · '+(S.debts.find(d=>d.id==t.debt)?.name||'liability'),m,0,t.note);
+      else if(t.type==='prin')ad(t.date,0,'invest','Principal received · '+an(t.acct),0,m,t.note)});
+    S.assets.forEach(a=>{
+      if(a.kind==='p2p')ad(a.p2p.start,0,'invest','P2P lent · '+a.name,a.p2p.P,0,'');
+      else if(a.lots&&a.lots.length)a.lots.forEach(l=>ad(l.date,0,'invest',(l.sip?'SIP instalment · ':'Purchased · ')+a.name,l.amt,0,''));
+      else if(a.buyDate&&a.inv)ad(a.buyDate,0,'invest','Purchased · '+a.name,a.inv,0,'')});
+    R.sort((x,y)=>(x.date||'').localeCompare(y.date||''))}
+  else if(g==='acct'){const id=+item,dl=t=>{const m=+t.amount;if(t.type==='income'||t.type==='prin')return t.acct==id?m:0;if(t.type==='transfer')return t.acct==id?-m:t.to==id?m:0;return t.acct==id?-m:0},
+    p=t=>t.type==='transfer'?(t.acct==id?'To '+an(t.to):'From '+an(t.acct)):t.type==='repay'?'Repayment · '+(S.debts.find(d=>d.id==t.debt)?.name||'liability'):(t.cat||t.type),ev=T.filter(t=>t.acct==id||t.to==id);
+    open=(acct(id)?.bal||0)-ev.reduce((x,t)=>x+dl(t),0);ev.forEach(t=>{const d=dl(t);mk(t,d>0?d:0,d<0?-d:0,d,p(t))})}
+  else if(g==='cat')T.filter(t=>(t.type==='income'||t.type==='expense')&&(all||t.cat===item)).forEach(t=>{const i=t.type==='income';mk(t,i?0:t.amount,i?t.amount:0,i?t.amount:-t.amount,(all?(t.cat||'—')+' · ':'')+(i?'received in ':'paid from ')+an(t.acct))})
+  else if(g==='liab'){const rp=T.filter(t=>t.type==='repay'&&(all||t.debt==item));
+    open=(all?sum(S.debts,'out'):S.debts.find(d=>d.id==item)?.out||0)+sum(rp,'amount');
+    rp.forEach(t=>mk(t,t.amount,0,-t.amount,'Repayment'+(all?' · '+(S.debts.find(d=>d.id==t.debt)?.name||'liability'):'')+' from '+an(t.acct)))}
+  else{(all?S.assets:S.assets.filter(a=>a.id==item)).forEach(a=>{
+    if(a.kind==='p2p'){R.push({date:a.p2p.start,id:0,note:'',dr:a.p2p.P,cr:0,delta:a.p2p.P,p:'Lent · '+a.name});a.p2p.rec.forEach(r=>{if(r.prin)R.push({date:r.date,id:0,note:'',dr:0,cr:r.prin,delta:-r.prin,p:'Principal received (instalment '+r.k+') · '+a.name})});return}
+    if(a.lots&&a.lots.length)a.lots.forEach(l=>R.push({date:l.date,id:0,note:'',dr:l.amt,cr:0,delta:l.amt,p:(l.sip?'SIP instalment · ':'Purchased · ')+a.name+' @ NAV '+(+l.nav).toFixed(4)}));
+    else R.push({date:a.buyDate||'',id:0,note:'',dr:a.inv,cr:0,delta:a.inv,p:'Purchased · '+a.name});const gn=a.val-a.inv;
+    if(gn)R.push({date:today(),id:0,note:'',dr:gn>0?gn:0,cr:gn<0?-gn:0,delta:gn,p:'Market gain/(loss) · '+a.name})});
+    R.sort((x,y)=>x.date.localeCompare(y.date))}
+  let b=open;R.forEach(r=>{b+=r.delta;r.bal=b});return{open,rows:R}}
+/* ---------- interlinked investing: holdings, lots, buy flow ---------- */
+function relot(a){const L=a.lots||[];a.qty=+sum(L,'units').toFixed(6);a.inv=+sum(L,'amt').toFixed(2);a.buyPrice=a.qty?a.inv/a.qty:0;a.buyDate=L[0]?L[0].date:a.buyDate;a.val=a.px?+(a.qty*a.px).toFixed(2):a.inv}
+function ensureLots(a){a.lots=a.lots||[];if(!a.lots.length&&a.qty>0)a.lots.push({date:a.buyDate||today(),amt:a.inv,nav:a.buyPrice,units:a.qty,opening:1})}
+function addLot(a,l){ensureLots(a);a.lots.push(l);a.lots.sort((x,y)=>x.date.localeCompare(y.date));if(!a.px&&l.nav)a.px=l.nav;relot(a)}
+const holdingFor=p=>S.assets.find(a=>a.kind===p.kind&&(p.kind==='stock'?a.sym===p.sym:String(a.code)===String(p.code)));
+function classFor(k){let c=S.classes.find(x=>kindOf(x)===k);if(!c){c=k==='stock'?'Stocks':'Mutual Funds';S.classes.push(c)}return c}
+function newHolding(p,cls){return{id:nid(),name:p.name,cls:cls||classFor(p.kind),kind:p.kind,sym:p.sym||'',code:p.code||'',qty:0,buyPrice:0,buyDate:'',inv:0,val:0,lots:[]}}
+const sipDfrom=st=>st>=today()?st:ymd(new Date(Date.now()+864e5));
+function delInvest(t){const a=S.assets.find(x=>x.id==t.asset);
+  if(a&&a.kind==='p2p'){alert('This is the lending entry of a P2P loan. Delete the loan from Investments instead.');return}
+  if(!confirm('Delete this investment entry? The units are removed from the holding and the money goes back to the account.'))return;
+  const er=chk(null,t);if(er){alert('Cannot delete: '+er);return}
+  apply(t,-1);S.txs=S.txs.filter(x=>x.id!==t.id);
+  if(a){const l=(a.lots||[]).find(x=>x.tx===t.id);if(l&&l.sip&&a.sip){a.sip.skip=a.sip.skip||[];a.sip.skip.push(l.date)}
+    a.lots=(a.lots||[]).filter(x=>x.tx!==t.id);if(!a.lots.length&&!a.sip)S.assets=S.assets.filter(x=>x!==a);else relot(a)}
+  save();go(tab)}
+function delAssetLinks(id){const L=S.txs.filter(t=>t.asset==id||t.p2p==id);if(!L.length)return true;
+  const keep=S.accounts.map(x=>({id:x.id,bal:x.bal}));L.forEach(t=>apply(t,-1));
+  const bad=S.accounts.find(x=>x.bal<-0.005&&x.bal<keep.find(k=>k.id===x.id).bal);
+  if(bad){keep.forEach(k=>{acct(k.id).bal=k.bal});alert('Cannot delete: it would make "'+bad.name+'" negative. Move money back first.');return false}
+  S.txs=S.txs.filter(t=>!L.includes(t));return true}
+/* buy flow inside the + sheet: which holding / which new stock or fund, price, units */
+let qstm,qpt=0;
+const qInvAsset=()=>q.inv&&q.inv.aid?S.assets.find(x=>x.id==q.inv.aid):null;
+function qInvRender(){const e=$('qinv');if(!e)return;e.classList.remove('hide');const I=q.inv=q.inv||{kind:'mf',aid:0,pick:null,px:0,qty:0,SR:[]},a=qInvAsset(),H=S.assets.filter(x=>x.kind==='stock'||x.kind==='mf'),p=a||I.pick,k=a?a.kind:I.kind;
+  e.innerHTML=(H.length?`<div class="mut">Which holding are you buying?</div><div class="chips2">${H.map(x=>`<button class="${I.aid==x.id?'on':''}" onclick="qInvHold(${x.id})">${esc(x.name.length>26?x.name.slice(0,26)+'…':x.name)}</button>`).join('')}<button class="${!I.aid?'on':''}" onclick="qInvHold(0)">＋ New stock / fund</button></div>`:'<div class="mut">Which stock or mutual fund are you buying?</div>')
+  +(!a?`<div class="chips2"><button class="${k==='mf'?'on':''}" onclick="qInvKind('mf')">Mutual fund</button><button class="${k==='stock'?'on':''}" onclick="qInvKind('stock')">Stock</button></div>`:'')
+  +(!p?`<input id="qisq" autocomplete="off" placeholder="${k==='stock'?'Type e.g. Reliance, TCS, Infosys':'Type e.g. Parag Parikh Flexi Cap'}" oninput="qInvSearch(this)"><div class="sres" id="qisr"></div>`:'')
+  +(p?`<div class="pick"><div><b>${esc(p.name)}</b><div class="mut">${esc(k==='stock'?(p.sym||''):'Code '+(p.code||''))} <span id="qilive"></span></div>${a?`<div class="mut">Holding ${(+a.qty||0).toLocaleString(undefined,{maximumFractionDigits:4})} ${k==='stock'?'shares':'units'} · invested ${fmt(a.inv)} · value ${fmt(a.val)}</div>`:''}</div>${a&&I.fromHold?'':`<button type="button" class="x" style="color:var(--mut)" onclick="qInvHold(0)">Change</button>`}</div>
+  <div class="row">${k==='stock'?`<label>Quantity (shares)<input id="qiq" type="number" step="any" min="0" oninput="q.inv.qty=+this.value;qInvCalc()"></label>`:''}<label>${k==='stock'?'Price per share':'NAV'}<input id="qipx" type="number" step="any" min="0" oninput="q.inv.px=+this.value;qInvCalc()"></label>${k==='mf'?'<label>Units (auto)<input id="qiu" readonly placeholder="auto"></label>':''}</div>
+  <div class="hbox">Price is filled automatically for the chosen date. ${k==='stock'?'The amount above = quantity × price.':'Enter the amount above, units are worked out from the NAV.'} The money is taken from the account below and the holding is updated.</div>`:'');
+  const iq=$('qiq'),ip=$('qipx');if(iq)iq.value=I.qty||'';if(ip)ip.value=I.px||'';qInvCalc()}
+function qInvHold(id){const I=q.inv;I.aid=id;I.pick=null;I.px=0;I.qty=0;I.SR=[];qInvRender();qInvPrice()}
+function qInvKind(k){const I=q.inv;I.kind=k;I.pick=null;I.SR=[];qInvRender()}
+function qInvSearch(el){const I=q.inv,v=el.value.trim(),box=$('qisr');clearTimeout(qstm);if(v.length<2){box.innerHTML='';return}
+  qstm=setTimeout(()=>findAssets(I.kind,v,box,'qInvPick',r=>I.SR=r,()=>el.value.trim()===v),350)}
+function qInvPick(i){const I=q.inv,x=(I.SR||[])[i];if(!x)return;I.pick={kind:I.kind,name:x.name,sym:x.sym||'',code:x.code||''};
+  const h=holdingFor(I.pick);if(h){I.aid=h.id;I.pick=null}I.px=0;I.qty=0;qInvRender();qInvPrice()}
+async function qInvPrice(){const I=q.inv,a=qInvAsset(),p=a||(I&&I.pick);if(!p)return;const k=a?a.kind:I.kind,d=$('qdate').value||today(),my=++qpt,live=d>=today(),el=$('qilive');
+  if(el)el.textContent='· fetching price…';
+  const r=live?(k==='stock'?await stockQuote(p.sym):await mfNav(p.code)):null,v=live?(r&&r.px):(k==='stock'?await stockOn(p.sym,d):await mfOn(p.code,d));
+  if(my!==qpt||!q.inv||q.type!=='invest')return;
+  const e2=$('qilive');if(v>0){I.px=+(+v).toFixed(k==='mf'?4:2);const ip=$('qipx');if(ip)ip.value=I.px;if(e2)e2.textContent='· '+(live?(k==='stock'?'live ':'latest NAV '):'price on '+d+' ')+pxf(v,k==='mf'?4:2);qInvCalc()}
+  else if(e2)e2.textContent='· price not found, type it in'}
+function qInvCalc(){const I=q.inv;if(!I)return;const a=qInvAsset(),k=a?a.kind:I.kind,am=$('qamt');
+  if(k==='stock'){am.readOnly=true;const t=+(I.qty*I.px).toFixed(2);am.value=t>0?t:''}
+  else{am.readOnly=false;const u=+am.value>0&&I.px>0?+am.value/I.px:0,e=$('qiu');if(e)e.value=u?u.toFixed(4):''}}
+function qInvSave(keep){const I=q.inv||{},a=qInvAsset(),p=a||I.pick;
+  if(!p){toast('Pick the stock or mutual fund first');return}
+  const k=a?a.kind:I.kind,px=+I.px,date=$('qdate').value||today(),acc=+$('qacct').value;let amt,units;
+  if(k==='stock'){units=+I.qty;if(!(units>0&&px>0)){toast('Enter quantity and price');return}amt=+(units*px).toFixed(2)}
+  else{amt=+$('qamt').value;if(!(amt>0&&px>0)){toast('Enter the amount and NAV');return}units=amt/px}
+  const un=$('qnote').value.trim(),t={id:nid(),date,type:'invest',amount:amt,acct:acc,cat:'Investment',note:p.name+(un?' · '+un:''),asset:0,qty:units,px};
+  const er=chk(t);if(er){toast(er);return}
+  const h=a||holdingFor({kind:k,sym:p.sym,code:p.code})||newHolding({kind:k,name:p.name,sym:p.sym,code:p.code});
+  t.asset=h.id;addLot(h,{date,amt,units,nav:px,tx:t.id});if(!S.assets.includes(h))S.assets.push(h);
+  apply(t);S.txs.push(t);save();localStorage.setItem('wt_q',JSON.stringify({type:'invest',acct:acc}));
+  toast('Invested '+fmt(amt)+' in '+p.name);syncPrices(0);
+  if(keep){$('qamt').value='';I.qty=0;qInvRender();qInvPrice()}else qc();go(tab)}
+/* SIP set-up for an existing holding */
+function smc(){const m=$('sm');if(m)m.classList.add('hide')}
+function sipModal(id){const a=S.assets.find(x=>x.id==id);if(!a)return;const sp=a.sip&&!a.sip.stopped?a.sip:null,ac=sp&&sp.acct?sp.acct:(S.accounts[0]?S.accounts[0].id:0);
+  $('sbody').innerHTML=`<h3 style="margin:0">${sp?'Edit SIP':'Start a SIP'} · ${esc(a.name)}</h3>
+  <div class="mut">${a.qty?'Current holding: '+(+a.qty).toLocaleString(undefined,{maximumFractionDigits:4})+' units · value '+fmt(a.val)+'. ':''}Each month on the SIP date the amount is taken from your account and units are added at that day\'s NAV.</div>
+  <div class="smx"><div class="row"><label>Monthly amount<input id="sma" type="number" step="any" min="0" value="${sp?sp.amt:''}"></label>
+  <label>SIP date (day of month)<select id="smd">${[...Array(28)].map((_,i)=>`<option ${(sp?sp.day:5)===i+1?'selected':''}>${i+1}</option>`).join('')}</select></label></div>
+  <div class="row"><label>Starts from<input id="sms" type="date" value="${sp?sp.start:today()}"></label><label>End date (optional)<input id="sme" type="date" value="${sp&&sp.end?sp.end:''}"></label></div>
+  <label>Debit from<select id="smc">${S.accounts.map(x=>`<option value="${x.id}" ${x.id==ac?'selected':''}>${esc(x.name)} (${fmt(x.bal)})</option>`).join('')}<option value="0" ${sp&&!sp.acct?'selected':''}>Don't debit any account (just track)</option></select></label>
+  <div class="mut">Instalments dated before today are only back-filled into the holding. From today onwards each instalment is debited from the account (if it has no money on that day, it waits until it does).</div>
+  <div class="row"><button class="btn" onclick="sipSave(${a.id})">${sp?'Save SIP':'Start SIP'}</button><button class="btn ghost" onclick="smc()">Cancel</button></div></div>`;
+  $('sm').classList.remove('hide')}
+function sipSave(id){const a=S.assets.find(x=>x.id==id);if(!a)return;const amt=+$('sma').value,day=+$('smd').value,st=$('sms').value,en=$('sme').value,ac=+$('smc').value;
+  if(!(amt>0)){toast('Enter the monthly SIP amount');return}if(!st){toast('Choose the start date');return}if(en&&en<st){toast('End date is before the start date');return}
+  ensureLots(a);a.sip={amt,day,start:st,end:en||'',acct:ac,dfrom:sipDfrom(st),skip:[],wait:0};
+  save();smc();go('assets');sipProcess().then(()=>syncPrices(0));toast('SIP saved')}
+function assetForm(){return`<form id="af2" onsubmit="return addAsset(this)">
+  <label>Class<select name="cls" onchange="assetKind(this.form)">${opts(S.classes)}</select></label>
+  <div class="fs" data-k="manual"><label>Name<input name="name" placeholder="e.g. Gold coin"></label>
+    <label>Invested<input name="inv" type="number" step="any"></label>
+    <label>Current value<input name="val" type="number" step="any"></label></div>
+  <div class="fs hide" data-k="mfmode"><label>Investment type<select name="mode" onchange="assetKind(this.form,1)"><option value="hold">Already holding (opening balance)</option><option value="sip">SIP (monthly plan)</option><option value="one">One-time purchase (past)</option></select></label></div>
+  <div class="fs hide" data-k="hold">
+    <label>Invested so far (total cost)<input name="holdinv" type="number" step="any" min="0"></label>
+    <label>Current value today<input name="holdval" type="number" step="any" min="0" oninput="holdCalc(this.form)"></label>
+    <label>Units held (auto, or type if you know)<input name="holdunits" type="number" step="any" min="0" oninput="this.dataset.man=this.value?'1':''"></label></div>
+  <div class="fs hide" data-k="linked">
+    <label style="flex:1 1 100%"><span id="sqlab">Stock name or symbol</span><input name="sq" autocomplete="off" oninput="srch(this)"></label>
+    <div class="sres" id="sres"></div><div class="pick hide" id="picked"></div>
+    <label><span id="bdlab">Purchase date</span><input name="bdate" type="date" value="${today()}" max="${today()}" onchange="autoPrice(this.form)"></label></div>
+  <div class="fs hide" data-k="stock">
+    <label>Quantity (shares)<input name="qty" type="number" step="any" min="0"></label>
+    <label>Price at purchase (per share)<input name="bpx" type="number" step="any" min="0" oninput="this.dataset.auto=''"></label>
+    <button type="button" class="btn ghost" onclick="autoPrice(this.form,1)">Fill price for that date</button></div>
+  <div class="fs hide" data-k="mf">
+    <label>Amount invested<input name="amt" type="number" step="any" min="0" oninput="mfUnits(this.form)"></label>
+    <label>NAV at purchase<input name="bnav" type="number" step="any" min="0" oninput="this.dataset.auto='';mfUnits(this.form)"></label>
+    <label>Units (auto)<input name="units" readonly placeholder="auto"></label>
+    <button type="button" class="btn ghost" onclick="autoPrice(this.form,1)">Fill NAV for that date</button></div>
+  <div class="fs hide" data-k="sip">
+    <label>Monthly SIP amount<input name="sipamt" type="number" step="any" min="0"></label>
+    <label>SIP date (day of month)<select name="sipday">${[...Array(28)].map((_,i)=>`<option ${i===4?'selected':''}>${i+1}</option>`).join('')}</select></label>
+    <label>Debit SIP from<select name="sipacct">${acctOpts()}<option value="0">Don't debit any account</option></select></label>
+    <label>End date (optional)<input name="sipend" type="date"></label></div>
+  <div class="fs hide" data-k="p2p">
+    <label>Borrower / platform<input name="pname" placeholder="e.g. Lendbox - Ravi"></label>
+    <label>Amount lent<input name="pprin" type="number" step="any" min="0"></label>
+    <label>Interest % p.a.<input name="prate" type="number" step="any" min="0"></label>
+    <label>Tenure (months)<input name="pn" type="number" min="1" max="360" step="1"></label>
+    <label>Lent on<input name="pstart" type="date" value="${today()}"></label>
+    <label>Receive as<select name="pmode"><option value="emi">EMI: principal + interest every month</option><option value="int">Interest monthly, principal at the end</option><option value="bullet">Bullet: principal + all interest at the end</option></select></label>
+    <label>Lend from<select name="plend">${acctOpts()}<option value="0">Don't deduct (just record)</option></select></label>
+    <label>Receive into<select name="pacct">${acctOpts()}</select></label></div>
+  <button class="btn">Add asset</button></form><div class="mut note2" id="khint"></div>`}
+const dayPL=a=>(a.kind==='stock'||a.kind==='mf')&&a.prev>0&&a.px>0?a.qty*(a.px-a.prev):0;
+const dayPLs=()=>{let pl=0,base=0;S.assets.forEach(a=>{if(dayPL(a)||a.prev>0&&a.px>0){pl+=dayPL(a);base+=a.qty*a.prev}});return{pl,pct:base?pl/base*100:0,has:S.assets.some(a=>a.prev>0&&a.px>0)}};
+function assetTable(){return mfPanel()+p2pPanel()+assetHold()}
+function assetHold(){
+  const g=a=>a.val-a.inv,any=S.assets.some(a=>a.kind==='stock'||a.kind==='mf');
+  return`<div class="bar2"><h3 style="margin:0">Holdings</h3>${any?`<button class="btn ghost" onclick="syncPrices(1)">↻ Refresh prices</button><span class="mut" id="pst">${esc(psMsg)}</span>`:''}</div>
+  <table><tr><th>Asset</th><th>Class</th><th class="num">Bought</th><th class="num">Market price</th><th class="num">Invested</th><th class="num">Value</th><th class="num">Gain / loss</th><th></th></tr>
+  ${S.assets.map(a=>{const lk=a.kind==='stock'||a.kind==='mf',d=a.kind==='mf'?4:2,dc=lk&&a.prev&&a.px?a.px-a.prev:0;
+  return`<tr><td style="white-space:normal;min-width:170px;max-width:300px">${esc(a.name)}${a.kind==='p2p'?p2pTag(a):''}${lk?`<div class="mut">${esc(a.sym||'Code '+a.code)}${a.sip?'':' · bought '+esc(a.buyDate||'')}</div>`:''}${a.sip?`<div class="mut"><span class="badge transfer">SIP</span> ${pxf(a.sip.amt,0)} on the ${ord(a.sip.day)} · ${(a.lots||[]).length} instalment${(a.lots||[]).length===1?'':'s'}${a.sip.stopped?' · stopped':sipNext(a.sip)?' · next '+sipNext(a.sip):''}</div>`:''}</td><td><span class="badge asset">${esc(a.cls)}</span></td>
+  <td class="num">${lk?(a.qty?(+a.qty).toLocaleString(undefined,{maximumFractionDigits:4})+' @ '+pxf(a.buyPrice,d)+(a.sip?' avg':''):'<span class="mut">no instalments yet</span>'):'-'}</td>
+  <td class="num">${lk?(a.px?`<span class="${FLASH[a.id]?'fl-'+FLASH[a.id]:''}">${a.kind==='stock'?'<span class="live"></span>':''}${pxf(a.px,d)}</span><div class="mut ${dc>=0?'g':'r'}">${dc?(dc>=0?'▲ +':'▼ ')+dc.toFixed(2)+' ('+(dc/a.prev*100).toFixed(2)+'%)':''}${a.kind==='mf'&&a.pxDate?' NAV '+esc(a.pxDate):''}${a.kind==='stock'&&a.pxTime?' <span class="mut">'+new Date(a.pxTime).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})+'</span>':''}</div>`:'<span class="mut">fetching…</span> <button class="x" style="color:var(--pri)" onclick="syncPrices(1)" title="Retry">↻</button>'):'-'}</td>
+  <td class="num">${fmt(a.inv)}</td>
+  <td class="num">${a.kind==='p2p'?fmt(a.val):lk?fmt(a.val)+(dayPL(a)?`<div class="${dayPL(a)>=0?'g':'r'}" style="font-size:12px">${dayPL(a)>=0?'+':''}${fmt(dayPL(a))} today</div>`:''):`<input style="width:110px" type="number" step="any" value="${a.val}" onchange="S.assets.find(x=>x.id==${a.id}).val=+this.value;save();go('assets')">`}</td>
+  <td class="num ${g(a)>=0?'g':'r'}">${fmt(g(a))} (${a.inv?(g(a)/a.inv*100).toFixed(1):0}%)</td><td>${a.kind==='stock'||a.kind==='mf'?`<button class="x" style="color:var(--pri)" onclick="qe({type:'invest',asset:${a.id}})" title="Buy more" aria-label="Buy more">＋</button>`:''}${a.sip&&!a.sip.stopped?`<button class="x" style="color:var(--mut)" onclick="stopSip(${a.id})" title="Stop SIP" aria-label="Stop SIP">⏹</button>`:''}${delBtn('assets',a.id)}</td></tr>`}).join('')}
+  ${S.assets.length?`<tr class="tot"><td>Total</td><td></td><td></td><td></td><td class="num">${fmt(sum(S.assets,'inv'))}</td><td class="num">${fmt(sum(S.assets,'val'))}${(()=>{const d=dayPLs();return d.has?`<div class="${d.pl>=0?'g':'r'}" style="font-size:12px">${d.pl>=0?'+':''}${fmt(d.pl)} today (${d.pct.toFixed(2)}%)</div>`:''})()}</td><td class="num ${sum(S.assets,'val')-sum(S.assets,'inv')>=0?'g':'r'}">${fmt(sum(S.assets,'val')-sum(S.assets,'inv'))}</td><td></td></tr>`:''}
+  </table>`}
+/* ---------- Mutual fund summary ---------- */
+function mfPanel(){const L=S.assets.filter(a=>a.kind==='mf');if(!L.length)return'';
+  const inv=sum(L,'inv'),val=sum(L,'val'),gn=val-inv,sips=L.filter(a=>a.sip&&!a.sip.stopped),mo=sips.reduce((x,a)=>x+a.sip.amt,0);
+  return`<div class="sec"><h4>Mutual funds: current investment &amp; value</h4>
+  <div class="row" style="margin-bottom:10px"><div><div class="mut">Current investment</div><div class="kpi">${fmt(inv)}</div></div>
+  <div><div class="mut">Current value</div><div class="kpi">${fmt(val)}</div></div>
+  <div><div class="mut">Gain / (loss)</div><div class="kpi ${gn>=0?'g':'r'}">${fmt(gn)} <span style="font-size:13px">(${inv?(gn/inv*100).toFixed(1):0}%)</span></div></div>
+  <div><div class="mut">Monthly SIP</div><div class="kpi">${fmt(mo)}</div><div class="mut">${sips.length} active SIP${sips.length===1?'':'s'}</div></div></div>
+  <table><tr><th>Fund</th><th>Plan</th><th class="num">Units</th><th class="num">Avg NAV</th><th class="num">Latest NAV</th><th class="num">Invested</th><th class="num">Current value</th><th class="num">Gain / (loss)</th></tr>
+  ${L.map(a=>{const g=a.val-a.inv,n=(a.lots||[]).length,nx=a.sip?sipNext(a.sip):'';
+  return`<tr><td style="white-space:normal;min-width:160px">${esc(a.name)}</td>
+  <td>${a.sip?`<span class="badge transfer">SIP</span> ${fmt(a.sip.amt)} on the ${ord(a.sip.day)} &middot; ${n} instalment${n===1?'':'s'}${a.sip.stopped?' &middot; stopped':nx?' &middot; next '+nx:''}${a.sip.acct&&acct(a.sip.acct)?' &middot; from '+esc(acct(a.sip.acct).name):''}${a.sip.wait?' &middot; <span class="r">waiting for funds</span>':''}`:'<span class="badge asset">Holding</span> since '+esc(a.buyDate||'')}<div style="margin-top:4px;display:flex;gap:6px;flex-wrap:wrap"><button class="btn ghost" style="padding:3px 10px" onclick="sipModal(${a.id})">${a.sip&&!a.sip.stopped?'Edit SIP':'Start SIP'}</button><button class="btn ghost" style="padding:3px 10px" onclick="qe({type:'invest',asset:${a.id}})">＋ Buy</button></div></td>
+  <td class="num">${a.qty?(+a.qty).toLocaleString(undefined,{maximumFractionDigits:3}):'-'}</td><td class="num">${a.buyPrice?pxf(a.buyPrice,4):'-'}</td><td class="num">${a.px?pxf(a.px,4):'-'}</td>
+  <td class="num">${fmt(a.inv)}</td><td class="num">${fmt(a.val)}</td><td class="num ${g>=0?'g':'r'}">${fmt(g)} (${a.inv?(g/a.inv*100).toFixed(1):0}%)</td></tr>`}).join('')}
+  <tr class="tot"><td>Total</td><td></td><td></td><td></td><td></td><td class="num">${fmt(inv)}</td><td class="num">${fmt(val)}</td><td class="num ${gn>=0?'g':'r'}">${fmt(gn)}</td></tr></table></div>`}
+
+/* ---------- P2P lending: instalment schedule + receipts ---------- */
+const P2M={emi:'EMI (principal + interest monthly)',int:'Monthly interest, principal at end',bullet:'Bullet (principal + interest at end)'};
+function p2pAdd(d,m){const[y,mo,da]=d.split('-').map(Number),t=new Date(Date.UTC(y,mo-1+m,1)),last=new Date(Date.UTC(t.getUTCFullYear(),t.getUTCMonth()+1,0)).getUTCDate();
+  return t.getUTCFullYear()+'-'+String(t.getUTCMonth()+1).padStart(2,'0')+'-'+String(Math.min(da,last)).padStart(2,'0')}
+function p2pSched(a){const p=a.p2p,P=p.P,n=p.n,r=p.rate/1200,R=x=>+x.toFixed(2),out=[];let bal=P;
+  const emi=p.mode==='emi'?R(r?P*r/(1-Math.pow(1+r,-n)):P/n):0;
+  for(let k=1;k<=n;k++){let i=R(bal*r),pr=0,acc=false;
+    if(p.mode==='emi')pr=k===n?bal:R(emi-i);
+    else if(p.mode==='bullet'){acc=k<n;i=k===n?R(P*r*n):0;pr=k===n?bal:0}
+    else pr=k===n?bal:0;
+    out.push({k,date:p2pAdd(p.start,k),int:i,prin:pr,emi:R(i+pr),acc,rec:(p.rec||[]).find(x=>x.k===k)});bal=R(bal-pr)}
+  return out}
+function p2pStat(a){const p=a.p2p,sc=p2pSched(a),ri=sum(p.rec,'int'),rp=sum(p.rec,'prin');return{sc,ri,rp,nx:sc.find(x=>!x.rec&&!x.acc),out:+(p.P-rp).toFixed(2)}}
+const p2pTag=a=>{const s=p2pStat(a);return`<div class="mut"><span class="badge transfer">P2P</span> ${a.p2p.rate}% &middot; ${a.p2p.mode==='emi'?'EMI':a.p2p.mode==='bullet'?'bullet':'interest'} &middot; ${s.sc.filter(x=>x.rec).length}/${a.p2p.n} received${s.nx?' &middot; next '+s.nx.date:''}</div>`};
+function p2pPost(a,s,I,Pr){const p=a.p2p,ac=acct(p.acct)||S.accounts[0];if(!ac)return false;
+  const note=a.name+' · instalment '+s.k+'/'+p.n;
+  if(I>0){const t={id:nid(),date:s.date,type:'income',amount:I,acct:ac.id,cat:'P2P Interest',note,p2p:a.id,k:s.k};apply(t);S.txs.push(t)}
+  if(Pr>0){const t={id:nid(),date:s.date,type:'prin',amount:Pr,acct:ac.id,cat:'P2P Principal',note,p2p:a.id,k:s.k};apply(t);S.txs.push(t)}
+  p.rec.push({k:s.k,date:s.date,int:I,prin:Pr,acct:ac.id});a.inv=a.val=+(p.P-sum(p.rec,'prin')).toFixed(2);
+  if(!S.cats.includes('P2P Interest'))S.cats.push('P2P Interest');return true}
+function p2pReceive(id,k){const a=S.assets.find(x=>x.id==id);if(!a)return;const s=p2pSched(a).find(x=>x.k===k);if(!s||s.rec)return;
+  if(s.date>today()){toast('This instalment is not due yet');return}
+  if(!S.accounts.length){toast('Add a bank or cash account first');go('cash');return}
+  const ia=prompt('Interest received for instalment '+k+' ('+a.name+')',s.int);if(ia===null)return;
+  const pa=prompt('Principal received',s.prin);if(pa===null)return;const I=+ia,Pr=+pa;
+  if(!(I>=0)||!(Pr>=0)||I+Pr<=0){toast('Enter valid amounts');return}
+  if(Pr>a.inv+0.005){toast('Principal is more than what is still outstanding');return}
+  if(p2pPost(a,s,I,Pr)){save();go(tab)}}
+function p2pReceiveDue(id){const a=S.assets.find(x=>x.id==id);if(!a)return;const due=p2pSched(a).filter(x=>!x.rec&&!x.acc&&x.date<=today());if(!due.length)return;
+  if(!S.accounts.length){toast('Add a bank or cash account first');go('cash');return}
+  if(!confirm('Record '+due.length+' due instalment'+(due.length===1?'':'s')+' as received (scheduled interest + principal)?'))return;
+  due.forEach(x=>p2pPost(a,x,x.int,x.prin));save();go(tab)}
+function p2pUndo(id,k){const t=S.txs.find(x=>x.p2p==id&&x.k==k);if(t)del('txs',t.id)}
+function p2pAcct(id,v){const a=S.assets.find(x=>x.id==id);if(a){a.p2p.acct=+v;save()}}
+function p2pPanel(){const L=S.assets.filter(a=>a.kind==='p2p');if(!L.length)return'';
+  return`<div class="sec"><h4>P2P lending: instalments receivable</h4>`+L.map(a=>{const p=a.p2p,s=p2pStat(a),due=s.sc.filter(x=>!x.rec&&!x.acc&&x.date<=today());
+  return`<div style="margin-bottom:18px"><div class="bar2" style="margin-bottom:6px"><b>${esc(a.name)}</b><span class="mut">Lent ${fmt(p.P)} @ ${p.rate}% p.a. &middot; ${p.n} months from ${p.start} &middot; ${P2M[p.mode]}</span></div>
+  <div class="row" style="margin-bottom:8px"><div><div class="mut">Principal outstanding</div><div class="kpi">${fmt(s.out)}</div></div><div><div class="mut">Principal received</div><div class="kpi">${fmt(s.rp)}</div></div>
+  <div><div class="mut">Interest received (income)</div><div class="kpi g">${fmt(s.ri)}</div></div><div><div class="mut">Next instalment</div><div class="kpi">${s.nx?fmt(s.nx.emi):'-'}</div><div class="mut">${s.nx?s.nx.date:'Completed'}</div></div></div>
+  <div class="bar2"><label style="flex-direction:row;align-items:center;gap:6px">Receive into<select onchange="p2pAcct(${a.id},this.value)">${S.accounts.map(x=>`<option value="${x.id}" ${x.id==p.acct?'selected':''}>${esc(x.name)}</option>`).join('')}</select></label>
+  ${due.length?`<button class="btn" onclick="p2pReceiveDue(${a.id})">Receive ${due.length} due instalment${due.length===1?'':'s'}</button>`:''}</div>
+  <table><tr><th>#</th><th>Due date</th><th class="num">Interest</th><th class="num">Principal</th><th class="num">Instalment</th><th>Status</th></tr>
+  ${s.sc.map(x=>{const r=x.rec;return`<tr><td>${x.k}</td><td>${x.date}</td><td class="num">${fmt(r?r.int:x.int)}</td><td class="num">${fmt(r?r.prin:x.prin)}</td><td class="num">${fmt(r?r.int+r.prin:x.emi)}</td>
+  <td>${r?`<span class="badge income">Received</span> <button class="x" style="color:var(--mut)" onclick="p2pUndo(${a.id},${x.k})" title="Undo this receipt">&#8630;</button>`:x.acc?'<span class="mut">Accruing, paid at end</span>':x.date<=today()?`<button class="btn ghost" onclick="p2pReceive(${a.id},${x.k})">Receive</button>`:'<span class="mut">Upcoming</span>'}</td></tr>`}).join('')}</table></div>`}).join('')+`</div>`}
+
 const V={
-totals(){const ex=grp('expense',S.heads),inc=grp('income',S.sources),te=sum(Object.values(ex).map(v=>({v})),'v'),ti=sum(Object.values(inc).map(v=>({v})),'v'),
+totals(){const ex=grp('expense'),inc=grp('income'),tt=o=>Object.values(o).reduce((a,b)=>a+b,0),te=tt(ex),ti=tt(inc),
   cl={};S.classes.concat(S.assets.map(a=>a.cls)).forEach(c=>{cl[c]=cl[c]||{i:0,v:0}});S.assets.forEach(a=>{cl[a.cls].i+=a.inv;cl[a.cls].v+=a.val});
   const dt={};S.debts.forEach(d=>dt[d.type]=(dt[d.type]||0)+d.out);
   const P=[['month','This month'],['last','Last month'],['year','This year'],['all','All time']];
   return`<div class="bar2"><select onchange="per=this.value;go('totals')">${P.map(([k,l])=>`<option value="${k}" ${k===per?'selected':''}>${l}</option>`).join('')}</select>
   <span class="mut">Income <b class="g">${fmt(ti)}</b> · Expenses <b class="r">${fmt(te)}</b> · Saved <b>${fmt(ti-te)}</b></span></div>
-  <div class="grid">${tbl('Expense heads',ex)}${tbl('Income sources',inc)}
+  <div class="grid">${tbl('Expenses by category',ex)}${tbl('Income by category',inc)}
   <div class="card"><h3>Asset classes (current)</h3><table><tr><th></th><th class="num">Invested</th><th class="num">Value</th></tr>${Object.entries(cl).map(([k,v])=>`<tr><td>${esc(k)}</td><td class="num">${fmt(v.i)}</td><td class="num">${fmt(v.v)}</td></tr>`).join('')}
   <tr class="tot"><td>Total</td><td class="num">${fmt(sum(S.assets,'inv'))}</td><td class="num">${fmt(sum(S.assets,'val'))}</td></tr></table></div>
   ${tbl('Liabilities by type (current)',dt)}
   ${tbl('Accounts (current)',{Cash:sum(S.accounts.filter(a=>a.type==='cash'),'bal'),Bank:sum(S.accounts.filter(a=>a.type==='bank'),'bal')})}</div>`},
-targets(){const m=today().slice(0,7),sp=(ty,h)=>S.txs.filter(t=>t.type===ty&&t.cat===h&&t.date.startsWith(m)).reduce((a,t)=>a+t.amount,0),
-  tot=(keys,b)=>keys.reduce((a,h)=>a+(+b[h]||0),0),ib=tot(S.sources,S.ibudget),eb=tot(S.heads,S.budget),
-  blk=(title,keys,ty,bud,fn)=>{const tb=tot(keys,bud),ts=keys.reduce((a,h)=>a+sp(ty,h),0),inc=ty==='income';
-  return`<div class="card"><h3>${title} · ${m}</h3><div class="mut">${fmt(ts)} ${inc?'received':'spent'} of ${fmt(tb)} planned</div>${pbar(tb?ts/tb*100:0,inc)}<br>
-  <table><tr><th>${inc?'Source':'Head'}</th><th class="num">${inc?'Expected':'Limit'} / mo</th><th class="num">${inc?'Received':'Spent'}</th><th class="num">${inc?'Gap':'Left'}</th><th></th></tr>
-  ${keys.map((h,i)=>{const b=+bud[h]||0,x=sp(ty,h),d=inc?x-b:b-x;return`<tr><td>${esc(h)}</td><td class="num"><input style="width:100px" type="number" min="0" value="${b||''}" placeholder="0" onchange="${fn}(${i},this.value)"></td>
-  <td class="num">${fmt(x)}</td><td class="num ${d<0?'r':'g'}">${b?fmt(d):'-'}</td><td>${b?pbar(x/b*100,inc):''}</td></tr>`}).join('')}
-  <tr class="tot"><td>Total</td><td class="num">${fmt(tb)}</td><td class="num">${fmt(ts)}</td><td class="num">${fmt(inc?ts-tb:tb-ts)}</td><td></td></tr></table></div>`};
+targets(){const m=today().slice(0,7),sp=(ty,c)=>S.txs.filter(t=>t.type===ty&&t.cat===c&&t.date.startsWith(m)).reduce((a,t)=>a+t.amount,0),ib=bsum(S.ibudget),eb=bsum(S.budget),
+  inp=(k,c,i)=>`<input style="width:90px" type="number" min="0" value="${+S[k][c]||''}" placeholder="0" onchange="setB('${k}',${i},this.value)">`,
+  rows=S.cats.map((c,i)=>{const x=sp('income',c),y=sp('expense',c),L=+S.budget[c]||0;
+    return`<tr><td>${esc(c)}</td><td class="num">${inp('ibudget',c,i)}</td><td class="num g">${x?fmt(x):'-'}</td><td class="num">${inp('budget',c,i)}</td><td class="num ${L&&y>L?'r':''}">${y?fmt(y):'-'}</td><td>${L?pbar(y/L*100):''}</td></tr>`}).join('');
   return`<div class="card"><h3>Monthly plan</h3><div class="row"><div><div class="mut">Planned income</div><div class="kpi g">${fmt(ib)}</div></div><div><div class="mut">Planned expenses</div><div class="kpi r">${fmt(eb)}</div></div>
   <div><div class="mut">Planned savings</div><div class="kpi">${fmt(ib-eb)}</div><div class="mut">${ib?((ib-eb)/ib*100).toFixed(0):0}% of income</div></div></div></div><br>
-  <div class="grid">${blk('Income budget',S.sources,'income',S.ibudget,'setIBudget')}${blk('Expense budget',S.heads,'expense',S.budget,'setBudget')}</div><br>
+  <div class="card"><h3>Budget by category · ${m}</h3><div class="mut">Set an income target and/or a spending limit. Income and expenses share the same categories.</div>
+  <table><tr><th>Category</th><th class="num">Income plan</th><th class="num">Received</th><th class="num">Spend limit</th><th class="num">Spent</th><th>Used</th></tr>${rows}
+  <tr class="tot"><td>Total</td><td class="num">${fmt(ib)}</td><td class="num">${fmt(S.cats.reduce((a,c)=>a+sp('income',c),0))}</td><td class="num">${fmt(eb)}</td><td class="num">${fmt(S.cats.reduce((a,c)=>a+sp('expense',c),0))}</td><td></td></tr></table></div><br>
   <div class="card"><h3>Investment targets</h3>
   <form onsubmit="return addTarget(this)"><label>Goal<input name="name" required placeholder="e.g. Retirement fund"></label>
   <label>Target amount<input name="amount" type="number" min="1" step="any" required></label>
@@ -443,7 +993,7 @@ dash(){
   <div class="grid">
    <div class="card"><div class="mut">Cash</div><div class="kpi">${fmt(cash)}</div></div>
    <div class="card"><div class="mut">Bank balances</div><div class="kpi">${fmt(bank)}</div></div>
-   <div class="card"><div class="mut">Investments</div><div class="kpi">${fmt(as)}</div><div class="${gl>=0?'g':'r'}">${gl>=0?'+':''}${fmt(gl)} (${inv?(gl/inv*100).toFixed(1):0}%)</div></div>
+   <div class="card"><div class="mut">Investments</div><div class="kpi">${fmt(as)}</div><div class="${gl>=0?'g':'r'}">${gl>=0?'+':''}${fmt(gl)} (${inv?(gl/inv*100).toFixed(1):0}%) overall</div>${(()=>{const d=dayPLs();return d.has?`<div class="${d.pl>=0?'g':'r'}">${d.pl>=0?'▲ +':'▼ '}${fmt(d.pl)} today (${d.pct.toFixed(2)}%)</div>`:''})()}</div>
    <div class="card"><div class="mut">Liabilities</div><div class="kpi r">${fmt(db)}</div></div>
   </div><br>
   <div class="grid">
@@ -456,44 +1006,55 @@ dash(){
   </div>`},
 cash(){return`<div class="card"><h3>Add account</h3>
   <form onsubmit="return addAcct(this)"><label>Name<input name="name" required></label>
-  <label>Type<select name="type"><option value="bank">Bank</option><option value="cash">Cash / wallet</option></select></label>
-  <label>Opening balance<input name="bal" type="number" step="any" value="0"></label><button class="btn">Add account</button></form>
+  <label>Type<select name="kind">${Object.keys(KINDS).map(k=>`<option>${k}</option>`).join('')}</select></label>
+  <label>Opening balance<input name="bal" type="number" step="any" min="0" value="0"></label><button class="btn">Add account</button></form>
+  <div class="mut">Add as many bank and cash accounts as you need (Savings, Current, wallets…). Expenses, transfers and repayments are blocked if the account doesn't have enough money.</div>
   <table><tr><th>Account</th><th>Type</th><th class="num">Balance</th><th></th></tr>
-  ${S.accounts.map(a=>`<tr><td>${esc(a.name)}</td><td>${a.type}</td><td class="num">${fmt(a.bal)}</td><td>${delBtn('accounts',a.id)}</td></tr>`).join('')}
+  ${S.accounts.length?S.accounts.map(a=>`<tr><td>${esc(a.name)}</td><td>${esc(akind(a))}</td><td class="num">${fmt(a.bal)}</td><td>${delBtn('accounts',a.id)}</td></tr>`).join('')+`<tr class="tot"><td>Total</td><td></td><td class="num">${fmt(sum(S.accounts,'bal'))}</td><td></td></tr>`:'<tr><td colspan="4" class="mut">No accounts yet. Add your first one above.</td></tr>'}
   </table></div>`},
-assets(){const t=a=>a.val-a.inv;return`<div class="card"><h3>Add asset</h3>
-  <form onsubmit="return addAsset(this)"><label>Name<input name="name" required></label>
-  <label>Class<select name="cls">${opts(S.classes)}</select></label>
-  <label>Invested<input name="inv" type="number" step="any" required></label>
-  <label>Current value<input name="val" type="number" step="any" required></label><button class="btn">Add asset</button></form>
-  <table><tr><th>Asset</th><th>Class</th><th class="num">Invested</th><th class="num">Value</th><th class="num">Gain / loss</th><th></th></tr>
-  ${S.assets.map(a=>`<tr><td>${esc(a.name)}</td><td><span class="badge asset">${esc(a.cls)}</span></td><td class="num">${fmt(a.inv)}</td>
-  <td class="num"><input style="width:110px" type="number" step="any" value="${a.val}" onchange="S.assets.find(x=>x.id==${a.id}).val=+this.value;save();go('assets')"></td>
-  <td class="num ${t(a)>=0?'g':'r'}">${fmt(t(a))} (${a.inv?(t(a)/a.inv*100).toFixed(1):0}%)</td><td>${delBtn('assets',a.id)}</td></tr>`).join('')}
-  </table></div>`},
+assets(){return`<div class="card"><h3>Add asset</h3><div class="mut" style="margin-bottom:8px">Record what you already hold, set up a SIP, or lend via P2P here. To <b>buy now</b> from a bank account, press <b>+</b> and choose <b>Invest</b>: it asks which stock or fund and deducts the money.</div>${assetForm()}</div><br><div class="card" id="ahold">${assetTable()}</div>`},
 debts(){return`<div class="grid"><div class="card"><h3>Add liability</h3>
   <form onsubmit="return addDebt(this)"><label>Name<input name="name" required></label>
   <label>Type<select name="type"><option>Credit card</option><option>Loan</option><option>Borrowed</option></select></label>
-  <label>Outstanding<input name="out" type="number" step="any" required></label><button class="btn">Add</button></form></div>
+  <label>Outstanding<input name="out" type="number" step="any" min="0.01" required></label><button class="btn">Add</button></form></div>
   <div class="card"><h3>Record repayment</h3>
   <form onsubmit="return repay(this)"><label>Liability<select name="debt">${S.debts.map(d=>`<option value="${d.id}">${esc(d.name)}</option>`).join('')}</select></label>
   <label>Pay from<select name="acct">${acctOpts()}</select></label>
   <label>Amount<input name="amount" type="number" step="any" min="0.01" required></label>
-  <label>Date<input name="date" type="date" value="${today()}"></label><button class="btn">Repay</button></form></div></div><br>
+  <label>Date<input name="date" type="date" value="${today()}" max="${today()}"></label><button class="btn">Repay</button></form>
+  <div class="mut">Enter the principal only. Record interest and charges as an expense (Loan Interest &amp; Charges).</div></div></div><br>
   <div class="card"><table><tr><th>Liability</th><th>Type</th><th class="num">Outstanding</th><th></th></tr>
   ${S.debts.map(d=>`<tr><td>${esc(d.name)}</td><td><span class="badge debt">${esc(d.type)}</span></td><td class="num r">${fmt(d.out)}</td><td><button class="x" style="color:var(--pri)" onclick="bump(${d.id})" title="Add to balance">＋</button>${delBtn('debts',d.id)}</td></tr>`).join('')}
   </table></div>`},
-tx(){const all=[...S.txs].sort((a,b)=>b.date.localeCompare(a.date)||b.id-a.id),months=[...new Set(S.txs.map(t=>t.date.slice(0,7)))].sort().reverse(),
-  rows=txMo==='all'?all:all.filter(t=>t.date.startsWith(txMo)),inc=sum(rows.filter(t=>t.type==='income'),'amount'),ex=sum(rows.filter(t=>t.type==='expense'),'amount');
-  return`<div class="card"><div class="bar2"><button class="btn" onclick="qe()">+ New entry</button>
-  <select onchange="txMo=this.value;go('tx')"><option value="all">All time</option>${months.map(m=>`<option ${m===txMo?'selected':''}>${m}</option>`).join('')}</select>
-  <span class="mut">Income <b class="g">${fmt(inc)}</b> · Expenses <b class="r">${fmt(ex)}</b></span></div>
-  <table><tr><th>Date</th><th>Type</th><th>Detail</th><th class="num">Amount</th><th></th></tr>
-  ${rows.map(t=>`<tr><td>${t.date}</td><td><span class="badge ${t.type}">${t.type}</span></td>
-  <td>${t.type==='transfer'?esc(acct(t.acct)?.name||'?')+' → '+esc(acct(t.to)?.name||'?'):esc(t.cat)+' · '+esc(acct(t.acct)?.name||'?')} <span class="mut">${esc(t.note||'')}</span></td>
-  <td class="num ${t.type==='income'?'g':t.type==='transfer'?'':'r'}">${t.type==='income'?'+':t.type==='transfer'?'':'-'}${fmt(t.amount)}</td>
-  <td><button class="x" style="color:var(--pri)" onclick="dup(${t.id})" title="Repeat this entry">⧉</button>${delBtn('txs',t.id)}</td></tr>`).join('')}</table></div>`},
-reports(){const chk=[['pl','Profit & Loss'],['bs','Balance Sheet'],['tx','Transactions ledger'],['hd','Holdings & liabilities']],y=new Date().getFullYear();
+tx(){const ac=(v)=>`<option value="all">All accounts</option>`+S.accounts.map(a=>`<option value="${a.id}" ${String(v)===String(a.id)?'selected':''}>${esc(a.name)}</option>`).join('');
+  return`<div class="card"><div class="bar2"><button class="btn" onclick="qe()">+ New entry</button></div>
+  <div class="fbar"><label>From<input type="date" value="${tf.from}" onchange="tf.from=this.value;txUpdate()"></label>
+  <label>To<input type="date" value="${tf.to}" onchange="tf.to=this.value;txUpdate()"></label>
+  <label>Type<select onchange="tf.type=this.value;txUpdate()">${[['all','All types'],['income','Income'],['expense','Expense'],['transfer','Transfer'],['repay','Repayment'],['invest','Investment']].map(([k,l])=>`<option value="${k}" ${tf.type===k?'selected':''}>${l}</option>`).join('')}</select></label>
+  <label>Account<select onchange="tf.acct=this.value;txUpdate()">${ac(tf.acct)}</select></label>
+  <label>Search<input type="search" placeholder="Category or note" value="${esc(tf.q)}" oninput="tf.q=this.value;txUpdate()"></label>
+  <button class="btn ghost" onclick="tfClear()">Clear</button></div>
+  <div id="txlist">${txList()}</div></div>`},
+ledger(){
+  const G=LG[lf.grp],items=lgItems(lf.grp),head=`<div class="card"><h3>General ledger</h3><div class="chips2" style="margin-bottom:12px">${Object.keys(LG).map(k=>`<button class="${lf.grp===k?'on':''}" onclick="lgGrp('${k}')">${LG[k].n}</button>`).join('')}</div>`;
+  if(!items.length)return head+`<div class="mut">Add a bank or cash account first. Each account gets its own ledger with a running balance.</div></div>`;
+  if(!items.some(i=>String(i[0])===String(lf.item)))lf.item=items[0][0];
+  const L=ledgerData(lf.grp,String(lf.item)),fo=!!(lf.from||lf.to),lim=!fo&&!lf.all,dt=r=>r.date||'—';
+  let vis=L.rows.filter(r=>(!lf.from||r.date>=lf.from)&&(!lf.to||r.date<=lf.to));const total=vis.length;if(lim)vis=vis.slice(-6);
+  const i0=vis.length?L.rows.indexOf(vis[0]):0,bf=vis.length?(i0>0?L.rows[i0-1].bal:L.open):L.open,
+  dr=vis.reduce((x,r)=>x+r.dr,0),cr=vis.reduce((x,r)=>x+r.cr,0),close=vis.length?vis[vis.length-1].bal:bf,
+  hint=fo?`${total} entr${total===1?'y':'ies'} in the selected dates`:lim?`Showing the last ${vis.length} of ${total} entries`:`Showing all ${total} entries`;
+  return head+`<div class="fbar"><label>${G.n}<select onchange="lf.item=this.value;lf.all=0;go('ledger')">${items.map(i=>`<option value="${esc(String(i[0]))}" ${String(i[0])===String(lf.item)?'selected':''}>${esc(i[1])}</option>`).join('')}</select></label>
+  <label>From<input type="date" value="${lf.from}" onchange="lf.from=this.value;go('ledger')"></label>
+  <label>To<input type="date" value="${lf.to}" onchange="lf.to=this.value;go('ledger')"></label>
+  <button class="btn ghost" onclick="lf.from=lf.to='';lf.all=0;go('ledger')">Clear</button></div>
+  <div class="mut" style="margin-bottom:8px">${hint}${!fo&&total>6?` · <a href="#" onclick="lf.all=${lf.all?0:1};go('ledger');return false" style="color:var(--pri);font-weight:700">${lf.all?'Show last 6':'Show all'}</a>`:''}</div>
+  ${vis.length?`<table><tr><th>Date</th><th>Particulars</th><th class="num">${G.h[0]}</th><th class="num">${G.h[1]}</th><th class="num">${G.h[2]}</th><th></th></tr>
+  <tr><td></td><td class="mut"><b>Balance b/f</b></td><td></td><td></td><td class="num"><b>${fmt(bf)}</b></td><td></td></tr>
+  ${vis.map(r=>`<tr><td>${dt(r)}</td><td>${esc(r.p)} <span class="mut">${esc(r.note)}</span></td><td class="num ${G.dc}">${r.dr?fmt(r.dr):''}</td><td class="num ${G.cc}">${r.cr?fmt(r.cr):''}</td><td class="num">${fmt(r.bal)}</td>
+  <td>${r.id?`<button class="x" style="color:var(--pri)" onclick="qe({edit:${r.id}})" title="Edit this entry" aria-label="Edit">✎</button>`:''}</td></tr>`).join('')}
+  <tr class="tot"><td></td><td>Total / closing balance</td><td class="num ${G.dc}">${fmt(dr)}</td><td class="num ${G.cc}">${fmt(cr)}</td><td class="num">${fmt(close)}</td><td></td></tr></table>`:'<div class="mut">No entries for this selection in that period.</div>'}</div>`},
+reports(){const chk=[['plv','Profit & Loss (vertical)'],['bsv','Balance Sheet (vertical)'],['pl','P&L A/c (horizontal)'],['bs','Balance Sheet (horizontal)'],['bv','Budget vs actual'],['tx','Transactions ledger'],['hd','Holdings & liabilities']],y=new Date().getFullYear();
   return`<div class="card"><h3>Reports & statements</h3>
   <div class="mut">1 · Choose documents</div><div class="chips2">${chk.map(([k,l])=>`<button class="${R.docs.includes(k)?'on':''}" onclick="rd('${k}')">${l}</button>`).join('')}<button onclick="R.docs=[...ORD];go('reports')">Select all</button></div><br>
   <div class="mut">2 · Choose period</div><div class="bar2"><div class="seg" style="min-width:250px">${[['month','Month'],['year','Year'],['custom','Custom']].map(([k,l])=>`<button class="${R.mode===k?'on transfer':''}" onclick="R.mode='${k}';go('reports')">${l}</button>`).join('')}</div>
@@ -507,45 +1068,104 @@ admin(){const list=(k,l)=>`<div class="card"><h3>${l}</h3><div class="chips">${S
   return`<div class="grid"><div class="card"><h3>Currency</h3>
   <select onchange="setCur(this.value)">${['$','€','₹','£','¥','A$','C$'].map(c=>`<option ${c===S.cur?'selected':''}>${c}</option>`).join('')}</select>
   <p class="mut">Signed in as ${esc(user.email)}. Data lives in your Supabase database. Monthly email runs on the server (monthly-email.sql).</p></div>
-  ${list('heads','Expense heads')}${list('sources','Income sources')}${list('classes','Asset classes')}</div>`}
+  <div class="card"><h3>Security</h3>
+  <p class="mut">Unlock on this device with PIN${bioOK()?' and fingerprint / face':''}. Each person signs in with their own email, password and email code.</p>
+  <div class="bar2"><button class="btn ghost" onclick="showPinSet()">${localStorage.getItem(pinKey(user.id))?'Change PIN':'Create PIN'}</button>
+  ${bioOK()?`<button class="btn ghost" onclick="bioToggle()">${localStorage.getItem(bioKey(user.id))?'Disable fingerprint':'Enable fingerprint'}</button>`:''}</div></div>
+  ${list('cats','Categories (income &amp; expenses)')}${list('classes','Asset classes')}
+  <div class="card"><h3>Email reports</h3>
+  <p class="mut">Paste your Google Apps Script web-app URL to send reports straight to any inbox. Keep the URL private. Without it, the report opens in your phone's share sheet or downloads so you can attach it.</p>
+  <div class="bar2"><input id="murl" style="flex:1;min-width:220px" placeholder="https://script.google.com/macros/s/.../exec" value="${esc(S.mailUrl||'')}"><button class="btn" onclick="S.mailUrl=$('murl').value.trim();save();toast('Saved')">Save</button></div>
+  <details><summary class="mut">Setup (2 minutes)</summary>
+  <ol class="mut"><li>Open script.google.com, create a New project and paste the code below.</li><li>Deploy, New deployment, type Web app, Execute as: Me, Who has access: Anyone.</li><li>Authorise when asked, copy the Web app URL and paste it above.</li></ol>
+  <textarea readonly style="min-height:120px">function doPost(e){
+  var d=JSON.parse(e.postData.contents);
+  MailApp.sendEmail({to:d.to,subject:d.subject,body:'Your Atisaya finrec report is attached.',
+    attachments:[Utilities.newBlob(Utilities.base64Decode(d.pdf),'application/pdf',d.filename)]});
+  return ContentService.createTextOutput('ok');
+}</textarea></details></div></div>`}
 };
 
 /* ---------- reports ---------- */
-const ORD=['pl','bs','tx','hd'];let R={docs:['pl','bs'],mode:'month',m:today().slice(0,7),y:new Date().getFullYear(),f:today().slice(0,8)+'01',t:today()};
+const ORD=['plv','bsv','pl','bs','bv','tx','hd'];let R={docs:['plv','bsv'],mode:'month',m:today().slice(0,7),y:new Date().getFullYear(),f:today().slice(0,8)+'01',t:today()};
 function rd(k){R.docs=ORD.filter(x=>x===k?!R.docs.includes(x):R.docs.includes(x));go('reports')}
 function rng(){if(R.mode==='month'){const[y,m]=R.m.split('-');return[R.m+'-01',R.m+'-'+String(new Date(y,m,0).getDate()).padStart(2,'0'),R.m]}
   if(R.mode==='year')return[R.y+'-01-01',R.y+'-12-31',''+R.y];return[R.f,R.t,R.f+' to '+R.t]}
 function bsAt(to){const a=S.accounts.map(x=>({...x})),dm=S.debts.map(x=>({...x}));  // roll back later transactions
   S.txs.filter(t=>t.date>to).forEach(t=>{const p=a.find(x=>x.id==t.acct),q=a.find(x=>x.id==t.to),m=+t.amount;
-    if(t.type==='income'&&p)p.bal-=m;else if((t.type==='expense'||t.type==='repay')&&p)p.bal+=m;else if(t.type==='transfer'){if(p)p.bal+=m;if(q)q.bal-=m}
+    if((t.type==='income'||t.type==='prin')&&p)p.bal-=m;else if((t.type==='expense'||t.type==='repay'||t.type==='invest')&&p)p.bal+=m;else if(t.type==='transfer'){if(p)p.bal+=m;if(q)q.bal-=m}
     if(t.type==='repay'){const d=dm.find(x=>x.id==t.debt);if(d)d.out+=m}});return{a,d:dm}}
+const dlong=d=>new Date(d+'T00:00:00').toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
 function docs(){const[f,to,lab]=rng(),T=S.txs.filter(t=>t.date>=f&&t.date<=to),k=R.mode==='month'?1:R.mode==='year'?12:Math.max(1,Math.round((new Date(to)-new Date(f))/2592e6)),
   sec=(name,ty,keys,bud)=>{const ks=[...new Set([...keys,...T.filter(t=>t.type===ty).map(t=>t.cat)])],inc=ty==='income';let A=0,B=0;
     const r=ks.map(c=>{const a=sum(T.filter(t=>t.type===ty&&t.cat===c),'amount'),b=(+bud[c]||0)*k;A+=a;B+=b;return[c,a,b,inc?a-b:b-a]}).filter(r=>r[1]||r[2]);
     return{A,B,r:[[name,'','','','h'],...r,['Total '+name.toLowerCase(),A,B,inc?A-B:B-A,'t']]}},
-  I=sec('Income','income',S.sources,S.ibudget),E=sec('Expenses','expense',S.heads,S.budget),{a,d}=bsAt(to),
-  cash=sum(a.filter(x=>x.type==='cash'),'bal'),ba=a.filter(x=>x.type==='bank'),ta=cash+sum(ba,'bal')+sum(S.assets,'val'),ld=sum(d,'out'),np=I.A-E.A;
-  return{pl:{t:'Profit & Loss Statement',h:['Item','Actual','Budget','Variance (+ = good)'],r:[...I.r,...E.r,['Net profit / (loss)',np,I.B-E.B,np-(I.B-E.B),'t'],['Savings rate',I.A?(np/I.A*100).toFixed(1)+'%':'-','','','']]},
-   bs:{t:'Balance Sheet',sub:'As at '+to,h:['Item','Amount'],r:[['Assets','','h'],['Cash in hand',cash],...ba.map(x=>['Bank · '+x.name,x.bal]),...S.assets.map(x=>[x.cls+' · '+x.name,x.val]),['Total assets',ta,'t'],['Liabilities','','h'],...d.map(x=>[x.type+' · '+x.name,x.out]),['Total liabilities',ld,'t'],['Net worth (assets - liabilities)',ta-ld,'t']],
-    note:'Cash and bank balances are rebuilt to the end date from your transactions. Investment values are the latest values you recorded.'},
-   tx:{t:'Transactions Ledger',h:['Date','Type','Detail','Note','Amount'],r:[...T].sort((x,y)=>x.date.localeCompare(y.date)||x.id-y.id).map(t=>[t.date,t.type,t.type==='transfer'?(acct(t.acct)?.name||'?')+' -> '+(acct(t.to)?.name||'?'):(t.cat||'')+' · '+(acct(t.acct)?.name||'?'),t.note||'',(t.type==='income'||t.type==='transfer'?1:-1)*t.amount])},
+  I=sec('Income','income',S.cats,S.ibudget),E=sec('Expenses','expense',S.cats,S.budget),{a,d}=bsAt(to),AS=S.assets.filter(x=>!(x.buyDate&&x.buyDate>to&&!(x.lots&&x.lots.length))).map(x=>{if(x.kind==='p2p'){const o=+(x.p2p.P-sum(x.p2p.rec.filter(r=>r.date<=to),'prin')).toFixed(2);return{...x,inv:o,val:o}}if(!(x.lots&&x.lots.length))return x;const L=x.lots.filter(l=>l.date<=to);return{...x,qty:sum(L,'units'),inv:sum(L,'amt'),val:+(sum(L,'units')*(x.px||0)).toFixed(2)}}).filter(x=>x.kind==='p2p'?x.val>0:(!x.lots||x.lots.length===0||x.qty>0)),
+  cash=sum(a.filter(x=>x.type==='cash'),'bal'),ba=a.filter(x=>x.type==='bank'),ta=r2(cash+sum(ba,'bal')+sum(AS,'val')),ld=r2(sum(d,'out')),np=r2(I.A-E.A);
+  const by=ty=>{const o={};T.filter(t=>t.type===ty).forEach(t=>{const c=t.cat||'Other';o[c]=(o[c]||0)+t.amount});return Object.entries(o).filter(x=>x[1]).sort((x,y)=>y[1]-x[1])},
+  zip=(L,Rt)=>{const n=Math.max(L.length,Rt.length),o=[];for(let i=0;i<n;i++){const l=L[i]||['','',''],r=Rt[i]||['','',''];o.push([l[0],l[1],r[0],r[1],l[2]||'',r[2]||''])}return o},
+  eL=by('expense').map(([c,v])=>['To '+c,v]),iR=by('income').map(([c,v])=>['By '+c,v]);
+  if(np>=0)eL.push(['To Net profit c/d (to Capital A/c)',np,'s']);else iR.push(['By Net loss c/d (to Capital A/c)',-np,'s']);
+  if(!eL.length&&!iR.length)eL.push(['No income or expenses in this period','']);
+  const pt=Math.max(I.A,E.A),unreal=r2(sum(AS,'val')-sum(AS,'inv')),capC=r2(ta-ld),capO=r2(capC-np-unreal),
+  BL=[['Capital Account','','h'],['Opening capital',capO],[np>=0?'Add: Net profit for the period':'Less: Net loss for the period',Math.abs(np)],['Add/(Less): Revaluation reserve (unrealised)',unreal],['Closing capital (Net worth)',capC,'s']],
+  BA=[['Current assets','','h'],['Cash in hand',cash],...ba.map(x=>['Bank · '+x.name,x.bal]),['Total current assets',cash+sum(ba,'bal'),'s']];
+  if(d.length){BL.push(['Liabilities','','h']);d.forEach(x=>BL.push([x.type+' · '+x.name,x.out]));BL.push(['Total liabilities',ld,'s'])}
+  if(AS.length){BA.push(['Investments (market value)','','h']);AS.forEach(x=>BA.push([x.cls+' · '+x.name,x.val]));BA.push(['Total investments',sum(AS,'val'),'s'])}
+  return{plv:(()=>{const sm=L=>+L.reduce((q,x)=>q+x[1],0).toFixed(2),isInv=c=>/interest|dividend|p2p|invest|gain/i.test(c||''),inc=by('income'),exp=by('expense'),oi=inc.filter(x=>!isInv(x[0])),ii=inc.filter(x=>isInv(x[0])),rw=L=>L.map(x=>[x[0],x[1],'i']),
+    lots=S.assets.filter(x=>x.lots&&x.lots.length).flatMap(x=>x.lots.filter(l=>l.date>=f&&l.date<=to)),bd=x=>x.kind==='p2p'?x.p2p.start:x.buyDate,
+    fresh=sum(lots,'amt')+S.assets.filter(x=>!(x.lots&&x.lots.length)&&bd(x)>=f&&bd(x)<=to).reduce((q,x)=>q+(x.kind==='p2p'?x.p2p.P:x.inv),0),
+    back=sum(T.filter(t=>t.type==='prin'),'amount'),a1=sm(oi),a2=sm(ii),b1=sm(exp),r=[['A. INCOME','','h']];
+    r.push(['Operating income','','sh'],...rw(oi),['Total operating income',a1,'s'],['Investment income (interest, dividends, P2P)','','sh'],...rw(ii),['Total investment income',a2,'s'],['TOTAL INCOME (A)',a1+a2,'t']);
+    r.push(['B. EXPENSES','','h'],...rw(exp),['TOTAL EXPENSES (B)',b1,'t']);
+    r.push([np>=0?'NET SURPLUS FOR THE PERIOD (A - B)':'NET DEFICIT FOR THE PERIOD (A - B)',np,'t']);
+    r.push(['C. INVESTMENT ACTIVITY (memo, not part of profit)','','h'],['Fresh investments in the period (incl. SIP instalments and P2P lent)',fresh,'i'],['Principal received back from P2P lending',back,'i'],['Unrealised gain / (loss) on investments held (cumulative, to '+dlong(to)+')',unreal,'i'],['Savings rate',I.A?(np/I.A*100).toFixed(1)+'%':'-','i']);
+    return{t:'Profit & Loss Account',sub:'For the period '+dlong(f)+' to '+dlong(to),h:['Particulars','Amount'],r,note:'Transfers between your own accounts, loan principal repayments and P2P principal received are not income or expenses. Interest and dividends are shown as investment income. Section C is for information.'}})(),
+  bsv:(()=>{const r=[['I. SOURCES OF FUNDS','','h'],['Capital account','','sh'],['Opening capital',capO,'i'],[np>=0?'Add: net surplus for the period':'Less: net deficit for the period',Math.abs(np),'i'],['Add/(Less): Revaluation reserve (unrealised gain/loss on investments)',unreal,'i'],['Net worth (closing capital)',capC,'s'],['Borrowings & liabilities','','sh']];
+    if(d.length)d.forEach(x=>r.push([x.type+' · '+x.name,x.out,'i']));else r.push(['No liabilities',0,'i']);
+    r.push(['Total liabilities',ld,'s'],['TOTAL SOURCES OF FUNDS',capC+ld,'t'],['II. APPLICATION OF FUNDS','','h'],['Current assets: cash & bank','','sh'],['Cash in hand',cash,'i'],...ba.map(x=>['Bank · '+x.name,x.bal,'i']),['Total current assets',cash+sum(ba,'bal'),'s'],['Investments (market value / principal outstanding)','','sh']);
+    const cl=[...new Set(AS.map(x=>x.cls))];if(!cl.length)r.push(['No investments',0,'i']);
+    cl.forEach(c=>{const L=AS.filter(x=>x.cls===c);r.push([c,sum(L,'val'),'s']);L.forEach(x=>r.push([x.name+(x.kind==='p2p'?' (principal outstanding)':' (invested '+fmt(x.inv)+')'),x.val,'i']))});
+    r.push(['Total investments',sum(AS,'val'),'s'],['TOTAL APPLICATION OF FUNDS',ta,'t']);
+    return{t:'Balance Sheet',sub:'As at '+dlong(to),h:['Particulars','Amount'],r,note:'Opening capital is derived: closing net worth less this period\'s surplus and the revaluation reserve (unrealised gains on investments). Cash and bank balances are rebuilt to the end date from your transactions; mutual funds and stocks are at the latest recorded market value and P2P loans at principal outstanding.'}})(),
+   pl:{T:1,t:'Profit & Loss Account',sub:'For the period '+dlong(f)+' to '+dlong(to),h:['Dr. · Expenses','Amount','Cr. · Income','Amount'],r:[...zip(eL,iR),['Total',pt,'Total',pt,'t','t']],
+    note:'Savings rate: '+(I.A?(np/I.A*100).toFixed(1)+'%':'-')+'. Transfers between your own accounts and loan principal repayments are not income or expenses. Unrealised gain/(loss) on investments ('+fmt(unreal)+') is not included above.'},
+   bs:{T:1,t:'Balance Sheet',sub:'As at '+dlong(to),h:['Liabilities & Capital','Amount','Assets','Amount'],r:[...zip(BL,BA),['Total',capC+ld,'Total',ta,'t','t']],
+    note:'Opening capital is derived: closing net worth less this period\'s profit and the revaluation reserve (unrealised gains on investments). Cash and bank balances are rebuilt to the end date from your transactions; investments are at the latest recorded market value.'},
+   bv:{t:'Budget vs Actual Statement',h:['Item','Actual','Budget','Variance (+ = good)'],r:[...I.r,...E.r,['Net profit / (loss)',np,I.B-E.B,np-(I.B-E.B),'t'],['Savings rate',I.A?(np/I.A*100).toFixed(1)+'%':'-','','','']]},
+   tx:{t:'Transactions Ledger',h:['Date','Type','Detail','Note','Amount'],r:[...T].sort((x,y)=>x.date.localeCompare(y.date)||x.id-y.id).map(t=>[t.date,t.type,t.type==='transfer'?(acct(t.acct)?.name||'?')+' -> '+(acct(t.to)?.name||'?'):(t.cat||'')+' · '+(acct(t.acct)?.name||'?'),t.note||'',(t.type==='income'||t.type==='prin'||t.type==='transfer'?1:-1)*t.amount])},
    hd:{t:'Holdings & Liabilities Register',sub:'Latest recorded values',h:['Item','Class / type','Invested','Value','Gain / owed'],r:[...S.assets.map(x=>[x.name,x.cls,x.inv,x.val,x.val-x.inv]),...S.debts.map(x=>[x.name,x.type,'','',x.out])]}}}
-const dhtml=(d,lab)=>`<div class="card"><h3>${esc(d.t)}</h3><div class="mut">${esc(d.sub||'Period: '+lab)}</div><table><tr>${d.h.map((x,j)=>`<th class="${d.r.some(r=>typeof r[j]==='number')?'num':''}">${esc(x)}</th>`).join('')}</tr>
-  ${d.r.map(r=>`<tr class="${r[d.h.length]==='t'?'tot':''}">${d.h.map((_,j)=>`<td class="${typeof r[j]==='number'?'num':''}" ${r[d.h.length]==='h'?'style="font-weight:800;color:var(--pri)"':''}>${typeof r[j]==='number'?fmt(r[j]):esc(r[j]??'')}</td>`).join('')}</tr>`).join('')}</table>${d.note?`<p class="mut">${esc(d.note)}</p>`:''}</div><br>`;
+const dhtml=(d,lab)=>d.T?thtml(d,lab):`<div class="card"><h3>${esc(d.t)}</h3><div class="mut">${esc(d.sub||'Period: '+lab)}</div><table><tr>${d.h.map((x,j)=>`<th class="${d.r.some(r=>typeof r[j]==='number')?'num':''}">${esc(x)}</th>`).join('')}</tr>
+  ${d.r.map(r=>`<tr class="${({t:'tot',h:'vh',s:'vs',i:'vi',sh:'vsh'})[r[d.h.length]]||''}">${d.h.map((_,j)=>`<td class="${typeof r[j]==='number'?'num':''}" ${r[d.h.length]==='h'?'style="font-weight:800;color:var(--pri)"':''}>${typeof r[j]==='number'?fmt(r[j]):esc(r[j]??'')}</td>`).join('')}</tr>`).join('')}</table>${d.note?`<p class="mut">${esc(d.note)}</p>`:''}</div><br>`;
+const thtml=(d,lab)=>{const c=(l,a,fl)=>{const b=fl==='t'||fl==='s',st=fl==='h'?'font-weight:800;color:var(--pri)':b?'font-weight:800':'';return`<td style="${st}">${esc(l)}</td><td class="num" style="${b?'font-weight:800':''}">${typeof a==='number'?fmt(a):''}</td>`};
+  return`<div class="card"><div style="text-align:center"><h3 style="font-size:18px;margin:0 0 2px">${esc(d.t)}</h3><div class="mut">${esc(d.sub||'Period: '+lab)} · ${esc(user.email)}</div></div><br>
+  <table class="tacc"><tr>${d.h.map((x,j)=>`<th class="${j%2?'num':''}">${esc(x)}</th>`).join('')}</tr>${d.r.map(r=>`<tr class="${r[4]==='t'?'tot':''}">${c(r[0],r[1],r[4])}${c(r[2],r[3],r[5])}</tr>`).join('')}</table>${d.note?`<p class="mut">${esc(d.note)}</p>`:''}</div><br>`};
 function rok(){if(!R.docs.length){toast('Pick at least one document');return false}if(R.mode==='custom'&&R.f>R.t){toast('Start date is after end date');return false}return true}
 function prev(){if(!rok())return;const D=docs(),l=rng()[2];$('rprev').innerHTML=R.docs.map(k=>dhtml(D[k],l)).join('')}
 function mkpdf(){const{jsPDF}=window.jspdf,p=new jsPDF(),D=docs(),lab=rng()[2],pf=n=>typeof n==='number'?fmt(n).replace('₹','Rs. '):n;
-  R.docs.forEach((k,i)=>{const d=D[k],n=d.h.length;if(i)p.addPage();p.setFontSize(18);p.text(d.t,14,18);p.setFontSize(9);p.text((d.sub?d.sub+'  |  ':'')+'Period: '+lab+'  |  '+user.email,14,25);
-    p.autoTable({startY:30,head:[d.h],body:d.r.map(r=>d.h.map((_,j)=>pf(r[j]??''))),headStyles:{fillColor:[79,70,229]},styles:{fontSize:9},
+  R.docs.forEach((k,i)=>{const d=D[k],n=d.h.length;if(i)p.addPage();
+    if(d.T){p.setFontSize(17);p.text(d.t,105,18,{align:'center'});p.setFontSize(9);p.text((d.sub||'Period: '+lab)+'  |  '+user.email,105,25,{align:'center'});
+      p.autoTable({startY:31,head:[d.h],body:d.r.map(r=>[r[0],pf(r[1]),r[2],pf(r[3])]),theme:'grid',headStyles:{fillColor:[79,70,229],halign:'center'},styles:{fontSize:9,lineColor:[170,170,185],lineWidth:.2},
+        columnStyles:{0:{cellWidth:58},1:{halign:'right',cellWidth:33},2:{cellWidth:58},3:{halign:'right',cellWidth:33}},
+        didParseCell:h=>{if(h.section!=='body')return;const r=d.r[h.row.index],fl=h.column.index<2?r[4]:r[5];if(fl==='t'||fl==='s')h.cell.styles.fontStyle='bold';if(fl==='h'){h.cell.styles.fontStyle='bold';h.cell.styles.fillColor=[238,238,250]}if(fl==='t')h.cell.styles.fillColor=[232,232,240]}});
+      if(d.note){p.setFontSize(8);p.text(p.splitTextToSize(d.note.replace(/₹/g,'Rs. '),180),14,p.lastAutoTable.finalY+8)}return}
+    p.setFontSize(18);p.text(d.t,14,18);p.setFontSize(9);p.text((d.sub?d.sub+'  |  ':'')+'Period: '+lab+'  |  '+user.email,14,25);
+    p.autoTable({startY:30,head:[d.h],body:d.r.map(r=>d.h.map((_,j)=>(j===0&&r[n]==='i'?'      ':'')+pf(r[j]??''))),headStyles:{fillColor:[79,70,229]},styles:{fontSize:9},
       didParseCell:h=>{if(h.section!=='body')return;const r=d.r[h.row.index],s=r[n];if(typeof r[h.column.index]==='number')h.cell.styles.halign='right';
-        if(s==='t')h.cell.styles.fontStyle='bold';if(s==='h'){h.cell.styles.fontStyle='bold';h.cell.styles.fillColor=[238,238,250]}}});
-    if(d.note){p.setFontSize(8);p.text(p.splitTextToSize(d.note,180),14,p.lastAutoTable.finalY+8)}});return p}
-const fname=()=>'wealth-report-'+rng()[2].replace(/ to /,'_to_')+'.pdf';
+        if(s==='t'||s==='s'||s==='sh')h.cell.styles.fontStyle='bold';if(s==='h'){h.cell.styles.fontStyle='bold';h.cell.styles.fillColor=[221,230,242]}if(s==='t')h.cell.styles.fillColor=[232,236,242]}});
+    if(d.note){p.setFontSize(8);p.text(p.splitTextToSize(d.note.replace(/₹/g,'Rs. '),180),14,p.lastAutoTable.finalY+8)}});return p}
+const fname=()=>'atisaya-finrec-'+rng()[2].replace(/ to /,'_to_')+'.pdf';
 function dlpdf(){if(!rok())return;mkpdf().save(fname())}
 async function mailReport(){const to=$('rto').value.trim();if(!/^\S+@\S+\.\S+$/.test(to)){toast('Enter a valid email');return}if(!rok())return;
-  const p=mkpdf(),fn=fname(),subj='Wealth Tracker report · '+rng()[2];toast('Sending…');
-  const {error}=await sb.functions.invoke('send-report',{body:{to,subject:subj,filename:fn,pdf:p.output('datauristring').split(',')[1]}});
-  if(error){p.save(fn);location.href='mailto:'+to+'?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent('Report attached: '+fn);toast('Email service not deployed yet: PDF downloaded, attach it to the draft')}else toast('Report sent to '+to)}
+  const p=mkpdf(),fn=fname(),subj='Atisaya finrec report · '+rng()[2];
+  if(S.mailUrl){toast('Sending…');
+    try{const r=await fetch(S.mailUrl,{method:'POST',body:JSON.stringify({to,subject:subj,filename:fn,pdf:p.output('datauristring').split(',')[1]})});
+      if((await r.text()).trim()==='ok')return toast('Report sent to '+to)}catch(e){}
+    toast('Email service did not respond. Check the URL in Admin.')}
+  const f=new File([p.output('blob')],fn,{type:'application/pdf'});
+  if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f],title:subj,text:'Report attached'})}catch(e){}return}
+  p.save(fn);location.href='mailto:'+to+'?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent('Report attached: '+fn);
+  toast('PDF downloaded. Attach it to the email draft (add your Apps Script URL in Admin to send directly).')}
 
 /* ---------- charts ---------- */
 function drawCharts(){
@@ -563,11 +1183,11 @@ function drawCharts(){
     {type:'line',label:'Net saved',data:N,borderColor:'#f59e0b',backgroundColor:'#f59e0b',tension:.4,pointRadius:3,order:1},
     {type:'line',label:'Cumulative (right axis)',data:C,borderColor:'#6366f1',borderDash:[6,4],tension:.4,pointRadius:0,fill:{target:'origin',above:'#6366f122',below:'#f43f5e22'},order:2,yAxisID:'y2'}]},
     options:{interaction:{mode:'index',intersect:false},scales:{y2:{position:'right',grid:{display:false}}},plugins:{legend:leg,tooltip:{callbacks:{label:x=>x.dataset.label+': '+fmt(x.parsed.y)}}}}}));
-  const ex=S.heads.map(h=>S.txs.filter(t=>t.type==='expense'&&t.cat===h).reduce((s,t)=>s+t.amount,0)),te=ex.reduce((a,b)=>a+b,0);
-  charts.push(new Chart($('c2'),{type:'doughnut',data:{labels:S.heads,datasets:[{data:ex,backgroundColor:pal,borderWidth:0,hoverOffset:14,borderRadius:6,spacing:3}]},
+  const mo=today().slice(0,7),spent=(c,m)=>S.txs.filter(t=>t.type==='expense'&&t.cat===c&&(!m||t.date.startsWith(m))).reduce((s,t)=>s+t.amount,0),cl=catList(),ec=cl.filter(c=>spent(c)),ex=ec.map(c=>spent(c)),te=ex.reduce((a,b)=>a+b,0);
+  charts.push(new Chart($('c2'),{type:'doughnut',data:{labels:ec,datasets:[{data:ex,backgroundColor:pal,borderWidth:0,hoverOffset:14,borderRadius:6,spacing:3}]},
     options:{cutout:'70%',plugins:{legend:leg}},plugins:[{id:'ctr',afterDraw(ch){const{ctx,chartArea:a}=ch,x=(a.left+a.right)/2,y=(a.top+a.bottom)/2;ctx.save();ctx.textAlign='center';ctx.fillStyle=mut;ctx.font='12px Manrope';ctx.fillText('All-time spend',x,y-8);ctx.fillStyle=ink;ctx.font='800 20px Manrope';ctx.fillText(fmt(te),x,y+16);ctx.restore()}}]}));
-  const mo=today().slice(0,7),sp=S.heads.map(h=>S.txs.filter(t=>t.type==='expense'&&t.cat===h&&t.date.startsWith(mo)).reduce((s,t)=>s+t.amount,0));
-  charts.push(new Chart($('c4'),{type:'radar',data:{labels:S.heads,datasets:[{label:'Budget',data:S.heads.map(h=>+S.budget[h]||0),borderColor:'#6366f1',backgroundColor:'#6366f133',pointRadius:3},{label:'Spent',data:sp,borderColor:'#f43f5e',backgroundColor:'#f43f5e44',pointRadius:3}]},
+  const rc=cl.filter(c=>+S.budget[c]||spent(c,mo));
+  charts.push(new Chart($('c4'),{type:'radar',data:{labels:rc,datasets:[{label:'Budget',data:rc.map(c=>+S.budget[c]||0),borderColor:'#6366f1',backgroundColor:'#6366f133',pointRadius:3},{label:'Spent',data:rc.map(c=>spent(c,mo)),borderColor:'#f43f5e',backgroundColor:'#f43f5e44',pointRadius:3}]},
     options:{scales:{r:{ticks:{display:false},grid:{color:line},angleLines:{color:line}}},plugins:{legend:leg}}}));
   const al=S.classes.map(c=>S.assets.filter(a=>a.cls===c).reduce((s,a)=>s+a.val,0));
   charts.push(new Chart($('c3'),{type:'polarArea',data:{labels:S.classes,datasets:[{data:al,backgroundColor:pal.map(p=>p+'bb'),borderWidth:0}]},options:{scales:{r:{ticks:{display:false},grid:{color:line}}},plugins:{legend:leg}}}));
