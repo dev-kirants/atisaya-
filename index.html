@@ -587,7 +587,7 @@ function stopSip(id){const a=S.assets.find(x=>x.id==id);if(!a||!a.sip)return;
 function addAsset(f){const o=fd(f),k=kindOf(o.cls);
   if(k==='p2p'){const P=+o.pprin,rt=+o.prate,n=Math.round(+o.pn);
     if(!o.pname||!(P>0)||!(n>=1)||!(rt>=0)||o.prate===''||!o.pstart){toast('Fill borrower, amount lent, rate, months and date');return false}
-    const id=nid(),from=+o.plend||0,a={id,name:o.pname,cls:o.cls,kind:'p2p',buyDate:o.pstart,inv:P,val:P,p2p:{P,rate:rt,n,start:o.pstart,mode:o.pmode,acct:+o.pacct||(S.accounts[0]?S.accounts[0].id:0),rec:[]}};
+    const id=nid(),from=+o.plend||0,a={id,name:o.pname,cls:o.cls,kind:'p2p',buyDate:o.pstart,inv:P,val:P,p2p:{P,rate:rt,n,start:o.pstart,mode:o.pmode,rtype:o.prtype==='flat'?'flat':'red',acct:+o.pacct||(S.accounts[0]?S.accounts[0].id:0),rec:[]}};
     if(from){const t={id:nid(),date:o.pstart,type:'invest',amount:P,acct:from,cat:'P2P Lent',note:'Lent to '+o.pname,asset:id};
       const er=chk(t);if(er){toast(er);return false}apply(t);S.txs.push(t);a.p2p.lendTx=t.id}
     S.assets.push(a);save();go('assets');return false}
@@ -872,6 +872,7 @@ function assetForm(){return`<form id="af2" onsubmit="return addAsset(this)">
     <label>Borrower / platform<input name="pname" placeholder="e.g. Lendbox - Ravi"></label>
     <label>Amount lent<input name="pprin" type="number" step="any" min="0"></label>
     <label>Interest % p.a.<input name="prate" type="number" step="any" min="0"></label>
+    <label>Interest type<select name="prtype"><option value="red">Reducing balance (on outstanding principal)</option><option value="flat">Flat rate (on the full amount lent)</option></select></label>
     <label>Tenure (months)<input name="pn" type="number" min="1" max="360" step="1"></label>
     <label>Lent on<input name="pstart" type="date" value="${today()}"></label>
     <label>Receive as<select name="pmode"><option value="emi">EMI: principal + interest every month</option><option value="int">Interest monthly, principal at the end</option><option value="bullet">Bullet: principal + all interest at the end</option></select></label>
@@ -915,15 +916,15 @@ const P2M={emi:'EMI (principal + interest monthly)',int:'Monthly interest, princ
 function p2pAdd(d,m){const[y,mo,da]=d.split('-').map(Number),t=new Date(Date.UTC(y,mo-1+m,1)),last=new Date(Date.UTC(t.getUTCFullYear(),t.getUTCMonth()+1,0)).getUTCDate();
   return t.getUTCFullYear()+'-'+String(t.getUTCMonth()+1).padStart(2,'0')+'-'+String(Math.min(da,last)).padStart(2,'0')}
 function p2pSched(a){const p=a.p2p,P=p.P,n=p.n,r=p.rate/1200,R=x=>+x.toFixed(2),out=[];let bal=P;
-  const emi=p.mode==='emi'?R(r?P*r/(1-Math.pow(1+r,-n)):P/n):0;
-  for(let k=1;k<=n;k++){let i=R(bal*r),pr=0,acc=false;
-    if(p.mode==='emi')pr=k===n?bal:R(emi-i);
+  const fl=p.rtype==='flat',emi=p.mode==='emi'?R(fl?P/n+P*r:r?P*r/(1-Math.pow(1+r,-n)):P/n):0;
+  for(let k=1;k<=n;k++){let i=R((fl?P:bal)*r),pr=0,acc=false;
+    if(p.mode==='emi')pr=k===n?bal:fl?R(P/n):R(emi-i);
     else if(p.mode==='bullet'){acc=k<n;i=k===n?R(P*r*n):0;pr=k===n?bal:0}
     else pr=k===n?bal:0;
     out.push({k,date:p2pAdd(p.start,k),int:i,prin:pr,emi:R(i+pr),acc,rec:(p.rec||[]).find(x=>x.k===k)});bal=R(bal-pr)}
   return out}
 function p2pStat(a){const p=a.p2p,sc=p2pSched(a),ri=sum(p.rec,'int'),rp=sum(p.rec,'prin');return{sc,ri,rp,nx:sc.find(x=>!x.rec&&!x.acc),out:+(p.P-rp).toFixed(2)}}
-const p2pTag=a=>{const s=p2pStat(a);return`<div class="mut"><span class="badge transfer">P2P</span> ${a.p2p.rate}% &middot; ${a.p2p.mode==='emi'?'EMI':a.p2p.mode==='bullet'?'bullet':'interest'} &middot; ${s.sc.filter(x=>x.rec).length}/${a.p2p.n} received${s.nx?' &middot; next '+s.nx.date:''}</div>`};
+const p2pTag=a=>{const s=p2pStat(a);return`<div class="mut"><span class="badge transfer">P2P</span> ${a.p2p.rate}%${a.p2p.rtype==='flat'?' flat':''} &middot; ${a.p2p.mode==='emi'?'EMI':a.p2p.mode==='bullet'?'bullet':'interest'} &middot; ${s.sc.filter(x=>x.rec).length}/${a.p2p.n} received${s.nx?' &middot; next '+s.nx.date:''}</div>`};
 function p2pPost(a,s,I,Pr){const p=a.p2p,ac=acct(p.acct)||S.accounts[0];if(!ac)return false;
   const note=a.name+' · instalment '+s.k+'/'+p.n;
   if(I>0){const t={id:nid(),date:s.date,type:'income',amount:I,acct:ac.id,cat:'P2P Interest',note,p2p:a.id,k:s.k};apply(t);S.txs.push(t)}
@@ -946,7 +947,7 @@ function p2pUndo(id,k){const t=S.txs.find(x=>x.p2p==id&&x.k==k);if(t)del('txs',t
 function p2pAcct(id,v){const a=S.assets.find(x=>x.id==id);if(a){a.p2p.acct=+v;save()}}
 function p2pPanel(){const L=S.assets.filter(a=>a.kind==='p2p');if(!L.length)return'';
   return`<div class="sec"><h4>P2P lending: instalments receivable</h4>`+L.map(a=>{const p=a.p2p,s=p2pStat(a),due=s.sc.filter(x=>!x.rec&&!x.acc&&x.date<=today());
-  return`<div style="margin-bottom:18px"><div class="bar2" style="margin-bottom:6px"><b>${esc(a.name)}</b><span class="mut">Lent ${fmt(p.P)} @ ${p.rate}% p.a. &middot; ${p.n} months from ${p.start} &middot; ${P2M[p.mode]}</span></div>
+  return`<div style="margin-bottom:18px"><div class="bar2" style="margin-bottom:6px"><b>${esc(a.name)}</b><span class="mut">Lent ${fmt(p.P)} @ ${p.rate}%${p.rtype==='flat'?' flat':''} p.a. &middot; ${p.n} months from ${p.start} &middot; ${P2M[p.mode]}</span></div>
   <div class="row" style="margin-bottom:8px"><div><div class="mut">Principal outstanding</div><div class="kpi">${fmt(s.out)}</div></div><div><div class="mut">Principal received</div><div class="kpi">${fmt(s.rp)}</div></div>
   <div><div class="mut">Interest received (income)</div><div class="kpi g">${fmt(s.ri)}</div></div><div><div class="mut">Next instalment</div><div class="kpi">${s.nx?fmt(s.nx.emi):'-'}</div><div class="mut">${s.nx?s.nx.date:'Completed'}</div></div></div>
   <div class="bar2"><label style="flex-direction:row;align-items:center;gap:6px">Receive into<select onchange="p2pAcct(${a.id},this.value)">${S.accounts.map(x=>`<option value="${x.id}" ${x.id==p.acct?'selected':''}>${esc(x.name)}</option>`).join('')}</select></label>
