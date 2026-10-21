@@ -148,6 +148,16 @@ label{font-size:11px;text-transform:uppercase;letter-spacing:.04em}
 #qinv .row{align-items:flex-end}#qinv .pick{align-items:flex-start}
 .hbox{padding:8px 12px;border-radius:10px;background:var(--bg);font-size:13px}
 .smx{display:flex;flex-direction:column;gap:10px}
+details>summary{cursor:pointer;font-weight:600;padding:6px 0}
+#auth:not(.hide),#otp:not(.hide),#pin:not(.hide),#pinset:not(.hide){position:fixed;inset:0;z-index:50;max-width:none;margin:0;padding:20px;overflow:auto;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 15% 10%,color-mix(in srgb,var(--pri) 24%,var(--bg)),var(--bg) 62%)}
+.lgc{width:100%;max-width:390px;background:var(--card);border:1px solid var(--line);border-radius:22px!important;padding:28px 24px;box-shadow:0 24px 60px rgba(15,30,50,.2);text-align:center}
+.lgc form{display:flex;flex-direction:column;gap:12px;text-align:left}.lgc label{display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:600;color:var(--mut)}
+.lgc input{padding:12px;border-radius:12px!important;font-size:15px}.lgc .btn{padding:12px;font-size:15px;border-radius:12px!important}.lgc h1{margin:0;font-size:24px}.lgc .code,.lgc .pincode{text-align:center}
+.lgo{width:56px;height:56px;margin:0 auto 10px;border-radius:16px;background:linear-gradient(135deg,var(--pri),var(--pri2));color:#fff;font:800 28px/56px system-ui;box-shadow:0 8px 20px rgba(29,79,140,.35)}
+.lgfp{width:88px;height:88px;margin:4px auto 14px;border-radius:50%;border:2px solid var(--pri);background:color-mix(in srgb,var(--pri) 8%,var(--card));font-size:42px;cursor:pointer;display:block}.lgfp:hover{box-shadow:0 0 0 6px color-mix(in srgb,var(--pri) 18%,transparent)}
+.atiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:14px}
+.atile{display:flex;flex-direction:column;gap:3px;text-align:left;padding:12px;border:1px solid var(--line);background:var(--card);cursor:pointer;color:var(--ink);font-size:13px;border-radius:12px}.atile b{font-size:18px}.atile.on{border-color:var(--pri);box-shadow:inset 0 0 0 1px var(--pri);background:color-mix(in srgb,var(--pri) 8%,var(--card))}
+.abar{display:flex;gap:26px;flex-wrap:wrap;padding:12px 14px;margin-top:10px;border:1px solid var(--line);border-top:3px solid var(--pri);background:var(--zebra)}.abar div{display:flex;flex-direction:column}.abar b{font-size:16px}
 </style>
 </head>
 <body>
@@ -176,37 +186,37 @@ const SUPABASE_URL="https://mefpkvaauqoqmquoajlf.supabase.co", SUPABASE_KEY="eyJ
   <div class="row"><button class="btn ghost" onclick="closeTickerEdit()">Cancel</button><button class="btn" onclick="saveTickerEdit()">Save</button></div>
 </div></div>
 
-<div id="auth" class="hide">
-  <h1><center>Atisaya</center></h1><div class="mut"><center>finrec</center></div>
-  <div class="card">
-    <div class="seg" style="margin-bottom:12px"><button type="button" id="am-in" class="on transfer" onclick="authMode('in')">Sign in</button><button type="button" id="am-up" onclick="authMode('up')">Create account</button></div>
-    <form id="af" onsubmit="return signIn(event)">
-      <label>Email<input name="email" type="email" required autocomplete="email"></label>
-      <label>Password<input name="pw" type="password" minlength="6" required autocomplete="current-password"></label>
-      <label id="apw2l" class="hide">Confirm password<input name="pw2" type="password" minlength="6" autocomplete="new-password"></label>
-      <button class="btn" id="abtn">Sign in</button>
-      <button type="button" class="btn ghost" id="aotp" onclick="otpLogin()">Sign in with email code instead</button>
-      <div id="amsg" class="r"></div><div class="mut"><center>Jñānaṁ vittasya rakṣakam.</center></div>
-    </form>
-    <button type="button" class="btn ghost" onclick="$('auth').classList.add('hide');$('landing').classList.remove('hide')" style="width:100%">← Back</button>
-  </div>
-</div>
+<div id="auth" class="hide"><div class="lgc">
+  <div class="lgo">A</div><h1>Atisaya</h1><div class="mut" style="margin-bottom:16px">finrec</div>
+  <div class="seg" style="margin-bottom:14px"><button type="button" id="at-pw" class="on transfer" onclick="authTab('pw')">Password</button><button type="button" id="at-otp" onclick="authTab('otp')">Email code</button><button type="button" id="at-bio" class="hide" onclick="authTab('bio')">👆 Fingerprint</button></div>
+  <div class="seg" id="amodes" style="margin-bottom:12px"><button type="button" id="am-in" class="on transfer" onclick="authMode('in')">Sign in</button><button type="button" id="am-up" onclick="authMode('up')">Create account</button></div>
+  <form id="af" onsubmit="return signIn(event)">
+    <label>Email<input name="email" type="email" required autocomplete="email" placeholder="you@example.com"></label>
+    <label id="apwl">Password<input name="pw" type="password" minlength="6" required autocomplete="current-password" placeholder="••••••••"></label>
+    <label id="apw2l" class="hide">Confirm password<input name="pw2" type="password" minlength="6" autocomplete="new-password"></label>
+    <button class="btn" id="abtn">Sign in</button>
+  </form>
+  <div id="abio" class="hide"><button type="button" class="lgfp" onclick="bioLogin()" aria-label="Fingerprint">👆</button><div class="mut">Touch to unlock with your fingerprint / face</div></div>
+  <div id="amsg" class="r" style="margin:10px 0"></div>
+  <button type="button" class="btn ghost" onclick="$('auth').classList.add('hide');$('landing').classList.remove('hide')" style="width:100%">← Back</button>
+  <div class="mut" style="margin-top:12px;font-size:12px">Jñānaṁ vittasya rakṣakam.</div>
+</div></div>
 
-<div id="otp" class="hide">
-  <h1>Verify your email</h1>
-  <div class="mut">We emailed a 6-digit code to <b id="oem"></b>.</div><br>
+<div id="otp" class="hide"><div class="lgc">
+  <div class="lgo">A</div><h1>Verify your email</h1>
+  <div class="mut" style="margin:6px 0 16px">We emailed a 6-digit code to <b id="oem"></b>.</div>
   <form onsubmit="return verifyOtp(event)">
     <input id="ocode" class="code" inputmode="numeric" maxlength="8" autocomplete="one-time-code" placeholder="••••••" required>
     <button class="btn">Verify and continue</button>
     <button type="button" id="ores" class="btn ghost" onclick="sendOtp()">Resend code</button>
     <button type="button" class="btn ghost" onclick="logout()">Use a different account</button>
-    <div id="omsg" class="mut"></div>
+    <div id="omsg" class="mut" style="text-align:center"></div>
   </form>
-</div>
+</div></div>
 
-<div id="pinset" class="hide">
-  <h1>Create a PIN</h1>
-  <div class="mut">Choose a 4-digit PIN. Next time you open the app on this device, this is all you'll need &mdash; no email code.</div><br>
+<div id="pinset" class="hide"><div class="lgc">
+  <div class="lgo">A</div><h1>Create a PIN</h1>
+  <div class="mut" style="margin:6px 0 16px">Choose a 4-digit PIN. Next time you open the app on this device, this is all you'll need, no email code.</div>
   <form onsubmit="return savePin(event)">
     <input id="pnew" class="pincode" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="••••" required>
     <input id="pnew2" class="pincode" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="Confirm ••••" required>
@@ -215,19 +225,19 @@ const SUPABASE_URL="https://mefpkvaauqoqmquoajlf.supabase.co", SUPABASE_KEY="eyJ
     <button type="button" class="btn ghost" onclick="skipPin()">Skip for now</button>
     <div id="psmsg" class="r"></div>
   </form>
-</div>
+</div></div>
 
-<div id="pin" class="hide">
-  <h1><center>Atisaya</center></h1><div class="mut"><center>finrec</center></div>
-  <div class="mut">Enter your 4-digit PIN.</div><br>
+<div id="pin" class="hide"><div class="lgc">
+  <div class="lgo">A</div><h1>Welcome back</h1><div class="mut" style="margin:6px 0 16px">Unlock Atisaya</div>
+  <button type="button" id="biobtn" class="lgfp hide" onclick="unlockBio()" aria-label="Use fingerprint">👆</button>
   <form onsubmit="return checkPin(event)">
     <input id="pcode" class="pincode" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="••••" autofocus required>
     <button class="btn">Unlock</button>
-    <button type="button" id="biobtn" class="btn ghost hide" onclick="unlockBio()">👆 Use fingerprint / face</button>
-    <button type="button" class="btn ghost" onclick="forgotPin()">Forgot PIN? Use email instead</button>
-    <div id="pmsg" class="r"></div>
+    <div class="mut" style="text-align:center;font-size:12px">or sign in with</div>
+    <div style="display:flex;gap:8px"><button type="button" class="btn ghost" style="flex:1" onclick="pinToPassword()">Password</button><button type="button" class="btn ghost" style="flex:1" onclick="forgotPin()">Email code</button></div>
+    <div id="pmsg" class="r" style="text-align:center"></div>
   </form>
-</div>
+</div></div>
 
 <div id="app" class="hide">
   <header>
@@ -276,7 +286,7 @@ const ck=()=>'wt_cache_'+user.id;
 let S,user,tab=localStorage.getItem('wt_tab')||'dash',charts=[],timer,txMo='all',per='month';
 
 /* ---------- default data ---------- */
-const CATS=['Salary','Business','Freelance','Interest','Dividends','Rent','Food & Dining','Groceries','Transport','Bills & Utilities','Shopping','Health','Education','Entertainment','Travel','Insurance','Loan Interest & Charges','Gifts','Taxes','Refunds','Other'];
+const CATS=['Salary','Business','Interest','Dividends','Rent','Food & Dining','Groceries','Transport','Bills & Utilities','Shopping','Health','Education','Entertainment','Travel','Insurance','Taxes','Other'];
 function demo(){ // fresh start: only starting categories, no sample money data
   return{cur:'₹',next:1,cats:CATS.slice(),classes:['Mutual Funds','Stocks','Bonds','P2P Lending','Real Estate','Gold'],
     accounts:[],assets:[],debts:[],ibudget:{},budget:{},targets:[],txs:[]};
@@ -300,22 +310,32 @@ async function loadState(){
 }
 
 /* ---------- auth ---------- */
-let amode='in',pend='';
+let amode='in',pend='',atab='pw';
+const bioHas=()=>Object.keys(localStorage).some(k=>k.startsWith('wt_bio_'));
+function authTab(t){atab=t;const o=t==='otp',b=t==='bio';
+  [['pw','at-pw'],['otp','at-otp'],['bio','at-bio']].forEach(([k,i])=>$(i).className=k===t?'on transfer':'');
+  $('at-bio').classList.toggle('hide',!(bioOK()&&bioHas()));
+  $('af').classList.toggle('hide',b);$('abio').classList.toggle('hide',!b);$('amodes').classList.toggle('hide',t!=='pw');
+  $('apwl').classList.toggle('hide',o);$('af').pw.required=!o;$('amsg').textContent='';
+  if(t==='pw')authMode(amode);else if(o){$('apw2l').classList.add('hide');$('af').pw2.required=false;$('abtn').textContent='Send code to email'}}
+async function bioLogin(){const {data:{session}}=await sb.auth.getSession();
+  if(session&&localStorage.getItem(bioKey(session.user.id))){$('auth').classList.add('hide');enter()}
+  else $('amsg').textContent='Session expired. Sign in once with password or email code.'}
 function authMode(m){amode=m;const up=m==='up';
   $('am-in').className=up?'':'on transfer';$('am-up').className=up?'on transfer':'';
   $('apw2l').classList.toggle('hide',!up);$('af').pw2.required=up;$('abtn').textContent=up?'Create account':'Sign in';
-  $('aotp').classList.toggle('hide',up);$('af').pw.autocomplete=up?'new-password':'current-password';$('amsg').textContent=''}
-async function signIn(e){e.preventDefault();const f=new FormData($('af')),email=String(f.get('email')).trim(),pw=f.get('pw'),m=$('amsg');m.textContent='';
+  $('af').pw.autocomplete=up?'new-password':'current-password';$('amsg').textContent=''}
+async function signIn(e){e.preventDefault();if(atab==='otp'){otpLogin();return false}const f=new FormData($('af')),email=String(f.get('email')).trim(),pw=f.get('pw'),m=$('amsg');m.textContent='';
   if(amode==='up'){
     if(pw!==f.get('pw2')){m.textContent='Passwords do not match.';return false}
     const {data,error}=await sb.auth.signUp({email,password:pw});
     if(error){m.textContent=error.message;return false}
     if(data.user&&data.user.identities&&!data.user.identities.length){m.textContent='This email is already registered. Use Sign in.';return false}
-    if(data.session){afterAuth.sent=0;afterAuth()}
+    if(data.session){sessionStorage.setItem('wt_otp_'+data.user.id,'1');afterAuth.sent=0;afterAuth()}
     else{authMode('in');m.className='g';m.textContent='Account created. Confirm the link we emailed you, then sign in.'}
     return false}
-  const {error}=await sb.auth.signInWithPassword({email,password:pw});
-  if(error)m.textContent=error.message;else{afterAuth.sent=0;afterAuth()}return false}
+  const {data,error}=await sb.auth.signInWithPassword({email,password:pw});
+  if(error)m.textContent=error.message;else{sessionStorage.setItem('wt_otp_'+data.user.id,'1');afterAuth.sent=0;afterAuth()}return false}
 async function otpLogin(){const em=String($('af').email.value).trim();
   if(!/^\S+@\S+\.\S+$/.test(em)){$('amsg').textContent='Enter your email first.';return}
   pend=em;$('auth').classList.add('hide');$('otp').classList.remove('hide');$('oem').textContent=em;$('ocode').value='';sendOtp()}
@@ -324,7 +344,7 @@ function pinHash(pin,uid){let h=5381;const s2=pin+':'+uid;for(let i=0;i<s2.lengt
 function pinKey(uid){return 'wt_pin_'+uid}
 async function enter(){$('landing').classList.add('hide');
   const {data:{session}}=await sb.auth.getSession();
-  if(!session){$('auth').classList.remove('hide');return}
+  if(!session){$('auth').classList.remove('hide');authTab('pw');return}
   user=session.user;
   if(localStorage.getItem(pinKey(user.id))){
     $('pin').classList.remove('hide');$('pmsg').textContent='';const c=$('pcode');c.value='';setTimeout(()=>c.focus(),50);
@@ -334,6 +354,7 @@ function checkPin(e){e.preventDefault();const v=$('pcode').value.trim();
   if(pinHash(v,user.id)===localStorage.getItem(pinKey(user.id))){$('pin').classList.add('hide');enterApp()}
   else{$('pmsg').textContent='Incorrect PIN. Try again.';$('pcode').value='';$('pcode').focus()}
   return false}
+async function pinToPassword(){$('pin').classList.add('hide');if(user)sessionStorage.removeItem('wt_otp_'+user.id);await sb.auth.signOut();user=null;$('auth').classList.remove('hide');authTab('pw')}
 async function forgotPin(){$('pin').classList.add('hide');localStorage.removeItem(pinKey(user.id));localStorage.removeItem(bioKey(user.id));
   sessionStorage.removeItem('wt_otp_'+user.id);afterAuth.sent=0;await afterAuth()}
 /* ---------- fingerprint / face unlock (WebAuthn, this device only) ---------- */
@@ -632,6 +653,13 @@ function del(kind,id){
       if(a){a.p2p.rec=a.p2p.rec.filter(r=>r.k!==t.k);a.inv=a.val=+(a.p2p.P-sum(a.p2p.rec,'prin')).toFixed(2)}save();go(tab);return}
     const er=chk(null,t);if(er){alert('Cannot delete: '+er);return}apply(t,-1)}
   S[kind]=S[kind].filter(x=>x.id!=id);save();go(tab)}
+async function chgPw(e){e.preventDefault();const a=$('npw').value,m=$('pwmsg');m.className='r';
+  if(a!==$('npw2').value){m.textContent='Passwords do not match.';return false}
+  const {error}=await sb.auth.updateUser({password:a});
+  if(error)m.textContent=error.message;else{m.className='g';m.textContent='Password updated.';$('npw').value=$('npw2').value=''}return false}
+function catTidy(){const u=new Set(S.txs.map(t=>t.cat)),r=S.cats.filter(c=>c!=='Other'&&!u.has(c)&&!(S.budget||{})[c]&&!(S.ibudget||{})[c]);
+  if(!r.length){toast('No unused categories');return}
+  if(!confirm('Remove '+r.length+' unused categories?\n\n'+r.join(', ')))return;S.cats=S.cats.filter(c=>!r.includes(c));save();go('admin')}
 function cat(kind,mode,v){const arr=S[kind],dupe=(n,i)=>arr.some((x,j)=>j!==i&&x.toLowerCase()===n.toLowerCase());
   if(mode==='add'){const n=(prompt('New name')||'').trim();if(!n)return;if(dupe(n,-1))return toast('Already exists');arr.push(n)}
   if(mode==='del'&&confirm('Remove "'+arr[v]+'"? Existing records keep their label.'))arr.splice(v,1);
@@ -880,39 +908,45 @@ function assetForm(){return`<form id="af2" onsubmit="return addAsset(this)">
     <label>Receive into<select name="pacct">${acctOpts()}</select></label></div>
   <button class="btn">Add asset</button></form><div class="mut note2" id="khint"></div>`}
 const dayPL=a=>(a.kind==='stock'||a.kind==='mf')&&a.prev>0&&a.px>0?a.qty*(a.px-a.prev):0;
-const dayPLs=()=>{let pl=0,base=0;S.assets.forEach(a=>{if(dayPL(a)||a.prev>0&&a.px>0){pl+=dayPL(a);base+=a.qty*a.prev}});return{pl,pct:base?pl/base*100:0,has:S.assets.some(a=>a.prev>0&&a.px>0)}};
-function assetTable(){return mfPanel()+p2pPanel()+assetHold()}
+const dayPLs=(L=S.assets)=>{let pl=0,base=0;L.forEach(a=>{if(dayPL(a)||a.prev>0&&a.px>0){pl+=dayPL(a);base+=a.qty*a.prev}});return{pl,pct:base?pl/base*100:0,has:L.some(a=>a.prev>0&&a.px>0)}};
+let AF='';const AK=[['mf','Mutual Funds'],['stock','Stocks'],['p2p','P2P'],['manual','Others']],inAF=a=>a.kind===AF;
+const setAF=k=>{AF=AF===k?'':k;$('ahold').innerHTML=assetTable()},
+  recL=()=>S.assets.filter(a=>a.kind==='p2p').flatMap(a=>a.p2p.rec.map(r=>({...r,n:a.name,m:a.p2p.n}))),
+  hasTab=k=>S.assets.some(a=>a.kind===k);
+function assetKpi(){const A=S.assets,t=(k,l,v,sub,c)=>`<button type="button" class="atile${AF===k?' on':''}" onclick="setAF('${k}')"><span class="mut">${l}</span><b>${v}</b><span class="${c}">${sub}</span></button>`;
+  return A.length?`<div class="atiles">${AK.filter(([k])=>hasTab(k)).map(([k,l])=>{
+  const L=A.filter(a=>a.kind===k),i=sum(L,'inv'),v=sum(L,'val'),g=v-i;
+  return t(k,l,fmt(v),(g>=0?'+':'')+fmt(g)+' ('+(i?(g/i*100).toFixed(1):0)+'%)',g>=0?'g':'r')}).join('')}</div>`:''}
+function assetBar(L=S.assets.filter(inAF)){if(!L.length)return'';const i=sum(L,'inv'),v=sum(L,'val'),g=v-i,d=dayPLs(L),c=x=>x>=0?'g':'r',n=x=>(x>=0?'+':'')+fmt(x),
+  k=(l,t,x='')=>`<div><span class="mut">${l}</span><b class="${x}">${t}</b></div>`;
+  return`<div class="abar">${k('Invested',fmt(i))}${k('Current value',fmt(v))}${k('Total gain / loss',n(g)+' ('+(i?(g/i*100).toFixed(1):0)+'%)',c(g))}${d.has?k('Today',n(d.pl)+' ('+d.pct.toFixed(2)+'%)',c(d.pl)):k('Today','-')}</div>`}
+const sipDue=a=>{const sp=a.sip,have=new Set((a.lots||[]).filter(l=>l.sip).map(l=>l.date)),sk=new Set(sp.skip||[]);return sp.stopped?[]:sipDates(sp,today()).filter(d=>!have.has(d)&&!sk.has(d))};
+async function sipNow(){await sipProcess();syncPrices(0);if(S.assets.some(a=>a.sip&&sipDue(a).length))toast('Still due: check the SIP account balance, or try again once the NAV is published')}
+function sipPanel(){const L=S.assets.filter(a=>a.sip);if(!L.length)return'';
+  return`<div class="sec"><h4>SIP &middot; ${fmt(L.filter(a=>!a.sip.stopped).reduce((x,a)=>x+a.sip.amt,0))} / month</h4><table><tr><th>Fund</th><th class="num">Monthly SIP</th><th>Date</th><th class="num">Instalments</th><th class="num">Invested</th><th class="num">Value</th><th>Status</th><th></th></tr>${L.map(a=>{const sp=a.sip,on=!sp.stopped,nx=on?sipNext(sp):'';
+  return`<tr><td style="white-space:normal">${esc(a.name)}</td><td class="num">${fmt(sp.amt)}</td><td>${ord(sp.day)} of month</td><td class="num">${(a.lots||[]).length}</td><td class="num">${fmt(a.inv)}</td><td class="num">${fmt(a.val)}</td><td>${on?(sipDue(a).length?`<button class="btn" style="padding:4px 12px" onclick="sipNow()">Received · ${sipDue(a).length} due</button>${sp.wait?' <span class="r">needs funds</span>':''}`:'Active'+(nx?' · next '+nx:'')):'<span class="mut">Stopped</span>'}</td><td><button class="x" style="color:var(--pri)" onclick="sipModal(${a.id})" title="Edit SIP">⟳</button>${on?`<button class="x" style="color:var(--mut)" onclick="stopSip(${a.id})" title="Stop SIP">⏹</button>`:''}</td></tr>`}).join('')}</table></div>`}
+function p2pQuick(id,k){const a=S.assets.find(x=>x.id==id),s=a&&p2pSched(a).find(x=>x.k===k);if(!s||s.rec)return;
+  if(!S.accounts.length){toast('Add a bank or cash account first');go('cash');return}
+  if(p2pPost(a,s,s.int,s.prin)){save();go(tab)}}
+function dueP2P(){const D=S.assets.filter(a=>a.kind==='p2p').flatMap(a=>p2pSched(a).filter(x=>!x.rec&&!x.acc&&x.date<=today()).map(x=>({...x,a})));if(!D.length)return'';
+  return`<div class="sec"><h4>P2P due now</h4><table><tr><th>Due date</th><th>Loan</th><th class="num">Instalment</th><th class="num">Interest</th><th class="num">Principal</th><th class="num">Total</th><th></th></tr>${D.map(x=>`<tr><td>${x.date}</td><td>${esc(x.a.name)}</td><td class="num">${x.k}/${x.a.p2p.n}</td><td class="num g">${fmt(x.int)}</td><td class="num">${fmt(x.prin)}</td><td class="num">${fmt(x.emi)}</td><td><button class="btn" style="padding:4px 12px" onclick="p2pQuick(${x.a.id},${x.k})">Received</button></td></tr>`).join('')}</table></div>`}
+function recPanel(){const R=recL().sort((a,b)=>a.date<b.date?1:-1),I=sum(R,'int'),P=sum(R,'prin');
+  return R.length?`<div class="sec"><h4>P2P received</h4><table><tr><th>Date</th><th>Loan</th><th class="num">Instalment</th><th class="num">Interest</th><th class="num">Principal</th><th class="num">Total</th></tr>${R.map(r=>`<tr><td>${r.date}</td><td>${esc(r.n)}</td><td class="num">${r.k}/${r.m}</td><td class="num g">${fmt(r.int)}</td><td class="num">${fmt(r.prin)}</td><td class="num">${fmt(r.int+r.prin)}</td></tr>`).join('')}<tr class="tot"><td>Total</td><td></td><td></td><td class="num g">${fmt(I)}</td><td class="num">${fmt(P)}</td><td class="num">${fmt(I+P)}</td></tr></table></div>`:''}
+function assetTable(){if(AF&&!hasTab(AF))AF='';return assetKpi()+(!AF?'':assetHold()+(AF==='mf'?sipPanel():AF==='p2p'?dueP2P()+p2pPanel()+recPanel():''))}
 function assetHold(){
   const g=a=>a.val-a.inv,any=S.assets.some(a=>a.kind==='stock'||a.kind==='mf');
-  return`<div class="bar2"><h3 style="margin:0">Holdings</h3>${any?`<button class="btn ghost" onclick="syncPrices(1)">↻ Refresh prices</button><span class="mut" id="pst">${esc(psMsg)}</span>`:''}</div>
+  return`<div class="bar2"><h3 style="margin:0">${AK.find(x=>x[0]===AF)[1]}</h3>${any?`<button class="btn ghost" onclick="syncPrices(1)">↻ Refresh prices</button><span class="mut" id="pst">${esc(psMsg)}</span>`:''}</div>
   <table><tr><th>Asset</th><th>Class</th><th class="num">Bought</th><th class="num">Market price</th><th class="num">Invested</th><th class="num">Value</th><th class="num">Gain / loss</th><th></th></tr>
-  ${S.assets.map(a=>{const lk=a.kind==='stock'||a.kind==='mf',d=a.kind==='mf'?4:2,dc=lk&&a.prev&&a.px?a.px-a.prev:0;
+  ${S.assets.filter(inAF).map(a=>{const lk=a.kind==='stock'||a.kind==='mf',d=a.kind==='mf'?4:2,dc=lk&&a.prev&&a.px?a.px-a.prev:0;
   return`<tr><td style="white-space:normal;min-width:170px;max-width:300px">${esc(a.name)}${a.kind==='p2p'?p2pTag(a):''}${lk?`<div class="mut">${esc(a.sym||'Code '+a.code)}${a.sip?'':' · bought '+esc(a.buyDate||'')}</div>`:''}${a.sip?`<div class="mut"><span class="badge transfer">SIP</span> ${pxf(a.sip.amt,0)} on the ${ord(a.sip.day)} · ${(a.lots||[]).length} instalment${(a.lots||[]).length===1?'':'s'}${a.sip.stopped?' · stopped':sipNext(a.sip)?' · next '+sipNext(a.sip):''}</div>`:''}</td><td><span class="badge asset">${esc(a.cls)}</span></td>
   <td class="num">${lk?(a.qty?(+a.qty).toLocaleString(undefined,{maximumFractionDigits:4})+' @ '+pxf(a.buyPrice,d)+(a.sip?' avg':''):'<span class="mut">no instalments yet</span>'):'-'}</td>
   <td class="num">${lk?(a.px?`<span class="${FLASH[a.id]?'fl-'+FLASH[a.id]:''}">${a.kind==='stock'?'<span class="live"></span>':''}${pxf(a.px,d)}</span><div class="mut ${dc>=0?'g':'r'}">${dc?(dc>=0?'▲ +':'▼ ')+dc.toFixed(2)+' ('+(dc/a.prev*100).toFixed(2)+'%)':''}${a.kind==='mf'&&a.pxDate?' NAV '+esc(a.pxDate):''}${a.kind==='stock'&&a.pxTime?' <span class="mut">'+new Date(a.pxTime).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})+'</span>':''}</div>`:'<span class="mut">fetching…</span> <button class="x" style="color:var(--pri)" onclick="syncPrices(1)" title="Retry">↻</button>'):'-'}</td>
   <td class="num">${fmt(a.inv)}</td>
   <td class="num">${a.kind==='p2p'?fmt(a.val):lk?fmt(a.val)+(dayPL(a)?`<div class="${dayPL(a)>=0?'g':'r'}" style="font-size:12px">${dayPL(a)>=0?'+':''}${fmt(dayPL(a))} today</div>`:''):`<input style="width:110px" type="number" step="any" value="${a.val}" onchange="S.assets.find(x=>x.id==${a.id}).val=+this.value;save();go('assets')">`}</td>
-  <td class="num ${g(a)>=0?'g':'r'}">${fmt(g(a))} (${a.inv?(g(a)/a.inv*100).toFixed(1):0}%)</td><td>${a.kind==='stock'||a.kind==='mf'?`<button class="x" style="color:var(--pri)" onclick="qe({type:'invest',asset:${a.id}})" title="Buy more" aria-label="Buy more">＋</button>`:''}${a.sip&&!a.sip.stopped?`<button class="x" style="color:var(--mut)" onclick="stopSip(${a.id})" title="Stop SIP" aria-label="Stop SIP">⏹</button>`:''}${delBtn('assets',a.id)}</td></tr>`}).join('')}
-  ${S.assets.length?`<tr class="tot"><td>Total</td><td></td><td></td><td></td><td class="num">${fmt(sum(S.assets,'inv'))}</td><td class="num">${fmt(sum(S.assets,'val'))}${(()=>{const d=dayPLs();return d.has?`<div class="${d.pl>=0?'g':'r'}" style="font-size:12px">${d.pl>=0?'+':''}${fmt(d.pl)} today (${d.pct.toFixed(2)}%)</div>`:''})()}</td><td class="num ${sum(S.assets,'val')-sum(S.assets,'inv')>=0?'g':'r'}">${fmt(sum(S.assets,'val')-sum(S.assets,'inv'))}</td><td></td></tr>`:''}
-  </table>`}
-/* ---------- Mutual fund summary ---------- */
-function mfPanel(){const L=S.assets.filter(a=>a.kind==='mf');if(!L.length)return'';
-  const inv=sum(L,'inv'),val=sum(L,'val'),gn=val-inv,sips=L.filter(a=>a.sip&&!a.sip.stopped),mo=sips.reduce((x,a)=>x+a.sip.amt,0);
-  return`<div class="sec"><h4>Mutual funds: current investment &amp; value</h4>
-  <div class="row" style="margin-bottom:10px"><div><div class="mut">Current investment</div><div class="kpi">${fmt(inv)}</div></div>
-  <div><div class="mut">Current value</div><div class="kpi">${fmt(val)}</div></div>
-  <div><div class="mut">Gain / (loss)</div><div class="kpi ${gn>=0?'g':'r'}">${fmt(gn)} <span style="font-size:13px">(${inv?(gn/inv*100).toFixed(1):0}%)</span></div></div>
-  <div><div class="mut">Monthly SIP</div><div class="kpi">${fmt(mo)}</div><div class="mut">${sips.length} active SIP${sips.length===1?'':'s'}</div></div></div>
-  <table><tr><th>Fund</th><th>Plan</th><th class="num">Units</th><th class="num">Avg NAV</th><th class="num">Latest NAV</th><th class="num">Invested</th><th class="num">Current value</th><th class="num">Gain / (loss)</th></tr>
-  ${L.map(a=>{const g=a.val-a.inv,n=(a.lots||[]).length,nx=a.sip?sipNext(a.sip):'';
-  return`<tr><td style="white-space:normal;min-width:160px">${esc(a.name)}</td>
-  <td>${a.sip?`<span class="badge transfer">SIP</span> ${fmt(a.sip.amt)} on the ${ord(a.sip.day)} &middot; ${n} instalment${n===1?'':'s'}${a.sip.stopped?' &middot; stopped':nx?' &middot; next '+nx:''}${a.sip.acct&&acct(a.sip.acct)?' &middot; from '+esc(acct(a.sip.acct).name):''}${a.sip.wait?' &middot; <span class="r">waiting for funds</span>':''}`:'<span class="badge asset">Holding</span> since '+esc(a.buyDate||'')}<div style="margin-top:4px;display:flex;gap:6px;flex-wrap:wrap"><button class="btn ghost" style="padding:3px 10px" onclick="sipModal(${a.id})">${a.sip&&!a.sip.stopped?'Edit SIP':'Start SIP'}</button><button class="btn ghost" style="padding:3px 10px" onclick="qe({type:'invest',asset:${a.id}})">＋ Buy</button></div></td>
-  <td class="num">${a.qty?(+a.qty).toLocaleString(undefined,{maximumFractionDigits:3}):'-'}</td><td class="num">${a.buyPrice?pxf(a.buyPrice,4):'-'}</td><td class="num">${a.px?pxf(a.px,4):'-'}</td>
-  <td class="num">${fmt(a.inv)}</td><td class="num">${fmt(a.val)}</td><td class="num ${g>=0?'g':'r'}">${fmt(g)} (${a.inv?(g/a.inv*100).toFixed(1):0}%)</td></tr>`}).join('')}
-  <tr class="tot"><td>Total</td><td></td><td></td><td></td><td></td><td class="num">${fmt(inv)}</td><td class="num">${fmt(val)}</td><td class="num ${gn>=0?'g':'r'}">${fmt(gn)}</td></tr></table></div>`}
-
+  <td class="num ${g(a)>=0?'g':'r'}">${fmt(g(a))} (${a.inv?(g(a)/a.inv*100).toFixed(1):0}%)</td><td>${a.kind==='stock'||a.kind==='mf'?`<button class="x" style="color:var(--pri)" onclick="qe({type:'invest',asset:${a.id}})" title="Buy more" aria-label="Buy more">＋</button>`:''}${a.kind==='mf'?`<button class="x" style="color:var(--pri)" onclick="sipModal(${a.id})" title="${a.sip&&!a.sip.stopped?'Edit SIP':'Start SIP'}" aria-label="SIP">⟳</button>`:''}${a.sip&&!a.sip.stopped?`<button class="x" style="color:var(--mut)" onclick="stopSip(${a.id})" title="Stop SIP" aria-label="Stop SIP">⏹</button>`:''}${delBtn('assets',a.id)}</td></tr>`}).join('')}
+  </table>${assetBar()}`}
 /* ---------- P2P lending: instalment schedule + receipts ---------- */
-const P2M={emi:'EMI (principal + interest monthly)',int:'Monthly interest, principal at end',bullet:'Bullet (principal + interest at end)'};
+let P2O={};const P2M={emi:'EMI (principal + interest monthly)',int:'Monthly interest, principal at end',bullet:'Bullet (principal + interest at end)'};
 function p2pAdd(d,m){const[y,mo,da]=d.split('-').map(Number),t=new Date(Date.UTC(y,mo-1+m,1)),last=new Date(Date.UTC(t.getUTCFullYear(),t.getUTCMonth()+1,0)).getUTCDate();
   return t.getUTCFullYear()+'-'+String(t.getUTCMonth()+1).padStart(2,'0')+'-'+String(Math.min(da,last)).padStart(2,'0')}
 function p2pSched(a){const p=a.p2p,P=p.P,n=p.n,r=p.rate/1200,R=x=>+x.toFixed(2),out=[];let bal=P;
@@ -946,15 +980,15 @@ function p2pReceiveDue(id){const a=S.assets.find(x=>x.id==id);if(!a)return;const
 function p2pUndo(id,k){const t=S.txs.find(x=>x.p2p==id&&x.k==k);if(t)del('txs',t.id)}
 function p2pAcct(id,v){const a=S.assets.find(x=>x.id==id);if(a){a.p2p.acct=+v;save()}}
 function p2pPanel(){const L=S.assets.filter(a=>a.kind==='p2p');if(!L.length)return'';
-  return`<div class="sec"><h4>P2P lending: instalments receivable</h4>`+L.map(a=>{const p=a.p2p,s=p2pStat(a),due=s.sc.filter(x=>!x.rec&&!x.acc&&x.date<=today());
-  return`<div style="margin-bottom:18px"><div class="bar2" style="margin-bottom:6px"><b>${esc(a.name)}</b><span class="mut">Lent ${fmt(p.P)} @ ${p.rate}%${p.rtype==='flat'?' flat':''} p.a. &middot; ${p.n} months from ${p.start} &middot; ${P2M[p.mode]}</span></div>
+  return`<div class="sec"><h4>P2P loans</h4>`+L.map(a=>{const p=a.p2p,s=p2pStat(a),due=s.sc.filter(x=>!x.rec&&!x.acc&&x.date<=today()),o=P2O[a.id]===undefined?due.length>0:P2O[a.id];
+  return`<details style="margin-bottom:10px" ${o?'open':''} ontoggle="P2O[${a.id}]=this.open"><summary><b>${esc(a.name)}</b> <span class="mut">Lent ${fmt(p.P)} @ ${p.rate}%${p.rtype==='flat'?' flat':''} p.a. &middot; ${p.n} months from ${p.start} &middot; ${P2M[p.mode]}</span></summary>
   <div class="row" style="margin-bottom:8px"><div><div class="mut">Principal outstanding</div><div class="kpi">${fmt(s.out)}</div></div><div><div class="mut">Principal received</div><div class="kpi">${fmt(s.rp)}</div></div>
   <div><div class="mut">Interest received (income)</div><div class="kpi g">${fmt(s.ri)}</div></div><div><div class="mut">Next instalment</div><div class="kpi">${s.nx?fmt(s.nx.emi):'-'}</div><div class="mut">${s.nx?s.nx.date:'Completed'}</div></div></div>
   <div class="bar2"><label style="flex-direction:row;align-items:center;gap:6px">Receive into<select onchange="p2pAcct(${a.id},this.value)">${S.accounts.map(x=>`<option value="${x.id}" ${x.id==p.acct?'selected':''}>${esc(x.name)}</option>`).join('')}</select></label>
   ${due.length?`<button class="btn" onclick="p2pReceiveDue(${a.id})">Receive ${due.length} due instalment${due.length===1?'':'s'}</button>`:''}</div>
   <table><tr><th>#</th><th>Due date</th><th class="num">Interest</th><th class="num">Principal</th><th class="num">Instalment</th><th>Status</th></tr>
   ${s.sc.map(x=>{const r=x.rec;return`<tr><td>${x.k}</td><td>${x.date}</td><td class="num">${fmt(r?r.int:x.int)}</td><td class="num">${fmt(r?r.prin:x.prin)}</td><td class="num">${fmt(r?r.int+r.prin:x.emi)}</td>
-  <td>${r?`<span class="badge income">Received</span> <button class="x" style="color:var(--mut)" onclick="p2pUndo(${a.id},${x.k})" title="Undo this receipt">&#8630;</button>`:x.acc?'<span class="mut">Accruing, paid at end</span>':x.date<=today()?`<button class="btn ghost" onclick="p2pReceive(${a.id},${x.k})">Receive</button>`:'<span class="mut">Upcoming</span>'}</td></tr>`}).join('')}</table></div>`}).join('')+`</div>`}
+  <td>${r?`<span class="badge income">Received</span> <button class="x" style="color:var(--mut)" onclick="p2pUndo(${a.id},${x.k})" title="Undo this receipt">&#8630;</button>`:x.acc?'<span class="mut">Accruing, paid at end</span>':x.date<=today()?`<button class="btn ghost" onclick="p2pReceive(${a.id},${x.k})">Receive</button>`:'<span class="mut">Upcoming</span>'}</td></tr>`}).join('')}</table></details>`}).join('')+`</div>`}
 
 const V={
 totals(){const ex=grp('expense'),inc=grp('income'),tt=o=>Object.values(o).reduce((a,b)=>a+b,0),te=tt(ex),ti=tt(inc),
@@ -1013,7 +1047,7 @@ cash(){return`<div class="card"><h3>Add account</h3>
   <table><tr><th>Account</th><th>Type</th><th class="num">Balance</th><th></th></tr>
   ${S.accounts.length?S.accounts.map(a=>`<tr><td>${esc(a.name)}</td><td>${esc(akind(a))}</td><td class="num">${fmt(a.bal)}</td><td>${delBtn('accounts',a.id)}</td></tr>`).join('')+`<tr class="tot"><td>Total</td><td></td><td class="num">${fmt(sum(S.accounts,'bal'))}</td><td></td></tr>`:'<tr><td colspan="4" class="mut">No accounts yet. Add your first one above.</td></tr>'}
   </table></div>`},
-assets(){return`<div class="card"><h3>Add asset</h3><div class="mut" style="margin-bottom:8px">Record what you already hold, set up a SIP, or lend via P2P here. To <b>buy now</b> from a bank account, press <b>+</b> and choose <b>Invest</b>: it asks which stock or fund and deducts the money.</div>${assetForm()}</div><br><div class="card" id="ahold">${assetTable()}</div>`},
+assets(){return`<div class="card"><details ${S.assets.length?'':'open'}><summary style="font-size:16px">＋ Add asset</summary><div class="mut" style="margin:6px 0 8px">Record a holding, start a SIP or add a P2P loan. To <b>buy now</b> from an account, press <b>+</b> and choose <b>Invest</b>.</div>${assetForm()}</details></div><br><div class="card" id="ahold">${assetTable()}</div>`},
 debts(){return`<div class="grid"><div class="card"><h3>Add liability</h3>
   <form onsubmit="return addDebt(this)"><label>Name<input name="name" required></label>
   <label>Type<select name="type"><option>Credit card</option><option>Loan</option><option>Borrowed</option></select></label>
@@ -1065,14 +1099,15 @@ reports(){const chk=[['plv','Profit & Loss (vertical)'],['bsv','Balance Sheet (v
 admin(){const list=(k,l)=>`<div class="card"><h3>${l}</h3><div class="chips">${S[k].map((c,i)=>`<span class="chip">${esc(c)}
   <button class="x" style="color:var(--mut)" onclick="cat('${k}','ren',${i})" aria-label="Rename">✎</button>
   <button class="x" onclick="cat('${k}','del',${i})" aria-label="Remove">✕</button></span>`).join('')}</div><br>
-  <button class="btn ghost" onclick="cat('${k}','add')">Add</button></div>`;
+  <button class="btn ghost" onclick="cat('${k}','add')">Add</button>${k==='cats'?' <button class="btn ghost" onclick="catTidy()">Remove unused</button>':''}</div>`;
   return`<div class="grid"><div class="card"><h3>Currency</h3>
   <select onchange="setCur(this.value)">${['$','€','₹','£','¥','A$','C$'].map(c=>`<option ${c===S.cur?'selected':''}>${c}</option>`).join('')}</select>
   <p class="mut">Signed in as ${esc(user.email)}. Data lives in your Supabase database. Monthly email runs on the server (monthly-email.sql).</p></div>
   <div class="card"><h3>Security</h3>
-  <p class="mut">Unlock on this device with PIN${bioOK()?' and fingerprint / face':''}. Each person signs in with their own email, password and email code.</p>
+  <p class="mut">Unlock on this device with PIN${bioOK()?' and fingerprint / face':''}. Sign in with your email and password, or with an email code.</p>
   <div class="bar2"><button class="btn ghost" onclick="showPinSet()">${localStorage.getItem(pinKey(user.id))?'Change PIN':'Create PIN'}</button>
-  ${bioOK()?`<button class="btn ghost" onclick="bioToggle()">${localStorage.getItem(bioKey(user.id))?'Disable fingerprint':'Enable fingerprint'}</button>`:''}</div></div>
+  ${bioOK()?`<button class="btn ghost" onclick="bioToggle()">${localStorage.getItem(bioKey(user.id))?'Disable fingerprint':'Enable fingerprint'}</button>`:''}</div>
+  <details style="margin-top:12px"><summary>Change password</summary><form class="bar2" onsubmit="return chgPw(event)" style="margin-top:8px"><input id="npw" type="password" minlength="6" placeholder="New password" autocomplete="new-password" required><input id="npw2" type="password" minlength="6" placeholder="Confirm password" autocomplete="new-password" required><button class="btn">Update</button></form><div id="pwmsg" class="mut" style="margin-top:6px"></div></details></div>
   ${list('cats','Categories (income &amp; expenses)')}${list('classes','Asset classes')}
   <div class="card"><h3>Email reports</h3>
   <p class="mut">Paste your Google Apps Script web-app URL to send reports straight to any inbox. Keep the URL private. Without it, the report opens in your phone's share sheet or downloads so you can attach it.</p>
